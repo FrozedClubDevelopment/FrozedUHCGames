@@ -1,6 +1,5 @@
 package club.frozed.uhc.utils;
 
-import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
@@ -13,7 +12,6 @@ import java.util.List;
  * Date: 09/01/2020 @ 13:42
  */
 public class PlayerCounter {
-    
     public static void getPlayerCount() {
         List<Player> onlinePlayers = new ArrayList<>();
         onlinePlayers.addAll(Bukkit.getOnlinePlayers());
