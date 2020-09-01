@@ -52,7 +52,7 @@ public class MongoDB {
                 this.client = new MongoClient(new ServerAddress(this.host, this.port));
             }
             this.connected = true;
-            Bukkit.getConsoleSender().sendMessage(CC.translate("&aSuccessfully connected to MongoDB."));
+            Bukkit.getConsoleSender().sendMessage(CC.translate("&8[&bFrozedUHCGames&8] &aSuccessfully connected to MongoDB."));
             this.mongoDatabase = this.client.getDatabase(this.database);
 
             switch (FrozedUHCGames.getInstance().getMainConfig().getConfig().getString("SETTINGS.MODE")) {

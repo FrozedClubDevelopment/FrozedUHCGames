@@ -1,5 +1,6 @@
 package club.frozed.uhc;
 
+import club.frozed.uhc.commands.PlayerDebugCommand;
 import club.frozed.uhc.commands.SetSpawnCommand;
 import club.frozed.uhc.data.MongoDB;
 import club.frozed.uhc.types.meetup.listeners.MeetupPlayerListeners;
@@ -63,6 +64,7 @@ public class FrozedUHCGames extends JavaPlugin {
         }
 
         commandFramework.registerCommands(new SetSpawnCommand());
+        commandFramework.registerCommands(new PlayerDebugCommand());
     }
 
     private void loadMeetup() {
