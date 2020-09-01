@@ -51,16 +51,17 @@ public class MeetupScoreboard extends Board {
         text = CC.translate(text);
         switch (FrozedUHCGames.getInstance().getMeetupGameManager().getState()) {
             case WAITING:
-                text = text.replace("<start-player>", String.valueOf((FrozedUHCGames.getInstance().getMeetupGameManager().getPlayersNeedToStart() - Bukkit.getOnlinePlayers().size())));
+                text = text.replace("<w-players>", String.valueOf((FrozedUHCGames.getInstance().getMeetupGameManager().getPlayersNeedToStart() - Bukkit.getOnlinePlayers().size())));
                 break;
             case STARTING:
-                text = text.replace("<time>", "aca el timepo  xd");
+                text = text.replace("<time>", "tiempo de partida");
                 break;
             case PLAYING:
                 text = text
-                        .replace("<time>", "timepo x2")
-                        .replace("<current>", String.valueOf(FrozedUHCGames.getInstance().getMeetupGameManager().getAlivePlayers().size()))
+                        .replace("<time>", "tiempo de partida")
+                        .replace("<alive>", String.valueOf(FrozedUHCGames.getInstance().getMeetupGameManager().getAlivePlayers().size()))
                         .replace("<max>", String.valueOf(FrozedUHCGames.getInstance().getMeetupGameManager().getMaxPlayers()))
+                        .replace("<ping>", String.valueOf(FrozedUHCGames.getInstance().getMeetupGameManager().getMaxPlayers()))
                         .replace("<kills>", String.valueOf(meetupPlayer.getGameKills()));
                 break;
         }

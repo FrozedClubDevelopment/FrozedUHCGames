@@ -1,22 +1,27 @@
-TITLE: '&b&lFrozed &7| &f&lUHCGames'
+TITLE: '&b&lUHC Meetup'
 
 SCORE:
   WAITING:
     - '&7&m-------------------'
     - '&bWaiting for players'
-    - '&b<start-player> more to start....'
-    -
-    - '&7&ofrozed.club'
+    - '&b<w-players> to start.'
+    - ' '
+    - '&bfrozed.club'
     - '&7&m-------------------'
   STARTING:
     - '&7&m-------------------'
-    - '&bVote for Scenario'
-    - '&bStarting in&7: &f<time>'
+    - '&fThe game will start in&7:'
+    - '&b<time> &fseconds.'
+    - ' '
+    - '&bfrozed.club'
     - '&7&m-------------------'
   GAME:
     - '&7&m-------------------'
-    - '&bTime&7: &f<time>'
-    - '&bRemaining&7: &f<current>/<max>'
-    - '&bKills&7: &f<kills>'
+    - '&bRemaining Players&7: &f<alive>/<max>'
     - '&bBorder&7: &f<size> &7(&c<time>&7)'
+    - '&bKills&7: &f<kills>'
+    - '&bPing&7: &f<ping>'
+    - '&bTime&7: &f<time>'
+    - ' '
+    - '&bfrozed.club'
     - '&7&m-------------------'
