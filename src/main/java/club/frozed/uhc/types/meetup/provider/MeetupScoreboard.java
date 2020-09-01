@@ -62,7 +62,6 @@ public class MeetupScoreboard extends Board {
                         .replace("<time>", "tiempo de partida")
                         .replace("<alive>", String.valueOf(FrozedUHCGames.getInstance().getMeetupGameManager().getAlivePlayers().size()))
                         .replace("<max>", String.valueOf(FrozedUHCGames.getInstance().getMeetupGameManager().getMaxPlayers()))
-                        .replace("<max>", String.valueOf(FrozedUHCGames.getInstance().getMeetupGameManager().getMaxPlayers()))
                         .replace("<size>", String.valueOf(0))
                         .replace("<border-time>", String.valueOf(0))
                         .replace("<ping>", String.valueOf(Utils.getPing(player)))

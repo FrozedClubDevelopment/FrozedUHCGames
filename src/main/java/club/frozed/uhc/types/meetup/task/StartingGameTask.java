@@ -13,7 +13,10 @@ public class StartingGameTask extends BukkitRunnable {
     @Override
     public void run() {
         FrozedUHCGames.getInstance().getMeetupGameManager().setState(MeetupGameManager.State.STARTING);
-        Utils.getOnlinePlayers().forEach(player -> MeetupPlayer.getByUuid(player.getUniqueId()).setState(MeetupPlayer.State.PLAYING));
+        Utils.getOnlinePlayers().forEach(player -> {
+            MeetupPlayer.getByUuid(player.getUniqueId()).setState(MeetupPlayer.State.PLAYING);
+            MeetupPlayer.getByUuid(player.getUniqueId()).setPlayed(true);
+        });
 
         int startTime = FrozedUHCGames.getInstance().getMeetupGameManager().getStartingTime();
         String type = "second" + ((startTime > 1) ? "s" : "");
