@@ -1,6 +1,7 @@
 package club.frozed.uhc.types.meetup.task;
 
 import club.frozed.uhc.types.meetup.provider.MeetupScoreboard;
+import club.frozed.uhc.utils.Utils;
 import club.frozed.uhc.utils.scoreboard.Board;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -11,7 +12,7 @@ public class MeetupScoreboardTask extends BukkitRunnable {
     public void run() {
         if (Board.getBoards().keySet().isEmpty()) return;
         try {
-            for (Player player : Bukkit.getOnlinePlayers()) {
+            for (Player player : Utils.getOnlinePlayers()) {
                 MeetupScoreboard meetupScoreboard = (MeetupScoreboard) Board.getBoards().get(player.getUniqueId());
                 if (meetupScoreboard != null) {
                     meetupScoreboard.update();
