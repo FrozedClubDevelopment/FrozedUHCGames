@@ -15,7 +15,7 @@ import java.util.List;
 @Getter
 public class MeetupScoreboard extends Board {
 
-    private final Player player;
+    private Player player;
 
     public MeetupScoreboard(Player player) {
         super(player);
