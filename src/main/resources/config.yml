@@ -1,0 +1,16 @@
+SETTINGS:
+  MODE: MEETUP
+  GLASS-BORDER:
+    ENABLED: true
+    DATA: 14 #More data https://pastebin.com/NZw2QC3P
+  PLAYERS-FOR-START: 7
+  MAX-PLAYERS: 15
+
+SPAWN:
+  WORLD: 'World'
+  COORDS:
+    X: 0
+    Y: 0
+    Z: 0
+    YAW: 0
+    PITCH: 0
