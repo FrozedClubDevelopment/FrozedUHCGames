@@ -55,7 +55,7 @@ public class MeetupScoreboard extends Board {
                 text = text.replace("<w-players>", String.valueOf((FrozedUHCGames.getInstance().getMeetupGameManager().getPlayersNeedToStart() - Bukkit.getOnlinePlayers().size())));
                 break;
             case STARTING:
-                text = text.replace("<time>", "tiempo de partida");
+                text = text.replace("<time>", String.valueOf(FrozedUHCGames.getInstance().getMeetupGameManager().getStartingTime()));
                 break;
             case PLAYING:
                 text = text

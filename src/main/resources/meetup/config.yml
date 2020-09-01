@@ -3,7 +3,7 @@ SETTINGS:
     ENABLED: true
     DATA: 14
     # Glass Colors Data -> https://pastebin.com/NZw2QC3P
-  REQUIRED-PLAYERS: 4
+  REQUIRED-PLAYERS: 3
   MAX-PLAYERS: 32
   STARTING-TIME: 30
 
