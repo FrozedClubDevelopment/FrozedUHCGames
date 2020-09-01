@@ -23,7 +23,7 @@ import org.bukkit.plugin.java.JavaPlugin;
  */
 @Getter
 @Setter
-public class FrozedUHCGames extends JavaPlugin {
+public final class FrozedUHCGames extends JavaPlugin {
 
     @Getter public static FrozedUHCGames instance;
     private CommandFramework commandFramework;
