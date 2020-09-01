@@ -39,22 +39,23 @@ public abstract class Board {
         boards.put(player.getUniqueId(), this);
     }
     public void setTitle(String title) {
-        if (title.length() > 32)
+        if (title.length() > 32) {
             title = title.substring(0, 32);
-        if (!this.sidebar.getDisplayName().equals(title))
+        }
+        if (!this.sidebar.getDisplayName().equals(title)) {
             this.sidebar.setDisplayName(title);
+        }
     }
 
     private void setSlot(int slot, String text) {
-        if (slot > 15)
-            return;
+        if (slot > 15) return;
         Team team = this.scoreboard.getTeam("SLOT_" + slot);
         String entry = genEntry(slot);
         if (!this.scoreboard.getEntries().contains(entry))
             this.sidebar.getScore(entry).setScore(slot);
         String prefix = getFirstSplit(text);
         int lastIndex = prefix.lastIndexOf('§');
-        String lastColor = (lastIndex >= 14) ? prefix.substring(lastIndex, prefix.length()) : ChatColor.getLastColors(prefix);
+        String lastColor = (lastIndex >= 14) ? prefix.substring(lastIndex) : ChatColor.getLastColors(prefix);
         if (lastIndex >= 14)
             prefix = prefix.substring(0, lastIndex);
         String suffix = getFirstSplit(lastColor + getSecondSplit(text));
