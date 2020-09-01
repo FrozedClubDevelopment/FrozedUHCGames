@@ -13,8 +13,9 @@ import java.util.stream.Collectors;
 public class MeetupGameManager {
 
     private State state = State.WAITING;
-    private int playersNeedToStart = FrozedUHCGames.getInstance().getMainConfig().getConfig().getInt("SETTINGS.PLAYERS-FOR-START");
-    private int maxPlayers = FrozedUHCGames.getInstance().getMainConfig().getConfig().getInt("SETTINGS.MAX-PLAYERS");
+    private int playersNeedToStart = FrozedUHCGames.getInstance().getMeetupMainConfig().getConfig().getInt("SETTINGS.PLAYERS-FOR-START");
+    private int maxPlayers = FrozedUHCGames.getInstance().getMeetupMainConfig().getConfig().getInt("SETTINGS.MAX-PLAYERS");
+    private int startingTime = FrozedUHCGames.getInstance().getMeetupMainConfig().getConfig().getInt("SETTINGS.STARTING-TIME");
     
     public enum State {
         WAITING,

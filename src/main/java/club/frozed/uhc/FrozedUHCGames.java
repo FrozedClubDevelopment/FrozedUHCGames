@@ -28,8 +28,9 @@ public final class FrozedUHCGames extends JavaPlugin {
     @Getter public static FrozedUHCGames instance;
     private CommandFramework commandFramework;
 
-    private FileConfig mainConfig;
     private FileConfig databaseConfig;
+    private FileConfig settingsConfig;
+    private FileConfig meetupMainConfig;
     private FileConfig meetupScoreboardConfig;
     private FileConfig meetupMessagesConfig;
 
@@ -42,11 +43,11 @@ public final class FrozedUHCGames extends JavaPlugin {
         instance = this;
         commandFramework = new CommandFramework(this);
 
-        mainConfig = new FileConfig(this, "config.yml");
+        meetupMainConfig = new FileConfig(this, "meetup/config.yml");
         databaseConfig = new FileConfig(this, "database.yml");
         meetupScoreboardConfig = new FileConfig(this, "meetup/scoreboard.yml");
         meetupMessagesConfig = new FileConfig(this,"meetup/messages.yml");
-
+        settingsConfig = new FileConfig(this,"settings.yml");
 
         spawnManager = new SpawnManager();
         meetupGameManager = new MeetupGameManager();
@@ -54,7 +55,7 @@ public final class FrozedUHCGames extends JavaPlugin {
         this.mongoDB = new MongoDB();
         mongoDB.connect();
 
-        switch (mainConfig.getConfig().getString("SETTINGS.MODE")) {
+        switch (settingsConfig.getConfig().getString("MODE")) {
             case "MEETUP":
                 loadMeetup();
                 break;

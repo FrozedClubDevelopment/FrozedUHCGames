@@ -7,7 +7,7 @@ import org.bukkit.Location;
 
 public class SpawnManager {
 
-    ConfigCursor configCursor = new ConfigCursor(FrozedUHCGames.getInstance().getMainConfig(), "SPAWN");
+    ConfigCursor configCursor = new ConfigCursor(FrozedUHCGames.getInstance().getSettingsConfig(), "SPAWN");
 
     private String world;
     private double x, y, z;
