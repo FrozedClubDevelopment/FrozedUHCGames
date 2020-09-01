@@ -10,6 +10,7 @@ import org.bukkit.Sound;
 import org.bukkit.scheduler.BukkitRunnable;
 
 public class StartingGameTask extends BukkitRunnable {
+
     @Override
     public void run() {
         FrozedUHCGames.getInstance().getMeetupGameManager().setState(MeetupGameManager.State.STARTING);
