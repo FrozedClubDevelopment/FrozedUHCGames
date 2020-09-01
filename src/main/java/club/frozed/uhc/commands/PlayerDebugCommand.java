@@ -32,13 +32,13 @@ public class PlayerDebugCommand extends BaseCommand {
                 player.sendMessage(CC.CHAT_BAR);
                 player.sendMessage(CC.translate("&b&lFrozedUHCGames &7- &fPlayer Debug"));
                 player.sendMessage(CC.CHAT_BAR);
-                player.sendMessage(CC.translate("&bPlayer&7: &f" + target.getName()));
-                player.sendMessage(CC.translate(" &9&l▸ &fState: &b" + meetupPlayer.getState()));
-                player.sendMessage(CC.translate(" &9&l▸ &fWorld: &f" + target.getWorld().getName()));
-                player.sendMessage(CC.translate(" &9&l▸ &fCoords:"));
-                player.sendMessage(CC.translate(" &9&l  ▸ &fX:" + Math.round(target.getLocation().getX())));
-                player.sendMessage(CC.translate(" &9&l  ▸ &fY:" + Math.round(target.getLocation().getY())));
-                player.sendMessage(CC.translate(" &9&l  ▸ &fZ:" + Math.round(target.getLocation().getZ())));
+                player.sendMessage(CC.translate("&7Player&f:  &b" + target.getName()));
+                player.sendMessage(CC.translate(" &9&l▸ &7State&f: &b" + meetupPlayer.getState()));
+                player.sendMessage(CC.translate(" &9&l▸ &7World&f:  &b" + target.getWorld().getName()));
+                player.sendMessage(CC.translate(" &9&l▸ &7Coords:"));
+                player.sendMessage(CC.translate(" &9&l  ▸ &7X&f: &b" + Math.round(target.getLocation().getX())));
+                player.sendMessage(CC.translate(" &9&l  ▸ &7Y&f: &b" + Math.round(target.getLocation().getY())));
+                player.sendMessage(CC.translate(" &9&l  ▸ &7Z&f: &b" + Math.round(target.getLocation().getZ())));
                 player.sendMessage(CC.CHAT_BAR);
             } else {
                 player.sendMessage(CC.translate("&cPlayer not found."));
