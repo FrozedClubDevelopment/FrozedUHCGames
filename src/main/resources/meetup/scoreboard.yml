@@ -1,11 +1,13 @@
-TITLE: '&b&lFrozed &f&lUHC-MEETUP'
+TITLE: '&b&lFrozed &7| &f&lUHCGames'
 
 SCORE:
   WAITING:
     - '&7&m-------------------'
-    - '&b<start-player> players more to start....'
-    - '&7&m-------------------'
+    - '&bWaiting for players'
+    - '&b<start-player> more to start....'
+    -
     - '&7&ofrozed.club'
+    - '&7&m-------------------'
   STARTING:
     - '&7&m-------------------'
     - '&bVote for Scenario'

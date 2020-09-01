@@ -31,6 +31,7 @@ public final class FrozedUHCGames extends JavaPlugin {
     private FileConfig mainConfig;
     private FileConfig databaseConfig;
     private FileConfig meetupScoreboardConfig;
+    private FileConfig meetupMessagesConfig;
 
     private MongoDB mongoDB;
     private SpawnManager spawnManager;
@@ -43,7 +44,9 @@ public final class FrozedUHCGames extends JavaPlugin {
 
         mainConfig = new FileConfig(this, "config.yml");
         databaseConfig = new FileConfig(this, "database.yml");
-        meetupScoreboardConfig = new FileConfig(this, "meetup-scoreboard.yml");
+        meetupScoreboardConfig = new FileConfig(this, "meetup/scoreboard.yml");
+        meetupMessagesConfig = new FileConfig(this,"meetup/messages.yml");
+
 
         spawnManager = new SpawnManager();
         meetupGameManager = new MeetupGameManager();

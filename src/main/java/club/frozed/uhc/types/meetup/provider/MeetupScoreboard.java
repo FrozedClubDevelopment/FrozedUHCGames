@@ -44,6 +44,7 @@ public class MeetupScoreboard extends Board {
                 meetupScoreboard.getStringList("GAME").forEach(text -> lines.add(translate(meetupPlayer, text)));
                 break;
         }
+        setSlotsFromList(lines);
     }
 
     private String translate(MeetupPlayer meetupPlayer, String text) {
