@@ -3,6 +3,7 @@ package club.frozed.uhc.types.meetup.provider;
 import club.frozed.uhc.FrozedUHCGames;
 import club.frozed.uhc.types.meetup.manager.MeetupPlayer;
 import club.frozed.uhc.utils.CC;
+import club.frozed.uhc.utils.Utils;
 import club.frozed.uhc.utils.config.ConfigCursor;
 import club.frozed.uhc.utils.scoreboard.Board;
 import lombok.Getter;
@@ -61,7 +62,7 @@ public class MeetupScoreboard extends Board {
                         .replace("<time>", "tiempo de partida")
                         .replace("<alive>", String.valueOf(FrozedUHCGames.getInstance().getMeetupGameManager().getAlivePlayers().size()))
                         .replace("<max>", String.valueOf(FrozedUHCGames.getInstance().getMeetupGameManager().getMaxPlayers()))
-                        .replace("<ping>", String.valueOf(FrozedUHCGames.getInstance().getMeetupGameManager().getMaxPlayers()))
+                        .replace("<ping>", String.valueOf(Utils.getPing(player)))
                         .replace("<kills>", String.valueOf(meetupPlayer.getGameKills()));
                 break;
         }
