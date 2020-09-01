@@ -10,6 +10,7 @@ import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
+import javax.rmi.CORBA.Util;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -59,7 +60,7 @@ public class MeetupScoreboard extends Board {
                 break;
             case PLAYING:
                 text = text
-                        .replace("<time>", "tiempo de partida")
+                        .replace("<time>", Utils.calculate(FrozedUHCGames.getInstance().getMeetupGameManager().getGameTime()))
                         .replace("<alive>", String.valueOf(FrozedUHCGames.getInstance().getMeetupGameManager().getAlivePlayers().size()))
                         .replace("<max>", String.valueOf(FrozedUHCGames.getInstance().getMeetupGameManager().getMaxPlayers()))
                         .replace("<size>", String.valueOf(0))

@@ -18,6 +18,7 @@ public class MeetupGameManager {
     private int playersNeedToStart = FrozedUHCGames.getInstance().getMeetupMainConfig().getConfig().getInt("SETTINGS.REQUIRED-PLAYERS");
     private int maxPlayers = FrozedUHCGames.getInstance().getMeetupMainConfig().getConfig().getInt("SETTINGS.MAX-PLAYERS");
     private int startingTime = FrozedUHCGames.getInstance().getMeetupMainConfig().getConfig().getInt("SETTINGS.STARTING-TIME");
+    private int gameTime;
     
     public enum State {
         WAITING,

@@ -23,7 +23,7 @@ public class StartingGameTask extends BukkitRunnable {
         FrozedUHCGames.getInstance().getMeetupGameManager().setStartingTime(startTime - 1);
 
         if (startTime <= 0) {
-            Bukkit.broadcastMessage("ACA SE INCIAR EL JUEGO PX");
+            new GameTask().runTaskTimer(FrozedUHCGames.getInstance(),0L,20L);
             FrozedUHCGames.getInstance().getMeetupGameManager().setState(MeetupGameManager.State.PLAYING);
             cancel();
             return;
