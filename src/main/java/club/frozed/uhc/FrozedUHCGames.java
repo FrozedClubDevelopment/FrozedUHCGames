@@ -3,6 +3,7 @@ package club.frozed.uhc;
 import club.frozed.uhc.commands.PlayerDebugCommand;
 import club.frozed.uhc.commands.SetSpawnCommand;
 import club.frozed.uhc.data.MongoDB;
+import club.frozed.uhc.types.meetup.listeners.MeetupLobbyListener;
 import club.frozed.uhc.types.meetup.listeners.MeetupPlayerListeners;
 import club.frozed.uhc.types.meetup.listeners.PlayerMeetupDataLoad;
 import club.frozed.uhc.types.meetup.manager.game.MeetupGameManager;
@@ -76,6 +77,7 @@ public final class FrozedUHCGames extends JavaPlugin {
         PluginManager pluginManager = Bukkit.getPluginManager();
         pluginManager.registerEvents(new PlayerMeetupDataLoad(), this);
         pluginManager.registerEvents(new MeetupPlayerListeners(), this);
+        pluginManager.registerEvents(new MeetupLobbyListener(),this);
 
         // Meetup Tasks
         new MeetupScoreboardTask().runTaskTimerAsynchronously(this, 0L, 2L);

@@ -25,3 +25,13 @@ SCORE:
     - ' '
     - '&bfrozed.club'
     - '&7&m-------------------'
+  FINISH:
+    - '&7&m-------------------'
+    - '&bRestart&7: &f<time>'
+    - ''
+    - '&bWinner&7: <player>'
+    - '&bKills&7: <kills>'
+    - '&bWins&7: <wins>'
+    - ' '
+    - '&bfrozed.club'
+    - '&7&m-------------------'

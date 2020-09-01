@@ -45,6 +45,9 @@ public class MeetupScoreboard extends Board {
             case PLAYING:
                 meetupScoreboard.getStringList("GAME").forEach(text -> lines.add(translate(meetupPlayer, text)));
                 break;
+            case FINISH:
+                meetupScoreboard.getStringList("FINISH").forEach(text -> lines.add(translate(meetupPlayer,text)));
+                break;
         }
         setSlotsFromList(lines);
     }

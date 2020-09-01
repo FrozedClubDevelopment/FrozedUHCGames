@@ -30,18 +30,22 @@ public class StartingGameTask extends BukkitRunnable {
         }
 
         switch (startTime) {
-            case 29:
-            case 24:
-            case 19:
-            case 14:
+            case 31:
+            case 26:
+            case 21:
+            case 16:
+            case 11:
+            case 10:
             case 9:
+            case 8:
+            case 7:
+            case 6:
+            case 5:
             case 4:
             case 3:
             case 2:
-            case 1:
-            case 0:
                 Bukkit.broadcastMessage(CC.translate(FrozedUHCGames.getInstance().getMeetupMessagesConfig().getConfig().getString("COUNTER.START"))
-                        .replace("<time>", String.valueOf(startTime + 1))
+                        .replace("<time>", String.valueOf(startTime - 1))
                         .replace("<type>", type));
 
                 if (!FrozedUHCGames.getInstance().getMeetupMainConfig().getConfig().getString("SOUNDS.START").equalsIgnoreCase("none") || FrozedUHCGames.getInstance().getMeetupMainConfig().getConfig().getString("SOUNDS.START") != null) {
