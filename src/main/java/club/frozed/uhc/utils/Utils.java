@@ -15,11 +15,11 @@ public class Utils {
         return players;
     }
 
-    public static int getPing(Player p) {
+    public static int getPing(Player player) {
         try {
             String version = Bukkit.getServer().getClass().getPackage().getName().substring(23);
             Class<?> craftPlayer = Class.forName("org.bukkit.craftbukkit." + version + ".entity.CraftPlayer");
-            Object handle = craftPlayer.getMethod("getHandle", new Class[0]).invoke(p, new Object[0]);
+            Object handle = craftPlayer.getMethod("getHandle", new Class[0]).invoke(player);
             return (Integer) handle.getClass().getDeclaredField("ping").get(handle);
         } catch (Exception e) {
             return -1;
