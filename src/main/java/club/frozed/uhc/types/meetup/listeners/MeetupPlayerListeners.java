@@ -22,7 +22,7 @@ public class MeetupPlayerListeners implements Listener {
                 .replace("<start-player>", String.valueOf((FrozedUHCGames.getInstance().getMeetupGameManager().getPlayersNeedToStart() - Bukkit.getOnlinePlayers().size()))));
         if (Utils.getOnlinePlayers().size() >= FrozedUHCGames.getInstance().getMeetupGameManager().getPlayersNeedToStart()) {
             new StartingGameTask().runTaskTimer(FrozedUHCGames.getInstance(), 20, 20);
-
         }
     }
+
 }

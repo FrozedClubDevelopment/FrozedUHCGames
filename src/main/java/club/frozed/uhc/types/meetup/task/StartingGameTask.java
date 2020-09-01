@@ -1,6 +1,7 @@
 package club.frozed.uhc.types.meetup.task;
 
 import club.frozed.uhc.FrozedUHCGames;
+import club.frozed.uhc.types.meetup.manager.MeetupPlayer;
 import club.frozed.uhc.types.meetup.manager.game.MeetupGameManager;
 import club.frozed.uhc.utils.CC;
 import club.frozed.uhc.utils.Utils;
@@ -12,6 +13,7 @@ public class StartingGameTask extends BukkitRunnable {
     @Override
     public void run() {
         FrozedUHCGames.getInstance().getMeetupGameManager().setState(MeetupGameManager.State.STARTING);
+        Utils.getOnlinePlayers().forEach(player -> MeetupPlayer.getByUuid(player.getUniqueId()).setState(MeetupPlayer.State.PLAYING));
 
         int startTime = FrozedUHCGames.getInstance().getMeetupGameManager().getStartingTime();
         String type = "second" + ((startTime > 1) ? "s" : "");
@@ -25,25 +27,23 @@ public class StartingGameTask extends BukkitRunnable {
         }
 
         switch (startTime) {
-            case 30:
-            case 25:
-            case 20:
-            case 15:
-            case 10:
-            case 5:
+            case 29:
+            case 24:
+            case 19:
+            case 14:
+            case 9:
             case 4:
             case 3:
             case 2:
             case 1:
+            case 0:
                 Bukkit.broadcastMessage(CC.translate(FrozedUHCGames.getInstance().getMeetupMessagesConfig().getConfig().getString("COUNTER.START"))
-                        .replace("<time>", String.valueOf(startTime))
+                        .replace("<time>", String.valueOf(startTime + 1))
                         .replace("<type>", type));
 
                 if (!FrozedUHCGames.getInstance().getMeetupMainConfig().getConfig().getString("SOUNDS.START").equalsIgnoreCase("none") || FrozedUHCGames.getInstance().getMeetupMainConfig().getConfig().getString("SOUNDS.START") != null) {
                     Utils.getOnlinePlayers().forEach(player -> player.playSound(player.getLocation(), Sound.valueOf(FrozedUHCGames.getInstance().getMeetupMainConfig().getConfig().getString("SOUNDS.START")), 2F, 2F));
                 }
-                break;
-            default:
                 break;
         }
     }
