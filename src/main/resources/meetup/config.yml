@@ -1,7 +1,8 @@
 SETTINGS:
   GLASS-BORDER:
     ENABLED: true
-    DATA: 14 #More data https://pastebin.com/NZw2QC3P
+    DATA: 14
+    # Glass Colors Data -> https://pastebin.com/NZw2QC3P
   REQUIRED-PLAYERS: 4
   MAX-PLAYERS: 32
   STARTING-TIME: 30
