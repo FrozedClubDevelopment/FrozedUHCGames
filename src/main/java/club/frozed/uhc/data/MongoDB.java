@@ -48,11 +48,13 @@ public class MongoDB {
             if (authentication) {
                 MongoCredential mongoCredential = MongoCredential.createCredential(this.user, this.authDatabase, this.password.toCharArray());
                 this.client = new MongoClient(new ServerAddress(this.host, this.port), Collections.singletonList(mongoCredential));
+                this.connected = true;
+                Bukkit.getConsoleSender().sendMessage(CC.translate("&8[&bFrozedUHCGames&8] &aSuccessfully connected to MongoDB."));
             } else {
                 this.client = new MongoClient(new ServerAddress(this.host, this.port));
+                this.connected = true;
+                Bukkit.getConsoleSender().sendMessage(CC.translate("&8[&bFrozedUHCGames&8] &aSuccessfully connected to MongoDB."));
             }
-            this.connected = true;
-            Bukkit.getConsoleSender().sendMessage(CC.translate("&8[&bFrozedUHCGames&8] &aSuccessfully connected to MongoDB."));
             this.mongoDatabase = this.client.getDatabase(this.database);
 
             switch (FrozedUHCGames.getInstance().getSettingsConfig().getConfig().getString("MODE")) {

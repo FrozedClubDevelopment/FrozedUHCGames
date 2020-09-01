@@ -16,11 +16,13 @@ public class MeetupPlayerListeners implements Listener {
     public void onPlayerJoin(PlayerJoinEvent e) {
         e.setJoinMessage(null);
         new MeetupScoreboard(e.getPlayer());
+
         Bukkit.broadcastMessage(CC.translate(FrozedUHCGames.getInstance().getMeetupMessagesConfig().getConfig().getString("JOIN-PLAYER"))
-                .replace("<player>",e.getPlayer().getName())
+                .replace("<player>", e.getPlayer().getName())
                 .replace("<start-player>", String.valueOf((FrozedUHCGames.getInstance().getMeetupGameManager().getPlayersNeedToStart() - Bukkit.getOnlinePlayers().size()))));
-        if (Utils.getOnlinePlayers().size() >= FrozedUHCGames.getInstance().getMeetupGameManager().getPlayersNeedToStart()){
-            new StartingGameTask().runTaskTimer(FrozedUHCGames.getInstance(),20,20);
+        if (Utils.getOnlinePlayers().size() >= FrozedUHCGames.getInstance().getMeetupGameManager().getPlayersNeedToStart()) {
+            new StartingGameTask().runTaskTimer(FrozedUHCGames.getInstance(), 20, 20);
+
         }
     }
 }
