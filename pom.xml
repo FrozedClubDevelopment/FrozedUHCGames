@@ -7,6 +7,7 @@
     <groupId>club.frozed.uhc</groupId>
     <artifactId>FrozedUHCGames</artifactId>
     <version>1.0-SNAPSHOT</version>
+    <url>https://github.com/FrozedClubDevelopment/FrozedUHCGames</url>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
