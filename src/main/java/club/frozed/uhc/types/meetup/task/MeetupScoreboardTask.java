@@ -19,7 +19,7 @@ public class MeetupScoreboardTask extends BukkitRunnable {
                     meetupScoreboard.update();
                 }
             }
-        } catch (Exception ignored) {
+        } catch (Exception exception) {
         }
     }
 }
