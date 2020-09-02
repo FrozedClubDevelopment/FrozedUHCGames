@@ -66,10 +66,17 @@ public class MeetupScoreboard extends Board {
                         .replace("<time>", Utils.calculate(FrozedUHCGames.getInstance().getMeetupGameManager().getGameTime()))
                         .replace("<alive>", String.valueOf(FrozedUHCGames.getInstance().getMeetupGameManager().getAlivePlayers().size()))
                         .replace("<max>", String.valueOf(FrozedUHCGames.getInstance().getMeetupGameManager().getMaxPlayers()))
-                        .replace("<size>", String.valueOf(0))
+                        .replace("<size>", String.valueOf(FrozedUHCGames.getInstance().getMeetupGameManager().getBorder()))
                         .replace("<border-time>", String.valueOf(0))
                         .replace("<ping>", String.valueOf(Utils.getPing(player)))
                         .replace("<kills>", String.valueOf(meetupPlayer.getGameKills()));
+                break;
+            case FINISH:
+                text = text
+                        .replace("<time>", Utils.calculate(FrozedUHCGames.getInstance().getMeetupGameManager().getRestartTime()))
+                        .replace("<player>", FrozedUHCGames.getInstance().getMeetupGameManager().getWinner())
+                        .replace("<kills>", String.valueOf(FrozedUHCGames.getInstance().getMeetupGameManager().getWinnerKills()))
+                        .replace("<wins>", String.valueOf(FrozedUHCGames.getInstance().getMeetupGameManager().getWinnerWins()));
                 break;
         }
         return text;

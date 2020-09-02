@@ -43,6 +43,7 @@ public class GameTask extends BukkitRunnable {
                         }
                     }).runTaskTimer(FrozedUHCGames.getInstance(), 0L, 20L);
                     new EndTask().runTaskTimer(FrozedUHCGames.getInstance(), 0L, 20L);
+                    cancel();
                 }
             });
         }

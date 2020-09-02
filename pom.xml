@@ -33,6 +33,24 @@
             <systemPath>${project.basedir}/libs/PaperSpigot-1.7.10-R0.1-SNAPSHOT.jar</systemPath>
         </dependency>
 
+        <!-- World Border -->
+        <dependency>
+            <groupId>com.wimbli</groupId>
+            <artifactId>WorldBorder</artifactId>
+            <version>1.8.7</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/libs/WorldBorder.jar</systemPath>
+        </dependency>
+
+        <!-- HoloAPI Border -->
+        <dependency>
+            <groupId>de.inventivegames</groupId>
+            <artifactId>hologram</artifactId>
+            <version>1.6.2</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/libs/HomoAPI.jar</systemPath>
+        </dependency>
+
         <!-- Lombok -->
         <dependency>
             <groupId>org.projectlombok</groupId>

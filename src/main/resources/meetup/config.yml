@@ -1,4 +1,7 @@
 SETTINGS:
+  WORLD:
+    NAME: 'meetup_world'
+    SIZE: 200
   GLASS-BORDER:
     ENABLED: true
     DATA: 14

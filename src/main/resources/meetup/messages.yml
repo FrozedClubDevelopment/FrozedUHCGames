@@ -1,4 +1,4 @@
-JOIN-PLAYER: '&b<player> &f<start-player> &bmore to start....'
+JOIN-PLAYER: '&b<player> joined, &f<start-player> &bmore to start....'
 
 COUNTER:
   START: '&fGame starts in &b<time> &f<type>&b.'

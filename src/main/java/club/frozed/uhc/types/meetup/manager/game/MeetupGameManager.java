@@ -5,8 +5,10 @@ import club.frozed.uhc.types.meetup.manager.MeetupPlayer;
 import club.frozed.uhc.utils.Utils;
 import lombok.Getter;
 import lombok.Setter;
+import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -15,15 +17,21 @@ import java.util.stream.Collectors;
 public class MeetupGameManager {
 
     private State state = State.WAITING;
+    private double generationPercent;
+    private int border;
+
     private int playersNeedToStart = FrozedUHCGames.getInstance().getMeetupMainConfig().getConfig().getInt("SETTINGS.REQUIRED-PLAYERS");
     private int maxPlayers = FrozedUHCGames.getInstance().getMeetupMainConfig().getConfig().getInt("SETTINGS.MAX-PLAYERS");
     private int startingTime = FrozedUHCGames.getInstance().getMeetupMainConfig().getConfig().getInt("SETTINGS.STARTING-TIME");
     private int restartTime = FrozedUHCGames.getInstance().getMeetupMainConfig().getConfig().getInt("SETTINGS.RESTART-TIME");
     private int gameTime;
 
+
     private String winner;
     private int winnerKills;
     private int winnerWins;
+
+    private List<Location> scatterLocations = new ArrayList<>();
     
     public enum State {
         WAITING,

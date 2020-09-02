@@ -1,10 +1,14 @@
 package club.frozed.uhc.utils;
 
+import club.frozed.uhc.FrozedUHCGames;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
+import org.bukkit.World;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 public class Utils {
@@ -40,5 +44,14 @@ public class Utils {
         if (second < 10L)
             second_text = "0" + second_text;
         return (hours == 0L) ? (minute_text + ":" + second_text) : (hour_text + ":" + minute_text + ":" + second_text);
+    }
+
+    public static Location randomLocation(World world, int radius){
+        Random random = FrozedUHCGames.getInstance().getRandom();
+
+        int x = random.nextBoolean() ? random.nextInt(radius) : -random.nextInt(radius);
+        int z = random.nextBoolean() ? random.nextInt(radius) : -random.nextInt(radius);
+
+        return new Location(world, x, world.getHighestBlockYAt(x, z), z);
     }
 }

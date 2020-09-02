@@ -3,10 +3,13 @@ package club.frozed.uhc.types.meetup.manager;
 import club.frozed.uhc.FrozedUHCGames;
 import club.frozed.uhc.data.MongoDB;
 import com.mongodb.client.model.Filters;
+import com.mongodb.client.model.UpdateOptions;
+import de.inventivegames.hologram.Hologram;
 import lombok.Getter;
 import lombok.Setter;
 import org.bson.Document;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
 import java.text.DecimalFormat;
@@ -29,10 +32,11 @@ public class MeetupPlayer {
 
     private int kills;
     private int deaths;
-    private int gamesPlayers;
+    private int gamesPlayed;
     private int wins;
 
     private int gameKills;
+    private Location scatterLocation;
 
     public MeetupPlayer(UUID uuid, String name) {
         this.uuid = uuid;
@@ -47,15 +51,24 @@ public class MeetupPlayer {
         return Bukkit.getPlayer(this.uuid);
     }
 
-    public String getKDR() {
-        int kills = this.kills;
-        int deaths = this.deaths;
-        double kdr = (deaths == 0.0D) ? kills : (kills / deaths);
-        return (new DecimalFormat("#.##")).format(kdr).replace(",", ".");
+    public boolean isOnline() {
+        return (Bukkit.getPlayer(this.uuid) != null);
     }
+
+    public String getKDR() {
+        double kills = this.kills;
+        double deaths = this.deaths;
+        double kdr = deaths == 0 ? kills : kills / deaths;
+        return new DecimalFormat("#.##").format(kdr).replace(",", ".");
+    }
+
 
     public boolean isAlive() {
         return this.state == State.PLAYING;
+    }
+
+    public boolean isWaiting() {
+        return (this.state == State.WAITING);
     }
 
     public void loadData() {
@@ -65,10 +78,10 @@ public class MeetupPlayer {
             this.kills = document.getInteger("kills");
             this.deaths = document.getInteger("deaths");
             this.wins = document.getInteger("wins");
-            this.gamesPlayers = document.getInteger("gamesPlayed");
+            this.gamesPlayed = document.getInteger("gamesPlayed");
         }
-        FrozedUHCGames.getInstance().getLogger().info(getName() + "'s data was successfully loaded.");
         this.dataLoaded = true;
+        FrozedUHCGames.getInstance().getLogger().info(getName() + "'s data was successfully loaded.");
     }
 
     public void saveData() {
@@ -76,14 +89,19 @@ public class MeetupPlayer {
 
         Document document = new Document();
 
+        document.put("name",this.name);
+        document.put("uuid",this.uuid.toString());
+
         document.put("kills", this.kills);
         document.put("deaths", this.deaths);
         document.put("wins", this.wins);
-        document.put("gamesPlayed", this.gamesPlayers);
+        document.put("gamesPlayed", this.gamesPlayed);
 
         playersDataNames.remove(this.name);
         playersData.remove(this.uuid);
         this.dataLoaded = false;
+        MongoDB mongoDB = FrozedUHCGames.getInstance().getMongoDB();
+        mongoDB.getMeetupPlayerData().replaceOne(Filters.eq("name", this.name), document, (new UpdateOptions()).upsert(true));
     }
 
     public enum State {
