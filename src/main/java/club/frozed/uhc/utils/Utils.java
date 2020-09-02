@@ -1,10 +1,14 @@
 package club.frozed.uhc.utils;
 
 import club.frozed.uhc.FrozedUHCGames;
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.World;
+import club.frozed.uhc.types.meetup.manager.world.Border;
+import org.bukkit.*;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Projectile;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.projectiles.ProjectileSource;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,5 +57,62 @@ public class Utils {
         int z = random.nextBoolean() ? random.nextInt(radius) : -random.nextInt(radius);
 
         return new Location(world, x, world.getHighestBlockYAt(x, z), z);
+    }
+
+    public static String simpleCalculate(long seconds) {
+        int day = (int)TimeUnit.SECONDS.toDays(seconds);
+        long hours = TimeUnit.SECONDS.toHours(seconds) - TimeUnit.DAYS.toHours(day);
+        long minute = TimeUnit.SECONDS.toMinutes(seconds) - TimeUnit.DAYS.toMinutes(day) - TimeUnit.HOURS.toMinutes(hours);
+        long second = TimeUnit.SECONDS.toSeconds(seconds) - TimeUnit.DAYS.toSeconds(day) - TimeUnit.HOURS.toSeconds(hours) - TimeUnit.MINUTES.toSeconds(minute);
+        return (minute > 0L) ? (((minute + 1L == 6L) ? minute : (minute + 1L)) + "m") : (second + "s");
+    }
+
+    public static int getNextBorderDefault() {
+        Border border = FrozedUHCGames.getInstance().getBorder();
+        if (border == null) return 25;
+        int size = border.getSize();
+        int nextsize = 0;
+        if (size > 500) {
+            nextsize = size - 500;
+        } else if (size <= 500
+                && size > 100) {
+            nextsize = 100;
+        } else if (size == 100) {
+            nextsize = 50;
+        } else if (size == 50) {
+            nextsize = 25;
+        } else if (size == 50) {
+            nextsize = 25;
+        } else if (size == 25) {
+            nextsize = 10;
+        }
+        return nextsize;
+    }
+
+    public static Player getAttacker(EntityDamageEvent entityDamageEvent, boolean ignoreSelf) {
+        Player attacker = null;
+        if (!(entityDamageEvent instanceof EntityDamageByEntityEvent)) return null;
+
+        Projectile projectile;
+        ProjectileSource shooter;
+        EntityDamageByEntityEvent event = (EntityDamageByEntityEvent) entityDamageEvent;
+        Entity damager = event.getDamager();
+        if (event.getDamager() instanceof Player) attacker = (Player) damager;
+        else if (event.getDamager() instanceof Projectile
+                && (shooter = ((Projectile) damager).getShooter()) instanceof Player) attacker = (Player) shooter;
+
+        if (attacker != null && ignoreSelf && event.getEntity().equals(attacker)) attacker = null;
+
+        return attacker;
+    }
+
+    public static void playSound(String sound){
+        if (!sound.equalsIgnoreCase("none") || sound != null){
+            getOnlinePlayers().forEach(player -> {  player.playSound(player.getLocation(), Sound.valueOf(sound),2F,2F);});
+        }
+    }
+
+    public static void broadcastMessage(String string){
+        getOnlinePlayers().forEach(player -> player.sendMessage(CC.translate(string)));
     }
 }

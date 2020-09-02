@@ -1,18 +1,19 @@
 package club.frozed.uhc.types.meetup.task;
 
 import club.frozed.uhc.FrozedUHCGames;
-import club.frozed.uhc.types.meetup.listeners.MeetupPlayerListeners;
+import club.frozed.uhc.types.meetup.listeners.player.MeetupPlayerListeners;
 import club.frozed.uhc.types.meetup.manager.MeetupPlayer;
 import club.frozed.uhc.types.meetup.manager.game.MeetupGameManager;
+import club.frozed.uhc.types.meetup.menu.VoteScenarioMenu;
 import club.frozed.uhc.utils.CC;
 import club.frozed.uhc.utils.MeetupUtil;
 import club.frozed.uhc.utils.Utils;
+import club.frozed.uhc.utils.config.ConfigCursor;
 import de.inventivegames.hologram.Hologram;
 import de.inventivegames.hologram.HologramAPI;
-import org.bukkit.Bukkit;
+import org.apache.commons.lang.StringUtils;
 import org.bukkit.Location;
 import org.bukkit.Sound;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.ArrayList;
@@ -32,18 +33,25 @@ public class StartingGameTask extends BukkitRunnable {
         if (!MeetupPlayerListeners.scatterPlayers.isEmpty()){
             MeetupPlayer meetupPlayer = MeetupPlayerListeners.scatterPlayers.remove(0);
             if (meetupPlayer.isWaiting() && meetupPlayer.getPlayer().isOnline()) {
+                ConfigCursor hologramConfig = new ConfigCursor(FrozedUHCGames.getInstance().getMeetupMainConfig(), "HOLOGRAM");
                 meetupPlayer.getPlayer().teleport(meetupPlayer.getScatterLocation());
                 FrozedUHCGames.getInstance().getNmsHandler().addVehicle(meetupPlayer.getPlayer());
+                new VoteScenarioMenu().open(meetupPlayer.getPlayer());
                 MeetupUtil.prepareGame(meetupPlayer);
                 Location hologramLocation  = new Location(meetupPlayer.getPlayer().getWorld(),meetupPlayer.getPlayer().getLocation().getX(),meetupPlayer.getPlayer().getLocation().getY() + 3.99,meetupPlayer.getPlayer().getLocation().getZ() + 3.50);
-                this.hologram = HologramAPI.createHologram(hologramLocation,"§f§l"+meetupPlayer.getPlayer().getName()+"'s §b§lStatistics");
+                this.hologram = HologramAPI.createHologram(hologramLocation,CC.translate(hologramConfig.getString("TITLE")
+                        .replace("<player>",meetupPlayer.getPlayer().getName())));
                 this.hologram.spawn();
                 Hologram lastHologram = this.hologram;
-                lastHologram = lastHologram.addLineBelow("§bTotal Kills§7: §f"+meetupPlayer.getKills());
-                lastHologram = lastHologram.addLineBelow("§bTotal Deaths§7: §f"+meetupPlayer.getDeaths());
-                lastHologram = lastHologram.addLineBelow("§bTotal KDR§7: §f"+meetupPlayer.getKDR());
-                lastHologram = lastHologram.addLineBelow("§bTotal Wins§7: §f"+meetupPlayer.getWins());
-                lastHologram = lastHologram.addLineBelow("§bGames Played§7: §f"+meetupPlayer.getGamesPlayed());
+                for (String linea : hologramConfig.getStringList("LINES")){
+                    String format = CC.translate(linea
+                            .replace("<kills>",String.valueOf(meetupPlayer.getKills()))
+                            .replace("<deaths>",String.valueOf(meetupPlayer.getDeaths()))
+                            .replace("<kdr>",String.valueOf(meetupPlayer.getKDR()))
+                            .replace("<wins>",String.valueOf(meetupPlayer.getWins()))
+                            .replace("<games>",String.valueOf(meetupPlayer.getGamesPlayed())));
+                    lastHologram = lastHologram.addLineBelow(format);
+                }
             }
         }
         if (startTime <= 1) {
@@ -64,8 +72,11 @@ public class StartingGameTask extends BukkitRunnable {
             if (!FrozedUHCGames.getInstance().getMeetupMainConfig().getConfig().getString("SOUNDS.START").equalsIgnoreCase("none") || FrozedUHCGames.getInstance().getMeetupMainConfig().getConfig().getString("SOUNDS.START") != null) {
                 Utils.getOnlinePlayers().forEach(player -> player.playSound(player.getLocation(), Sound.valueOf(FrozedUHCGames.getInstance().getMeetupMainConfig().getConfig().getString("SOUNDS.START")), 2F, 2F));
             }
+            VoteScenarioMenu.getHighestVote().enable();
+            Utils.broadcastMessage(CC.translate(FrozedUHCGames.getInstance().getMeetupMessagesConfig().getConfig().getString("SCENARIO").replace("<scenario>",VoteScenarioMenu.getHighestVote().getName())));
             new GameTask().runTaskTimer(FrozedUHCGames.getInstance(),0L,20L);
             FrozedUHCGames.getInstance().getMeetupGameManager().setState(MeetupGameManager.State.PLAYING);
+            new BorderTask().runTaskTimer(FrozedUHCGames.getInstance(),0L,20L);
             cancel();
             return;
         }

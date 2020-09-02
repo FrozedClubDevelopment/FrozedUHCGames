@@ -20,9 +20,8 @@ public class MeetupGameListener implements Listener {
         Player player = e.getEntity();
         Player killer = e.getEntity().getKiller();
         MeetupPlayer meetupPlayer = MeetupPlayer.getByUuid(player.getUniqueId());
-        MeetupUtil.reset(meetupPlayer);
         meetupPlayer.setDeaths(meetupPlayer.getDeaths() + 1);
-        meetupPlayer.setState(MeetupPlayer.State.SPECTATOR);
+        MeetupUtil.prepareSpectator(meetupPlayer);
         if (killer != null){
             MeetupPlayer killerPlayer = MeetupPlayer.getByUuid(killer.getUniqueId());
             killerPlayer.setKills(meetupPlayer.getKills() + 1);

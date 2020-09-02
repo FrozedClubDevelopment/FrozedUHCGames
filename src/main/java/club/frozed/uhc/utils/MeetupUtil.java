@@ -6,8 +6,24 @@ import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 
 public class MeetupUtil {
+
+    public static void prepareSpectator(MeetupPlayer meetupPlayer) {
+        meetupPlayer.setState(MeetupPlayer.State.SPECTATOR);
+
+        Player player = meetupPlayer.getPlayer();
+
+        reset(meetupPlayer);
+        player.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, 999999999, 1), true);
+        player.setGameMode(GameMode.CREATIVE);
+        player.setAllowFlight(true);
+        player.setFlying(true);
+        player.setCanPickupItems(false);
+        player.spigot().setCollidesWithEntities(false);
+    }
 
     public static void prepareGame(MeetupPlayer meetupPlayer) {
         Player player = meetupPlayer.getPlayer();
@@ -19,6 +35,15 @@ public class MeetupUtil {
 
         if (player.getOpenInventory() != null && player.getOpenInventory().getType() == InventoryType.CRAFTING)
             player.getOpenInventory().getTopInventory().clear();
+    }
+
+    public static void prepareLobby(MeetupPlayer meetupPlayer) {
+        Player player = meetupPlayer.getPlayer();
+        if (player.isDead())
+            player.spigot().respawn();
+        player.setGameMode(GameMode.SURVIVAL);
+        reset(meetupPlayer);
+        player.updateInventory();
     }
 
     public static void reset(MeetupPlayer meetupPlayer) {

@@ -6,12 +6,21 @@ import club.frozed.uhc.data.MongoDB;
 import club.frozed.uhc.nms.NMS;
 import club.frozed.uhc.nms.version.v1_7_R4;
 import club.frozed.uhc.types.meetup.listeners.*;
+import club.frozed.uhc.types.meetup.listeners.MeetupGlassListener;
+import club.frozed.uhc.types.meetup.listeners.player.MeetupPlayerListeners;
+import club.frozed.uhc.types.meetup.listeners.player.MeetupSpectatorListener;
+import club.frozed.uhc.types.meetup.listeners.player.PlayerMeetupDataLoad;
 import club.frozed.uhc.types.meetup.manager.game.MeetupGameManager;
+import club.frozed.uhc.types.meetup.manager.world.Border;
 import club.frozed.uhc.types.meetup.manager.world.MeetupWorld;
+import club.frozed.uhc.types.meetup.scenario.scenarios.Default;
+import club.frozed.uhc.types.meetup.scenario.scenarios.NoClean;
+import club.frozed.uhc.types.meetup.scenario.scenarios.TimeBomb;
 import club.frozed.uhc.types.meetup.task.MeetupScoreboardTask;
 import club.frozed.uhc.utils.SpawnManager;
 import club.frozed.uhc.utils.command.CommandFramework;
 import club.frozed.uhc.utils.config.FileConfig;
+import club.frozed.uhc.utils.menu.MenuListener;
 import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.Bukkit;
@@ -44,6 +53,7 @@ public final class FrozedUHCGames extends JavaPlugin {
     private SpawnManager spawnManager;
     private MeetupGameManager meetupGameManager;
     private MeetupWorld meetupWorld;
+    private Border border;
 
     @Override
     public void onEnable() {
@@ -62,6 +72,7 @@ public final class FrozedUHCGames extends JavaPlugin {
         }
         meetupGameManager = new MeetupGameManager();
         meetupWorld = new MeetupWorld();
+        border = new Border();
 
         this.mongoDB = new MongoDB();
         mongoDB.connect();
@@ -80,6 +91,7 @@ public final class FrozedUHCGames extends JavaPlugin {
 
         commandFramework.registerCommands(new SetSpawnCommand());
         commandFramework.registerCommands(new PlayerDebugCommand());
+        Bukkit.getPluginManager().registerEvents(new MenuListener(),this);
     }
 
     private void loadMeetup() {
@@ -90,11 +102,18 @@ public final class FrozedUHCGames extends JavaPlugin {
         pluginManager.registerEvents(new MeetupLobbyListener(),this);
         pluginManager.registerEvents(new MeetupWorldListener(),this);
         pluginManager.registerEvents(new MeetupGameListener(),this);
+        pluginManager.registerEvents(new MeetupSpectatorListener(),this);
+        if (FrozedUHCGames.getInstance().getMeetupMainConfig().getConfig().getBoolean("SETTINGS.GLASS-BORDER.ENABLED")){
+            pluginManager.registerEvents(new MeetupGlassListener(),this);
+        }
 
         // Meetup Tasks
         new MeetupScoreboardTask().runTaskTimerAsynchronously(this, 0L, 2L);
 
-        // Meetup Commands
+        // Meetup Scenarios
+        new Default();
+        new NoClean();
+        new TimeBomb();
     }
 
     private void loadUHCRun() {

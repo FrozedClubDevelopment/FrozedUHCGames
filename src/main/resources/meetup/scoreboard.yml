@@ -1,5 +1,12 @@
 TITLE: '&b&lUHC Meetup'
 
+BORDER:
+  TIME: '&f<size> &7(&c<border-time>&7)'
+  LAST-BORDER: '&f<size>'
+
+NO-CLEAN:
+  - '&bNo-Clean&7: &f<time>'
+
 SCORE:
   WAITING:
     - '&7&m-------------------'
@@ -18,11 +25,12 @@ SCORE:
   GAME:
     - '&7&m-------------------'
     - '&bRemaining Players&7: &f<alive>/<max>'
-    - '&bBorder&7: &f<size> &7(&c<border-time>&7)'
+    - '&bBorder&7: <border>'
     - '&bKills&7: &f<kills>'
     - '&bPing&7: &f<ping>'
     - '&bTime&7: &f<time>'
-    - ' '
+    - ''
+    - '<no-clean>'
     - '&bfrozed.club'
     - '&7&m-------------------'
   FINISH:

@@ -1,4 +1,4 @@
-package club.frozed.uhc.types.meetup.listeners;
+package club.frozed.uhc.types.meetup.listeners.player;
 
 import club.frozed.uhc.FrozedUHCGames;
 import club.frozed.uhc.types.meetup.manager.MeetupPlayer;
@@ -11,12 +11,16 @@ import club.frozed.uhc.utils.Utils;
 import club.frozed.uhc.utils.task.TaskUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.entity.Entity;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.entity.PlayerDeathEvent;
+import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.player.PlayerItemConsumeEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerLoginEvent;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,6 +38,7 @@ public class MeetupPlayerListeners implements Listener {
             Bukkit.broadcastMessage(CC.translate(FrozedUHCGames.getInstance().getMeetupMessagesConfig().getConfig().getString("JOIN-PLAYER"))
                     .replace("<player>", e.getPlayer().getName())
                     .replace("<start-player>", String.valueOf((FrozedUHCGames.getInstance().getMeetupGameManager().getPlayersNeedToStart() - Bukkit.getOnlinePlayers().size()))));
+            MeetupUtil.prepareLobby(MeetupPlayer.getByUuid(e.getPlayer().getUniqueId()));
             if (Utils.getOnlinePlayers().size() >= FrozedUHCGames.getInstance().getMeetupGameManager().getPlayersNeedToStart()) {
                 TaskUtil.runLater(()->{
                     MeetupPlayer.playersData.values().forEach(meetupPlayer -> {
@@ -53,5 +58,27 @@ public class MeetupPlayerListeners implements Listener {
                 scatterPlayers.add(meetupPlayer);
             }
         }
+    }
+
+    @EventHandler
+    public void onPlayerLogin(PlayerLoginEvent e){
+        if (FrozedUHCGames.getInstance().getMeetupGameManager().getState() == MeetupGameManager.State.GENERATING){
+            e.setResult(PlayerLoginEvent.Result.KICK_OTHER);
+            e.setKickMessage("§cWait for the map to generate");
+        }
+    }
+
+    @EventHandler
+    public void onPlayerItemConsumeEvent(PlayerItemConsumeEvent e) {
+        Player player = e.getPlayer();
+        if (e.getItem().isSimilar(FrozedUHCGames.getInstance().getMeetupGameManager().getGoldenHead())) {
+            player.removePotionEffect(PotionEffectType.REGENERATION);
+            player.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 200, 1));
+        }
+    }
+
+    @EventHandler
+    public void onBreakBlock(BlockBreakEvent e){
+        if (e.getBlock().getType() == Material.BEDROCK) e.setCancelled(true);
     }
 }

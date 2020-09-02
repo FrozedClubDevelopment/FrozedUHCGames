@@ -2,12 +2,14 @@ package club.frozed.uhc.types.meetup.provider;
 
 import club.frozed.uhc.FrozedUHCGames;
 import club.frozed.uhc.types.meetup.manager.MeetupPlayer;
+import club.frozed.uhc.types.meetup.manager.world.Border;
 import club.frozed.uhc.utils.CC;
 import club.frozed.uhc.utils.Utils;
 import club.frozed.uhc.utils.config.ConfigCursor;
 import club.frozed.uhc.utils.scoreboard.Board;
 import lombok.Getter;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
 import javax.rmi.CORBA.Util;
@@ -43,7 +45,17 @@ public class MeetupScoreboard extends Board {
                 meetupScoreboard.getStringList("STARTING").forEach(text -> lines.add(translate(meetupPlayer, text)));
                 break;
             case PLAYING:
-                meetupScoreboard.getStringList("GAME").forEach(text -> lines.add(translate(meetupPlayer, text)));
+                meetupScoreboard.getStringList("GAME").forEach(text -> {
+                    switch (text) {
+                        case "<no-clean>":
+                            if (!meetupPlayer.getNoCleanCooldown().hasExpired())
+                                FrozedUHCGames.getInstance().getMeetupScoreboardConfig().getConfig().getStringList("NO-CLEAN").forEach(line -> lines.add(CC.translate(line.replace("<time>",meetupPlayer.getNoCleanCooldown().getTimeLeft()))));
+                            break;
+                        default:
+                            lines.add(translate(meetupPlayer, text));
+                            break;
+                    }
+                });
                 break;
             case FINISH:
                 meetupScoreboard.getStringList("FINISH").forEach(text -> lines.add(translate(meetupPlayer,text)));
@@ -66,8 +78,7 @@ public class MeetupScoreboard extends Board {
                         .replace("<time>", Utils.calculate(FrozedUHCGames.getInstance().getMeetupGameManager().getGameTime()))
                         .replace("<alive>", String.valueOf(FrozedUHCGames.getInstance().getMeetupGameManager().getAlivePlayers().size()))
                         .replace("<max>", String.valueOf(FrozedUHCGames.getInstance().getMeetupGameManager().getMaxPlayers()))
-                        .replace("<size>", String.valueOf(FrozedUHCGames.getInstance().getMeetupGameManager().getBorder()))
-                        .replace("<border-time>", String.valueOf(0))
+                        .replace("<border>", getBorderLine())
                         .replace("<ping>", String.valueOf(Utils.getPing(player)))
                         .replace("<kills>", String.valueOf(meetupPlayer.getGameKills()));
                 break;
@@ -80,5 +91,16 @@ public class MeetupScoreboard extends Board {
                 break;
         }
         return text;
+    }
+
+    private String getBorderLine(){
+        if (FrozedUHCGames.getInstance().getBorder().isCanShrink()){
+            return CC.translate(FrozedUHCGames.getInstance().getMeetupScoreboardConfig().getConfig().getString("BORDER.TIME")
+                    .replace("<size>",String.valueOf(FrozedUHCGames.getInstance().getBorder().getSize()))
+                    .replace("<border-time>", Utils.simpleCalculate(FrozedUHCGames.getInstance().getBorder().getSeconds())));
+        } else {
+            return CC.translate(FrozedUHCGames.getInstance().getMeetupScoreboardConfig().getConfig().getString("BORDER.LAST-BORDER")
+                    .replace("<size>",String.valueOf(FrozedUHCGames.getInstance().getBorder().getSize())));
+        }
     }
 }
