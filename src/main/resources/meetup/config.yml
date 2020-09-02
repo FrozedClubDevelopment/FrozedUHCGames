@@ -4,12 +4,28 @@ SETTINGS:
     SIZE: 200
   GLASS-BORDER:
     ENABLED: true
-    DATA: 14
+    DATA: 3
     # Glass Colors Data -> https://pastebin.com/NZw2QC3P
+  BORDER:
+    SHRINK-UNTIL: 25
+    SHRINK-EVERY-SECONDS: 180
+    SHRINK-STREAM: 200;150;100;50;25
   REQUIRED-PLAYERS: 3
   MAX-PLAYERS: 32
   STARTING-TIME: 30
   RESTART-TIME: 10
 
 SOUNDS:
-  START: 'NOTE_PLING'
+  START: 'ENDERDRAGON_GROWL'
+  START_COUNTDOWN: 'NOTE_PLING'
+  BORDER_COUNTDOWN: 'NOTE_PLING'
+  BORDER: 'FIREWORK_BLAST'
+
+HOLOGRAM:
+  TITLE: '&f&l<player>''s &b&lStatistics'
+  LINES:
+    - '&b&lTotal Kills&7: &f<kills>'
+    - '&b&lTotal Deaths&7: &f<deaths>'
+    - '&b&lTotal KRD&7: &f<kdr>'
+    - '&b&lTotal Wins&7: &f<wins>'
+    - '&b&lGames Played&7: &f<games>'

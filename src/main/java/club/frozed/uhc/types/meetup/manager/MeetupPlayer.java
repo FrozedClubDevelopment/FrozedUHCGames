@@ -2,9 +2,9 @@ package club.frozed.uhc.types.meetup.manager;
 
 import club.frozed.uhc.FrozedUHCGames;
 import club.frozed.uhc.data.MongoDB;
+import club.frozed.uhc.utils.time.Cooldown;
 import com.mongodb.client.model.Filters;
 import com.mongodb.client.model.UpdateOptions;
-import de.inventivegames.hologram.Hologram;
 import lombok.Getter;
 import lombok.Setter;
 import org.bson.Document;
@@ -29,6 +29,7 @@ public class MeetupPlayer {
     private boolean dataLoaded;
     private State state;
     private boolean played;
+    private boolean vote;
 
     private int kills;
     private int deaths;
@@ -37,6 +38,7 @@ public class MeetupPlayer {
 
     private int gameKills;
     private Location scatterLocation;
+    private Cooldown noCleanCooldown = new Cooldown(0L);
 
     public MeetupPlayer(UUID uuid, String name) {
         this.uuid = uuid;
@@ -53,6 +55,10 @@ public class MeetupPlayer {
 
     public boolean isOnline() {
         return (Bukkit.getPlayer(this.uuid) != null);
+    }
+
+    public boolean isSpectating() {
+        return this.state == State.SPECTATOR;
     }
 
     public String getKDR() {
