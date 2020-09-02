@@ -2,9 +2,11 @@ package club.frozed.uhc.types.meetup.manager.game;
 
 import club.frozed.uhc.FrozedUHCGames;
 import club.frozed.uhc.types.meetup.manager.MeetupPlayer;
+import club.frozed.uhc.utils.Utils;
 import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.Location;
+import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,6 +32,13 @@ public class MeetupGameManager {
     private int winnerWins;
 
     private List<Location> scatterLocations = new ArrayList<>();
+    
+    public enum State {
+        WAITING,
+        STARTING,
+        PLAYING,
+        FINISH
+    }
 
     public List<MeetupPlayer> getAlivePlayers() {
         return MeetupPlayer.playersData.values().stream().filter(MeetupPlayer::isAlive).collect(Collectors.toList());
@@ -37,12 +46,5 @@ public class MeetupGameManager {
 
     public int getMaxPlayers() {
         return (int) MeetupPlayer.playersData.values().stream().filter(MeetupPlayer::isPlayed).count();
-    }
-
-    public enum State {
-        WAITING,
-        STARTING,
-        PLAYING,
-        ENDING
     }
 }

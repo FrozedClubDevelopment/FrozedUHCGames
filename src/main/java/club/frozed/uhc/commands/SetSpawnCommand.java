@@ -19,6 +19,7 @@ public class SetSpawnCommand extends BaseCommand {
         Player player = cmd.getPlayer();
 
         FrozedUHCGames.getInstance().getSpawnManager().save(player.getLocation());
+        FrozedUHCGames.getInstance().getSpawnManager().load();
         player.sendMessage("§aYou set spawn location.");
     }
 }

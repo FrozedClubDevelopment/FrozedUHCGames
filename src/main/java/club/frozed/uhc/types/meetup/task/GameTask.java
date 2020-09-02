@@ -19,21 +19,21 @@ public class GameTask extends BukkitRunnable {
         /*
         Check Winner
          */
-        if (FrozedUHCGames.getInstance().getMeetupGameManager().getAlivePlayers().size() == 1) {
-            FrozedUHCGames.getInstance().getMeetupGameManager().setState(MeetupGameManager.State.ENDING);
+        if (FrozedUHCGames.getInstance().getMeetupGameManager().getAlivePlayers().size() == 1){
+            FrozedUHCGames.getInstance().getMeetupGameManager().setState(MeetupGameManager.State.FINISH);
             MeetupPlayer.playersData.values().forEach(meetupPlayer -> {
-                if (meetupPlayer.isAlive()) {
+                if (meetupPlayer.isAlive()){
                     meetupPlayer.setWins(meetupPlayer.getWins() + 1);
 
                     FrozedUHCGames.getInstance().getMeetupGameManager().setWinner(meetupPlayer.getPlayer().getName());
                     FrozedUHCGames.getInstance().getMeetupGameManager().setWinnerKills(meetupPlayer.getGameKills());
-                    FrozedUHCGames.getInstance().getMeetupGameManager().setWinnerWins(meetupPlayer.getWins() + 1);
+                    FrozedUHCGames.getInstance().getMeetupGameManager().setWinnerWins(meetupPlayer.getWins() +1 );
 
                     (new BukkitRunnable() {
                         int launchedFireworks;
 
                         public void run() {
-                            Firework firework = meetupPlayer.getPlayer().getWorld().spawn(meetupPlayer.getPlayer().getLocation(), Firework.class);
+                            Firework firework = (Firework)meetupPlayer.getPlayer().getWorld().spawn(meetupPlayer.getPlayer().getLocation(), Firework.class);
                             FireworkMeta fireworkMeta = firework.getFireworkMeta();
                             fireworkMeta.addEffect(FireworkEffect.builder().flicker(false).trail(true).with(FireworkEffect.Type.BURST).withColor(Color.ORANGE).withFade(Color.YELLOW).build());
                             fireworkMeta.setPower(3);

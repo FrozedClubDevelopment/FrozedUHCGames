@@ -19,17 +19,16 @@ import java.util.*;
 @Getter
 public class MeetupWorld {
 
-    private final String meetupWorldName;
-    private final World world;
-    private World meetupWorld;
+    private String meetupWorldName;
+    private World world, meetupWorld;
     private int meetupWorldSize;
 
-    private final Set<Integer> materialBypass = new HashSet<>(Arrays.asList(17, 162, 18, 161, 0, 81, 175, 31, 37, 38, 175, 39, 40));
-    private final List<Location> borderBlocks = new ArrayList<>();
+    private Set<Integer> materialBypass = new HashSet<>(Arrays.asList(17, 162, 18, 161, 0, 81, 175, 31, 37, 38, 175, 39, 40));
+    private List<Location> borderBlocks = new ArrayList<>();
 
-    public MeetupWorld() {
+    public MeetupWorld(){
         MeetupGameManager meetupGameManager = FrozedUHCGames.getInstance().getMeetupGameManager();
-        ConfigCursor worldConfig = new ConfigCursor(FrozedUHCGames.getInstance().getMeetupMainConfig(), "SETTINGS.WORLD");
+        ConfigCursor worldConfig = new ConfigCursor(FrozedUHCGames.getInstance().getMeetupMainConfig(),"SETTINGS.WORLD");
 
         this.meetupWorldName = worldConfig.getString("NAME");
         this.meetupWorldSize = worldConfig.getInt("SIZE");
@@ -45,11 +44,11 @@ public class MeetupWorld {
 
         this.checkMeetupWorld();
 
-        TaskUtil.runLater(() -> {
+        TaskUtil.runLater(() ->{
             String path = FrozedUHCGames.getInstance().getServer().getWorldContainer().getAbsolutePath().replace(".", "");
             File serverFile = new File(path + this.meetupWorldName);
 
-            if (!serverFile.exists()) {
+            if (!serverFile.exists()){
                 this.meetupWorld = new WorldCreator(this.meetupWorldName).environment(World.Environment.NORMAL).type(WorldType.NORMAL).createWorld();
 
                 TaskUtil.runLater(() -> {
@@ -78,7 +77,7 @@ public class MeetupWorld {
 
             meetupGameManager.setBorder(this.meetupWorldSize);
             meetupGameManager.setState(MeetupGameManager.State.WAITING);
-        }, 10L);
+        },10L);
     }
 
     public void changeSize() {
@@ -93,10 +92,9 @@ public class MeetupWorld {
 
     private void checkMeetupWorld() {
         try {
-            String path = FrozedUHCGames.getInstance().getServer().getWorldContainer().getAbsolutePath().replace(".", "");
-            File file = new File(path + "/" + this.meetupWorldName + "/mapused");
-            if (file.exists()) {
-                Bukkit.broadcastMessage("§bMeetup world are begin removed.");
+            if (FrozedUHCGames.getInstance().getSettingsConfig().getConfig().getBoolean("MAP-USED")){
+                String path = FrozedUHCGames.getInstance().getServer().getWorldContainer().getAbsolutePath().replace(".", "");
+                Bukkit.getConsoleSender().sendMessage("§bMeetup world are begin removed.");
                 Runtime.getRuntime().exec("rm -rf " + path + "/" + this.meetupWorldName);
             }
         } catch (IOException e) {
@@ -131,17 +129,14 @@ public class MeetupWorld {
     }
 
     public void setUsed(boolean used) {
-        String path = FrozedUHCGames.getInstance().getServer().getWorldContainer().getAbsolutePath().replace(".", "");
-        File file = new File(path + "/" + this.meetupWorldName + "/used");
-        if (used) file.mkdirs();
-        else file.delete();
+        FrozedUHCGames.getInstance().getSettingsConfig().getConfig().set("MAP-USED",used);
+        FrozedUHCGames.getInstance().getSettingsConfig().save();
     }
 
     private void figureBlock(int x, int z) {
         Block block = this.meetupWorld.getHighestBlockAt(x, z);
         Block below = block.getRelative(BlockFace.DOWN);
-        while (materialBypass.contains(below.getTypeId()) && below.getY() > 5)
-            below = below.getRelative(BlockFace.DOWN);
+        while (materialBypass.contains(below.getTypeId()) && below.getY() > 5) below = below.getRelative(BlockFace.DOWN);
 
         Material material = Material.BEDROCK;
 

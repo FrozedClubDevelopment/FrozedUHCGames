@@ -13,9 +13,9 @@ public class EndTask extends BukkitRunnable {
 
         FrozedUHCGames.getInstance().getMeetupGameManager().setRestartTime(restartTime - 1);
 
-        if (restartTime <= 0) {
+        if (restartTime <= 0){
             MeetupPlayer.playersData.values().forEach(meetupPlayer -> {
-                if (meetupPlayer != null) {
+                if (meetupPlayer != null){
                     meetupPlayer.saveData();
                 }
             });

@@ -10,13 +10,14 @@ import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
+import javax.rmi.CORBA.Util;
 import java.util.ArrayList;
 import java.util.List;
 
 @Getter
 public class MeetupScoreboard extends Board {
 
-    private final Player player;
+    private Player player;
 
     public MeetupScoreboard(Player player) {
         super(player);
@@ -44,8 +45,8 @@ public class MeetupScoreboard extends Board {
             case PLAYING:
                 meetupScoreboard.getStringList("GAME").forEach(text -> lines.add(translate(meetupPlayer, text)));
                 break;
-            case ENDING:
-                meetupScoreboard.getStringList("ENDING").forEach(text -> lines.add(translate(meetupPlayer, text)));
+            case FINISH:
+                meetupScoreboard.getStringList("FINISH").forEach(text -> lines.add(translate(meetupPlayer,text)));
                 break;
         }
         setSlotsFromList(lines);
@@ -70,7 +71,7 @@ public class MeetupScoreboard extends Board {
                         .replace("<ping>", String.valueOf(Utils.getPing(player)))
                         .replace("<kills>", String.valueOf(meetupPlayer.getGameKills()));
                 break;
-            case ENDING:
+            case FINISH:
                 text = text
                         .replace("<time>", Utils.calculate(FrozedUHCGames.getInstance().getMeetupGameManager().getRestartTime()))
                         .replace("<player>", FrozedUHCGames.getInstance().getMeetupGameManager().getWinner())

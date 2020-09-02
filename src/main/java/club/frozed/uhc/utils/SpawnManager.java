@@ -2,9 +2,11 @@ package club.frozed.uhc.utils;
 
 import club.frozed.uhc.FrozedUHCGames;
 import club.frozed.uhc.utils.config.ConfigCursor;
+import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 
+@Getter
 public class SpawnManager {
 
     ConfigCursor configCursor = new ConfigCursor(FrozedUHCGames.getInstance().getSettingsConfig(), "SPAWN");
@@ -12,6 +14,7 @@ public class SpawnManager {
     private String world;
     private double x, y, z;
     private float yaw, pitch;
+    private boolean set = configCursor.getBoolean("SET");
 
     public void load() {
         this.world = configCursor.getString("WORLD");
@@ -20,6 +23,7 @@ public class SpawnManager {
         this.z = configCursor.getInt("COORDS.Z");
         this.yaw = configCursor.getInt("COORDS.YAW");
         this.pitch = configCursor.getInt("COORDS.PITCH");
+        Bukkit.getConsoleSender().sendMessage("§aSpawn location has been loaded.");
     }
 
     public void save(Location location) {
@@ -36,6 +40,7 @@ public class SpawnManager {
         this.configCursor.set("COORDS.Z", this.z);
         this.configCursor.set("COORDS.YAW", this.yaw);
         this.configCursor.set("COORDS.PITCH", this.pitch);
+        this.configCursor.set("SET",true);
         this.configCursor.save();
     }
 

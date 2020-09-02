@@ -5,10 +5,7 @@ import club.frozed.uhc.commands.SetSpawnCommand;
 import club.frozed.uhc.data.MongoDB;
 import club.frozed.uhc.nms.NMS;
 import club.frozed.uhc.nms.version.v1_7_R4;
-import club.frozed.uhc.types.meetup.listeners.MeetupLobbyListener;
-import club.frozed.uhc.types.meetup.listeners.MeetupPlayerListeners;
-import club.frozed.uhc.types.meetup.listeners.MeetupWorldListener;
-import club.frozed.uhc.types.meetup.listeners.PlayerMeetupDataLoad;
+import club.frozed.uhc.types.meetup.listeners.*;
 import club.frozed.uhc.types.meetup.manager.game.MeetupGameManager;
 import club.frozed.uhc.types.meetup.manager.world.MeetupWorld;
 import club.frozed.uhc.types.meetup.task.MeetupScoreboardTask;
@@ -32,8 +29,7 @@ import java.util.Random;
 @Setter
 public final class FrozedUHCGames extends JavaPlugin {
 
-    @Getter
-    public static FrozedUHCGames instance;
+    @Getter public static FrozedUHCGames instance;
     private CommandFramework commandFramework;
     private NMS nmsHandler = new v1_7_R4();
     private Random random = new Random();
@@ -57,10 +53,13 @@ public final class FrozedUHCGames extends JavaPlugin {
         meetupMainConfig = new FileConfig(this, "meetup/config.yml");
         databaseConfig = new FileConfig(this, "database.yml");
         meetupScoreboardConfig = new FileConfig(this, "meetup/scoreboard.yml");
-        meetupMessagesConfig = new FileConfig(this, "meetup/messages.yml");
-        settingsConfig = new FileConfig(this, "settings.yml");
+        meetupMessagesConfig = new FileConfig(this,"meetup/messages.yml");
+        settingsConfig = new FileConfig(this,"settings.yml");
 
         spawnManager = new SpawnManager();
+        if (spawnManager.isSet()){
+            spawnManager.load();
+        }
         meetupGameManager = new MeetupGameManager();
         meetupWorld = new MeetupWorld();
 
@@ -88,8 +87,9 @@ public final class FrozedUHCGames extends JavaPlugin {
         PluginManager pluginManager = Bukkit.getPluginManager();
         pluginManager.registerEvents(new PlayerMeetupDataLoad(), this);
         pluginManager.registerEvents(new MeetupPlayerListeners(), this);
-        pluginManager.registerEvents(new MeetupLobbyListener(), this);
-        pluginManager.registerEvents(new MeetupWorldListener(), this);
+        pluginManager.registerEvents(new MeetupLobbyListener(),this);
+        pluginManager.registerEvents(new MeetupWorldListener(),this);
+        pluginManager.registerEvents(new MeetupGameListener(),this);
 
         // Meetup Tasks
         new MeetupScoreboardTask().runTaskTimerAsynchronously(this, 0L, 2L);
