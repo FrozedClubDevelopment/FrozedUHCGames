@@ -12,7 +12,8 @@ import java.util.HashMap;
 
 public class v1_8_R3 implements NMS {
 
-    @Getter private HashMap<Player, Integer> vehicles = new HashMap<>();
+    @Getter
+    private final HashMap<Player, Integer> vehicles = new HashMap<>();
 
 
     @Override

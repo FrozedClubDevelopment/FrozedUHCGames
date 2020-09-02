@@ -16,12 +16,13 @@ import java.util.UUID;
 @Getter
 public abstract class Board {
 
-    @Getter private static HashMap<UUID,Board> boards = new HashMap<>();
-    private Player player;
-    private Scoreboard scoreboard;
-    private Objective sidebar;
+    @Getter
+    private static final HashMap<UUID, Board> boards = new HashMap<>();
+    private final Player player;
+    private final Scoreboard scoreboard;
+    private final Objective sidebar;
 
-    public Board(Player player){
+    public Board(Player player) {
         this.player = player;
         this.scoreboard = Bukkit.getScoreboardManager().getNewScoreboard();
         this.sidebar = this.scoreboard.registerNewObjective("sidebar", "dummy");
@@ -38,6 +39,7 @@ public abstract class Board {
         }
         boards.put(player.getUniqueId(), this);
     }
+
     public void setTitle(String title) {
         if (title.length() > 32) {
             title = title.substring(0, 32);
@@ -95,7 +97,7 @@ public abstract class Board {
     private String getSecondSplit(String s) {
         if (s.length() > 32)
             s = s.substring(0, 32);
-        return (s.length() > 16) ? s.substring(16, s.length()) : "";
+        return (s.length() > 16) ? s.substring(16) : "";
     }
 
     public abstract void update();

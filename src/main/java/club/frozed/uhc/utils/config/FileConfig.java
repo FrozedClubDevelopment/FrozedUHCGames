@@ -9,17 +9,9 @@ import java.io.File;
 import java.io.IOException;
 
 public class FileConfig {
-    private File file;
+    private final File file;
 
-    private FileConfiguration config;
-
-    public File getFile() {
-        return this.file;
-    }
-
-    public FileConfiguration getConfig() {
-        return this.config;
-    }
+    private final FileConfiguration config;
 
     public FileConfig(JavaPlugin plugin, String fileName) {
         this.file = new File(plugin.getDataFolder(), fileName);
@@ -35,7 +27,15 @@ public class FileConfig {
                 plugin.saveResource(fileName, false);
             }
         }
-        this.config = (FileConfiguration) YamlConfiguration.loadConfiguration(this.file);
+        this.config = YamlConfiguration.loadConfiguration(this.file);
+    }
+
+    public File getFile() {
+        return this.file;
+    }
+
+    public FileConfiguration getConfig() {
+        return this.config;
     }
 
     public void save() {

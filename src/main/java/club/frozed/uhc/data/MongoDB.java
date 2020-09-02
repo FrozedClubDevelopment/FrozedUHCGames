@@ -21,21 +21,16 @@ import java.util.Collections;
  */
 @Getter
 public class MongoDB {
-    private MongoClient client;
-
-    private MongoDatabase mongoDatabase;
-
     ConfigCursor mongoConfig = new ConfigCursor(FrozedUHCGames.getInstance().getDatabaseConfig(), "MONGO");
-
     private final String host = mongoConfig.getString("HOST");
     private final int port = mongoConfig.getInt("PORT");
     private final String database = mongoConfig.getString("DATABASE");
     private final boolean authentication = mongoConfig.getBoolean("AUTH.ENABLED");
-
     private final String user = mongoConfig.getString("AUTH.USERNAME");
     private final String password = mongoConfig.getString("AUTH.PASSWORD");
     private final String authDatabase = mongoConfig.getString("AUTH.AUTH-DATABASE");
-
+    private MongoClient client;
+    private MongoDatabase mongoDatabase;
     private boolean connected;
 
     private MongoCollection<Document> meetupPlayerData;

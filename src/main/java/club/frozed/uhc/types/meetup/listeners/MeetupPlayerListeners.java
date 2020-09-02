@@ -11,7 +11,6 @@ import club.frozed.uhc.utils.Utils;
 import club.frozed.uhc.utils.task.TaskUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -23,27 +22,28 @@ import java.util.List;
 
 public class MeetupPlayerListeners implements Listener {
     public static List<MeetupPlayer> scatterPlayers = new ArrayList<>();
+
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent e) {
         e.setJoinMessage(null);
         new MeetupScoreboard(e.getPlayer());
-        if (FrozedUHCGames.getInstance().getMeetupGameManager().getState() == MeetupGameManager.State.WAITING){
+        if (FrozedUHCGames.getInstance().getMeetupGameManager().getState() == MeetupGameManager.State.WAITING) {
             Bukkit.broadcastMessage(CC.translate(FrozedUHCGames.getInstance().getMeetupMessagesConfig().getConfig().getString("JOIN-PLAYER"))
                     .replace("<player>", e.getPlayer().getName())
                     .replace("<start-player>", String.valueOf((FrozedUHCGames.getInstance().getMeetupGameManager().getPlayersNeedToStart() - Bukkit.getOnlinePlayers().size()))));
             if (Utils.getOnlinePlayers().size() >= FrozedUHCGames.getInstance().getMeetupGameManager().getPlayersNeedToStart()) {
-                TaskUtil.runLater(()->{
+                TaskUtil.runLater(() -> {
                     MeetupPlayer.playersData.values().forEach(meetupPlayer -> {
-                        if (meetupPlayer.isWaiting() && meetupPlayer.isOnline() && !scatterPlayers.contains(meetupPlayer)){
-                            meetupPlayer.setScatterLocation(((Location)FrozedUHCGames.getInstance().getMeetupGameManager().getScatterLocations().remove(0)).add(0.5D, 0.0D, 0.5D));
+                        if (meetupPlayer.isWaiting() && meetupPlayer.isOnline() && !scatterPlayers.contains(meetupPlayer)) {
+                            meetupPlayer.setScatterLocation(FrozedUHCGames.getInstance().getMeetupGameManager().getScatterLocations().remove(0).add(0.5D, 0.0D, 0.5D));
                             scatterPlayers.add(meetupPlayer);
                         }
                     });
                     new StartingGameTask().runTaskTimer(FrozedUHCGames.getInstance(), 0L, 20L);
-                },20);
+                }, 20);
             }
 
-            if (FrozedUHCGames.getInstance().getMeetupGameManager().getState() == MeetupGameManager.State.PLAYING){
+            if (FrozedUHCGames.getInstance().getMeetupGameManager().getState() == MeetupGameManager.State.PLAYING) {
                 MeetupPlayer meetupPlayer = MeetupPlayer.getByUuid(e.getPlayer().getUniqueId());
                 meetupPlayer.setPlayed(true);
             }
@@ -51,9 +51,9 @@ public class MeetupPlayerListeners implements Listener {
     }
 
     @EventHandler
-    public void onPlayerDeathEvent(PlayerDeathEvent e){
+    public void onPlayerDeathEvent(PlayerDeathEvent e) {
         e.setDeathMessage(null);
-        if (FrozedUHCGames.getInstance().getMeetupGameManager().getState() != MeetupGameManager.State.PLAYING){
+        if (FrozedUHCGames.getInstance().getMeetupGameManager().getState() != MeetupGameManager.State.PLAYING) {
             return;
         }
         Player player = e.getEntity();
@@ -62,7 +62,7 @@ public class MeetupPlayerListeners implements Listener {
         MeetupUtil.reset(meetupPlayer);
         meetupPlayer.setDeaths(meetupPlayer.getDeaths() + 1);
         meetupPlayer.setState(MeetupPlayer.State.SPECTATOR);
-        if (killer != null){
+        if (killer != null) {
             MeetupPlayer killerPlayer = MeetupPlayer.getByUuid(killer.getUniqueId());
             killerPlayer.setKills(meetupPlayer.getKills() + 1);
             killerPlayer.setGameKills(killerPlayer.getGameKills() + 1);

@@ -32,7 +32,8 @@ import java.util.Random;
 @Setter
 public final class FrozedUHCGames extends JavaPlugin {
 
-    @Getter public static FrozedUHCGames instance;
+    @Getter
+    public static FrozedUHCGames instance;
     private CommandFramework commandFramework;
     private NMS nmsHandler = new v1_7_R4();
     private Random random = new Random();
@@ -56,8 +57,8 @@ public final class FrozedUHCGames extends JavaPlugin {
         meetupMainConfig = new FileConfig(this, "meetup/config.yml");
         databaseConfig = new FileConfig(this, "database.yml");
         meetupScoreboardConfig = new FileConfig(this, "meetup/scoreboard.yml");
-        meetupMessagesConfig = new FileConfig(this,"meetup/messages.yml");
-        settingsConfig = new FileConfig(this,"settings.yml");
+        meetupMessagesConfig = new FileConfig(this, "meetup/messages.yml");
+        settingsConfig = new FileConfig(this, "settings.yml");
 
         spawnManager = new SpawnManager();
         meetupGameManager = new MeetupGameManager();
@@ -87,8 +88,8 @@ public final class FrozedUHCGames extends JavaPlugin {
         PluginManager pluginManager = Bukkit.getPluginManager();
         pluginManager.registerEvents(new PlayerMeetupDataLoad(), this);
         pluginManager.registerEvents(new MeetupPlayerListeners(), this);
-        pluginManager.registerEvents(new MeetupLobbyListener(),this);
-        pluginManager.registerEvents(new MeetupWorldListener(),this);
+        pluginManager.registerEvents(new MeetupLobbyListener(), this);
+        pluginManager.registerEvents(new MeetupWorldListener(), this);
 
         // Meetup Tasks
         new MeetupScoreboardTask().runTaskTimerAsynchronously(this, 0L, 2L);
