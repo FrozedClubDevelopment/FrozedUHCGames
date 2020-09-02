@@ -2,16 +2,13 @@ package club.frozed.uhc.types.meetup.manager.game;
 
 import club.frozed.uhc.FrozedUHCGames;
 import club.frozed.uhc.types.meetup.manager.MeetupPlayer;
-import club.frozed.uhc.utils.Utils;
 import club.frozed.uhc.utils.item.ItemCreator;
 import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.Recipe;
 import org.bukkit.inventory.ShapedRecipe;
 
 import java.util.ArrayList;
@@ -34,21 +31,21 @@ public class MeetupGameManager {
     private int restartTime = FrozedUHCGames.getInstance().getMeetupMainConfig().getConfig().getInt("SETTINGS.RESTART-TIME");
     private int gameTime;
 
-
     private String winner;
     private int winnerKills;
     private int winnerWins;
 
     private List<Location> scatterLocations = new ArrayList<>();
 
-    public MeetupGameManager(){
+    public MeetupGameManager() {
         this.goldenHead = (new ItemCreator(Material.GOLDEN_APPLE)).setName("§6§lGolden Head").get();
         ShapedRecipe goldenHeadRecipe = new ShapedRecipe(this.goldenHead);
-        goldenHeadRecipe.shape(new String[] { "EEE", "EFE", "EEE" });
+        goldenHeadRecipe.shape("EEE", "EFE", "EEE");
         goldenHeadRecipe.setIngredient('E', Material.GOLD_INGOT);
         goldenHeadRecipe.setIngredient('F', Material.SKULL_ITEM, 3);
-        Bukkit.getServer().addRecipe((Recipe)goldenHeadRecipe);
-}
+        Bukkit.getServer().addRecipe(goldenHeadRecipe);
+    }
+
     public enum State {
         GENERATING,
         WAITING,

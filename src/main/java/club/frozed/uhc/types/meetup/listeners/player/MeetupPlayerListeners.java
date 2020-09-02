@@ -26,13 +26,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MeetupPlayerListeners implements Listener {
+
     public static List<MeetupPlayer> scatterPlayers = new ArrayList<>();
+
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent e) {
         e.setJoinMessage(null);
         new MeetupScoreboard(e.getPlayer());
-        if (FrozedUHCGames.getInstance().getMeetupGameManager().getState() == MeetupGameManager.State.WAITING){
-            if (FrozedUHCGames.getInstance().getSpawnManager().isSet()){
+        if (FrozedUHCGames.getInstance().getMeetupGameManager().getState() == MeetupGameManager.State.WAITING) {
+            if (FrozedUHCGames.getInstance().getSpawnManager().isSet()) {
                 e.getPlayer().teleport(FrozedUHCGames.getInstance().getSpawnManager().getSpawnLocation());
             }
             Bukkit.broadcastMessage(CC.translate(FrozedUHCGames.getInstance().getMeetupMessagesConfig().getConfig().getString("JOIN-PLAYER"))
@@ -40,20 +42,20 @@ public class MeetupPlayerListeners implements Listener {
                     .replace("<start-player>", String.valueOf((FrozedUHCGames.getInstance().getMeetupGameManager().getPlayersNeedToStart() - Bukkit.getOnlinePlayers().size()))));
             MeetupUtil.prepareLobby(MeetupPlayer.getByUuid(e.getPlayer().getUniqueId()));
             if (Utils.getOnlinePlayers().size() >= FrozedUHCGames.getInstance().getMeetupGameManager().getPlayersNeedToStart()) {
-                TaskUtil.runLater(()->{
+                TaskUtil.runLater(() -> {
                     MeetupPlayer.playersData.values().forEach(meetupPlayer -> {
-                        if (meetupPlayer.isWaiting() && meetupPlayer.isOnline() && !scatterPlayers.contains(meetupPlayer)){
-                            meetupPlayer.setScatterLocation(((Location)FrozedUHCGames.getInstance().getMeetupGameManager().getScatterLocations().remove(0)).add(0.5D, 0.0D, 0.5D));
+                        if (meetupPlayer.isWaiting() && meetupPlayer.isOnline() && !scatterPlayers.contains(meetupPlayer)) {
+                            meetupPlayer.setScatterLocation(((Location) FrozedUHCGames.getInstance().getMeetupGameManager().getScatterLocations().remove(0)).add(0.5D, 0.0D, 0.5D));
                             scatterPlayers.add(meetupPlayer);
                         }
                     });
                     new StartingGameTask().runTaskTimer(FrozedUHCGames.getInstance(), 0L, 20L);
-                },20);
+                }, 20);
             }
         }
-        if (FrozedUHCGames.getInstance().getMeetupGameManager().getState() == MeetupGameManager.State.STARTING){
+        if (FrozedUHCGames.getInstance().getMeetupGameManager().getState() == MeetupGameManager.State.STARTING) {
             MeetupPlayer meetupPlayer = MeetupPlayer.getByUuid(e.getPlayer().getUniqueId());
-            if (meetupPlayer.isWaiting() && meetupPlayer.isOnline() && !scatterPlayers.contains(meetupPlayer)){
+            if (meetupPlayer.isWaiting() && meetupPlayer.isOnline() && !scatterPlayers.contains(meetupPlayer)) {
                 meetupPlayer.setScatterLocation(FrozedUHCGames.getInstance().getMeetupGameManager().getScatterLocations().remove(0));
                 scatterPlayers.add(meetupPlayer);
             }
@@ -61,8 +63,8 @@ public class MeetupPlayerListeners implements Listener {
     }
 
     @EventHandler
-    public void onPlayerLogin(PlayerLoginEvent e){
-        if (FrozedUHCGames.getInstance().getMeetupGameManager().getState() == MeetupGameManager.State.GENERATING){
+    public void onPlayerLogin(PlayerLoginEvent e) {
+        if (FrozedUHCGames.getInstance().getMeetupGameManager().getState() == MeetupGameManager.State.GENERATING) {
             e.setResult(PlayerLoginEvent.Result.KICK_OTHER);
             e.setKickMessage("§cWait for the map to generate");
         }
@@ -78,7 +80,7 @@ public class MeetupPlayerListeners implements Listener {
     }
 
     @EventHandler
-    public void onBreakBlock(BlockBreakEvent e){
+    public void onBreakBlock(BlockBreakEvent e) {
         if (e.getBlock().getType() == Material.BEDROCK) e.setCancelled(true);
     }
 }

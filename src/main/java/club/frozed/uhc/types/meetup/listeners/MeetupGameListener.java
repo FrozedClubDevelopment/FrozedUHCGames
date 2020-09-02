@@ -12,9 +12,9 @@ import org.bukkit.event.entity.PlayerDeathEvent;
 public class MeetupGameListener implements Listener {
 
     @EventHandler
-    public void onPlayerDeathEvent(PlayerDeathEvent e){
+    public void onPlayerDeathEvent(PlayerDeathEvent e) {
         e.setDeathMessage(null);
-        if (FrozedUHCGames.getInstance().getMeetupGameManager().getState() != MeetupGameManager.State.PLAYING){
+        if (FrozedUHCGames.getInstance().getMeetupGameManager().getState() != MeetupGameManager.State.PLAYING) {
             return;
         }
         Player player = e.getEntity();
@@ -22,7 +22,7 @@ public class MeetupGameListener implements Listener {
         MeetupPlayer meetupPlayer = MeetupPlayer.getByUuid(player.getUniqueId());
         meetupPlayer.setDeaths(meetupPlayer.getDeaths() + 1);
         MeetupUtil.prepareSpectator(meetupPlayer);
-        if (killer != null){
+        if (killer != null) {
             MeetupPlayer killerPlayer = MeetupPlayer.getByUuid(killer.getUniqueId());
             killerPlayer.setKills(meetupPlayer.getKills() + 1);
             killerPlayer.setGameKills(killerPlayer.getGameKills() + 1);

@@ -10,14 +10,13 @@ import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.server.ServerListPingEvent;
 
-public class    PlayerMeetupDataLoad implements Listener {
+public class PlayerMeetupDataLoad implements Listener {
 
     @EventHandler
     public void onAsyncPlayerPreLoginEvent(AsyncPlayerPreLoginEvent e) {
         if (!FrozedUHCGames.getInstance().getMongoDB().isAuthentication()) return;
 
         MeetupPlayer meetupPlayer = MeetupPlayer.getByUuid(e.getUniqueId());
-
         if (meetupPlayer == null) {
             meetupPlayer = new MeetupPlayer(e.getUniqueId(), e.getName());
         }
@@ -40,9 +39,9 @@ public class    PlayerMeetupDataLoad implements Listener {
     }
 
     @EventHandler
-    public void  onServerListPingEvent(ServerListPingEvent e){
+    public void onServerListPingEvent(ServerListPingEvent e) {
         MeetupGameManager meetupGameManager = FrozedUHCGames.getInstance().getMeetupGameManager();
-        switch (meetupGameManager.getState()){
+        switch (meetupGameManager.getState()) {
             case GENERATING:
                 e.setMotd(CC.translate("&eGenerating..."));
                 break;

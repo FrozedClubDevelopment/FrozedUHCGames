@@ -18,27 +18,27 @@ public class MeetupLobbyListener implements Listener {
     MeetupGameManager gameManager = FrozedUHCGames.getInstance().getMeetupGameManager();
 
     @EventHandler
-    public void onBlockBreakEvent(BlockBreakEvent e){
-        if (gameManager.getState() != MeetupGameManager.State.PLAYING){
-            if (!e.getPlayer().isOp()){
+    public void onBlockBreakEvent(BlockBreakEvent e) {
+        if (gameManager.getState() != MeetupGameManager.State.PLAYING) {
+            if (!e.getPlayer().isOp()) {
                 e.setCancelled(true);
             }
         }
     }
 
     @EventHandler
-    public void onBlockPlaceEvent(BlockPlaceEvent e){
-        if (gameManager.getState() != MeetupGameManager.State.PLAYING){
-            if (!e.getPlayer().isOp()){
+    public void onBlockPlaceEvent(BlockPlaceEvent e) {
+        if (gameManager.getState() != MeetupGameManager.State.PLAYING) {
+            if (!e.getPlayer().isOp()) {
                 e.setCancelled(true);
             }
         }
     }
 
     @EventHandler
-    public void onPlayerBucketEmptyEvent(PlayerBucketEmptyEvent e){
-        if (gameManager.getState() != MeetupGameManager.State.PLAYING){
-            if (!e.getPlayer().isOp()){
+    public void onPlayerBucketEmptyEvent(PlayerBucketEmptyEvent e) {
+        if (gameManager.getState() != MeetupGameManager.State.PLAYING) {
+            if (!e.getPlayer().isOp()) {
                 e.setCancelled(true);
             }
         }
@@ -46,8 +46,8 @@ public class MeetupLobbyListener implements Listener {
 
     @EventHandler
     public void onInventoryClickEvent(InventoryClickEvent e) {
-        if (gameManager.getState() == MeetupGameManager.State.WAITING){
-            if (!e.getWhoClicked().isOp()){
+        if (gameManager.getState() == MeetupGameManager.State.WAITING) {
+            if (!e.getWhoClicked().isOp()) {
                 e.setCancelled(true);
             }
         }
@@ -56,11 +56,12 @@ public class MeetupLobbyListener implements Listener {
     @EventHandler
     public void onPlayerDamage(EntityDamageEvent e) {
         Entity entity = e.getEntity();
-        if (gameManager.getState() != MeetupGameManager.State.PLAYING){
+        if (gameManager.getState() != MeetupGameManager.State.PLAYING) {
             if (entity instanceof Player) {
                 e.setCancelled(true);
-                if (e.getCause() != EntityDamageEvent.DamageCause.VOID)
+                if (e.getCause() != EntityDamageEvent.DamageCause.VOID) {
                     return;
+                }
                 entity.teleport(entity.getWorld().getSpawnLocation());
             }
         }
@@ -69,7 +70,7 @@ public class MeetupLobbyListener implements Listener {
     @EventHandler
     public void onHangingDamageByEntity(EntityDamageByEntityEvent e) {
         Entity entity = e.getEntity();
-        if (gameManager.getState() != MeetupGameManager.State.PLAYING){
+        if (gameManager.getState() != MeetupGameManager.State.PLAYING) {
             if (entity instanceof Player) {
                 e.setCancelled(true);
             }
