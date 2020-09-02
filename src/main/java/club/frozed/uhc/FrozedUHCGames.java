@@ -13,9 +13,7 @@ import club.frozed.uhc.types.meetup.listeners.player.PlayerMeetupDataLoad;
 import club.frozed.uhc.types.meetup.manager.game.MeetupGameManager;
 import club.frozed.uhc.types.meetup.manager.world.Border;
 import club.frozed.uhc.types.meetup.manager.world.MeetupWorld;
-import club.frozed.uhc.types.meetup.scenario.scenarios.Default;
-import club.frozed.uhc.types.meetup.scenario.scenarios.NoClean;
-import club.frozed.uhc.types.meetup.scenario.scenarios.TimeBomb;
+import club.frozed.uhc.types.meetup.scenario.scenarios.*;
 import club.frozed.uhc.types.meetup.task.MeetupScoreboardTask;
 import club.frozed.uhc.utils.SpawnManager;
 import club.frozed.uhc.utils.command.CommandFramework;
@@ -114,6 +112,9 @@ public final class FrozedUHCGames extends JavaPlugin {
         new Default();
         new NoClean();
         new TimeBomb();
+        new Fireless();
+        new Rodless();
+        new Bowless();
     }
 
     private void loadUHCRun() {

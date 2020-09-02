@@ -9,10 +9,14 @@ import com.wimbli.WorldBorder.Events.WorldBorderFillStartEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.entity.ExperienceOrb;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.CreatureSpawnEvent;
+import org.bukkit.event.entity.EntityDeathEvent;
+import org.bukkit.event.entity.ItemSpawnEvent;
 import org.bukkit.event.world.ChunkUnloadEvent;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 
@@ -67,5 +71,29 @@ public class MeetupWorldListener implements Listener {
                 }
             }).runTaskTimer(FrozedUHCGames.getInstance(), 1L, 1L), 20L);
         }
+    }
+
+    private Material[] materials = new Material[] { Material.SAPLING, Material.SEEDS };
+
+    @EventHandler
+    public void onItemSpawn(ItemSpawnEvent event) {
+        for (Material material : this.materials) {
+            if (event.getEntity().getItemStack().getType() == material)
+                event.setCancelled(true);
+        }
+    }
+
+    @EventHandler
+    public void onEntityDeath(EntityDeathEvent event) {
+        if (event.getEntity() instanceof Player && event.getEntity().getKiller() != null) {
+            Player killer = event.getEntity().getKiller();
+            if (killer.getItemInHand() != null)
+                ((ExperienceOrb)killer.getWorld().spawn(killer.getLocation(), ExperienceOrb.class)).setExperience(event.getDroppedExp() * 2);
+        }
+    }
+
+    @EventHandler
+    public void onCreatureSpawn(CreatureSpawnEvent event) {
+        event.setCancelled(true);
     }
 }

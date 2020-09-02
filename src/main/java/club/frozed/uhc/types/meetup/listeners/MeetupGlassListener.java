@@ -2,115 +2,132 @@ package club.frozed.uhc.types.meetup.listeners;
 
 import club.frozed.uhc.FrozedUHCGames;
 import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
+import org.bukkit.inventory.ItemStack;
 
 import java.util.*;
 
 public class MeetupGlassListener implements Listener {
 
-    private Map<UUID, Set<Location>> glassLocations = new HashMap<>();
+    private byte color = (byte)FrozedUHCGames.getInstance().getMeetupMainConfig().getConfig().getInt("SETTINGS.GLASS-BORDER.DATA");
 
-    private int borderSize = FrozedUHCGames.getInstance().getBorder().getSize() + 1;
+    private Map<Player, List<Location>> players = new WeakHashMap<>();
 
-    public int closest(int n, int... array) {
-        int n2 = array[0];
-        for (int i = 0; i < array.length; ++i) {
-            if (Math.abs(n - array[i]) < Math.abs(n - n2)) {
-                n2 = array[i];
-            }
-        }
-        return n2;
+    private static boolean isInBetween(int xone, int xother, int mid) {
+        int distance = Math.abs(xone - xother);
+        return (distance == Math.abs(mid - xone) + Math.abs(mid - xother));
     }
 
-    public void update(Player player) {
-        if (FrozedUHCGames.getInstance().getBorder() == null) {
-            return;
+    private static int closestNumber(int from, int... numbers) {
+        int distance = Math.abs(numbers[0] - from);
+        int idx = 0;
+        for (int c = 1; c < numbers.length; c++) {
+            int cdistance = Math.abs(numbers[c] - from);
+            if (cdistance < distance) {
+                idx = c;
+                distance = cdistance;
+            }
         }
+        return numbers[idx];
+    }
+    @EventHandler
+    public void handlePlayerMovement(PlayerMoveEvent event) {
+        Location from = event.getFrom();
+        Location to = event.getTo();
+        World world = event.getPlayer().getWorld();
+        if (world.getName().equals(FrozedUHCGames.getInstance().getMeetupWorld().getMeetupWorldName())){
+            if (!from.getWorld().getName().equalsIgnoreCase(FrozedUHCGames.getInstance().getMeetupWorld().getMeetupWorldName()))
+                return;
+            if (from.getBlockX() != to.getBlockX() || to.getBlockZ() != from.getBlockZ())
+                handleGlassRender(event.getPlayer(), to, -FrozedUHCGames.getInstance().getMeetupWorld().getMeetupWorldSize()- 1,
+                        FrozedUHCGames.getInstance().getMeetupWorld().getMeetupWorldSize(), - FrozedUHCGames.getInstance().getMeetupWorld().getMeetupWorldSize() - 1,
+                        FrozedUHCGames.getInstance().getMeetupWorld().getMeetupWorldSize());
+        }
+    }
 
-        HashSet<Location> set = new HashSet<>();
-        int firstClosest = closest(player.getLocation().getBlockX(), -borderSize, borderSize);
-        int secondClosest = closest(player.getLocation().getBlockZ(), -borderSize, borderSize);
-        boolean first = Math.abs(player.getLocation().getX() - firstClosest) < 6.0;
-        boolean second = Math.abs(player.getLocation().getZ() - secondClosest) < 6.0;
-
-        if (!first && !second) {
+    private boolean handleGlassRender(Player player, Location to, int minX, int maxX, int minZ, int maxZ) {
+        int closerx = closestNumber(to.getBlockX(), new int[] { minX, maxX });
+        int closerz = closestNumber(to.getBlockZ(), new int[] { minZ, maxZ });
+        boolean updateX = (Math.abs(to.getX() - closerx) < 10.0D);
+        boolean updateZ = (Math.abs(to.getZ() - closerz) < 10.0D);
+        if (!updateX && !updateZ) {
             removeGlass(player);
-            return;
+            return false;
         }
-        if (first) {
-            for (int i = -4; i < 5; ++i) {
-                for (int j = -5; j < 6; ++j) {
-                    Location location = new Location(player.getLocation().getWorld(), firstClosest, player.getLocation().getBlockY() + i, player.getLocation().getBlockZ() + j);
-                    if (!set.contains(location) && !location.getBlock().getType().isOccluding()) {
-                        set.add(location);
+        List<Location> toUpdate = new ArrayList<>();
+        if (updateX)
+            for (int y = -2; y < 6; y++) {
+                for (int x = -4; x < 4; x++) {
+                    if (isInBetween(minZ, maxZ, to.getBlockZ() + x)) {
+                        Location location = new Location(to.getWorld(), closerx, (to.getBlockY() + y), (to.getBlockZ() + x));
+                        if (!toUpdate.contains(location) && !location.getBlock().getType().isOccluding())
+                            toUpdate.add(location);
                     }
                 }
             }
-        }
-        if (second) {
-            for (int k = -4; k < 5; ++k) {
-                for (int l = -5; l < 6; ++l) {
-                    Location location2 = new Location(player.getLocation().getWorld(), player.getLocation().getBlockX() + l, player.getLocation().getBlockY() + k, secondClosest);
-                    if (!set.contains(location2) && !location2.getBlock().getType().isOccluding()) {
-                        set.add(location2);
+        if (updateZ)
+            for (int y = -2; y < 6; y++) {
+                for (int x = -4; x < 4; x++) {
+                    if (isInBetween(minX, maxX, to.getBlockX() + x)) {
+                        Location location = new Location(to.getWorld(), (to.getBlockX() + x), (to.getBlockY() + y), closerz);
+                        if (!toUpdate.contains(location) && !location.getBlock().getType().isOccluding())
+                            toUpdate.add(location);
                     }
-
                 }
             }
-        }
-        render(player, set);
-    }
-
-    @Deprecated
-    public void render(Player player, Set<Location> set) {
-        if (FrozedUHCGames.getInstance().getBorder() == null) {
-            return;
-        }
-        if (glassLocations.containsKey(player.getUniqueId())) {
-            glassLocations.get(player.getUniqueId()).addAll(set);
-            for (Location location : glassLocations.get(player.getUniqueId())) {
-                if (!set.contains(location)) {
-                    Block block = location.getBlock();
-                    player.sendBlockChange(location, block.getTypeId(), block.getData());
-                }
-            }
-            Iterator<Location> iterator2 = set.iterator();
-            while (iterator2.hasNext()) {
-                player.sendBlockChange(iterator2.next(), 95, (byte) FrozedUHCGames.getInstance().getMeetupMainConfig().getConfig().getInt("SETTINGS.GLASS-BORDER.DATA"));
-            }
-        } else {
-            Iterator<Location> iterator3 = set.iterator();
-            while (iterator3.hasNext()) {
-                player.sendBlockChange(iterator3.next(), 95, (byte) FrozedUHCGames.getInstance().getMeetupMainConfig().getConfig().getInt("SETTINGS.GLASS-BORDER.DATA"));
-            }
-        }
-        glassLocations.put(player.getUniqueId(), set);
+        handleGlassUpdate(player, toUpdate);
+        return !toUpdate.isEmpty();
     }
 
     public void removeGlass(Player player) {
-        if (glassLocations.containsKey(player.getUniqueId())) {
-            for (Location location : glassLocations.get(player.getUniqueId())) {
+        if (this.players.containsKey(player)) {
+            for (Location location : this.players.get(player)) {
                 Block block = location.getBlock();
                 player.sendBlockChange(location, block.getTypeId(), block.getData());
             }
-            glassLocations.remove(player.getUniqueId());
+            this.players.remove(player);
+        }
+    }
+
+    public void handleGlassUpdate(Player player, List<Location> toUpdate) {
+        if (this.players.containsKey(player)) {
+            for (Location location : this.players.get(player)) {
+                Block block = location.getBlock();
+                player.sendBlockChange(location, block.getTypeId(), block.getData());
+            }
+            for (Location location2 : toUpdate)
+                player.sendBlockChange(location2, 95, this.color);
+            this.players.put(player, toUpdate);
+        } else {
+            for (Location location2 : toUpdate)
+                player.sendBlockChange(location2, 95, this.color);
+            this.players.put(player, toUpdate);
         }
     }
 
     @EventHandler
-    public void onInteract(PlayerInteractEvent event) {
-        Player player = event.getPlayer();
-        update(player);
+    public void handleInventoryClick(InventoryClickEvent event) {
+        ItemStack current = event.getCurrentItem();
+        ItemStack cursor = event.getCursor();
+        if (current != null && cursor != null && cursor.getType() == Material.POTION && current.getType() == Material.POTION && current.getDurability() == cursor.getDurability() && current.getAmount() >= 2 && cursor.getAmount() >= 2)
+            event.setCancelled(true);
     }
 
     @EventHandler
-    public void onPlayerMove(PlayerMoveEvent event) {
+    public void handlePlayerInteract(PlayerInteractEvent event) {
         Player player = event.getPlayer();
-        update(player);
+        if (!player.getWorld().getName().equalsIgnoreCase(FrozedUHCGames.getInstance().getMeetupWorld().getMeetupWorldName()))
+            return;
+        if (!this.players.containsKey(player))
+            return;
+        handleGlassUpdate(player, this.players.get(player));
     }
 }

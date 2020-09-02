@@ -39,21 +39,12 @@ public class VoteScenarioMenu implements Menu {
 
     public void update() {
         this.inventory.clear();
-        ItemCreator no_clean = new ItemCreator(Scenario.getByName("No Clean").getItemStack());
-        getVotes().put(Scenario.getByName("No Clean"), 0);
-        no_clean.setName(ChatColor.AQUA + Scenario.getByName("No Clean").getName());
-
-        ItemCreator time_bomb = new ItemCreator(Scenario.getByName("Time Bomb").getItemStack());
-        getVotes().put(Scenario.getByName("Time Bomb"), 0);
-        time_bomb.setName(ChatColor.AQUA + Scenario.getByName("Time Bomb").getName());
-
-        ItemCreator default_scenario = new ItemCreator(Scenario.getByName("Default").getItemStack());
-        getVotes().put(Scenario.getByName("Default"), 0);
-        default_scenario.setName(ChatColor.AQUA + Scenario.getByName("Default").getName());
-
-        this.inventory.setItem(0, no_clean.get());
-        this.inventory.setItem(1, time_bomb.get());
-        this.inventory.setItem(2, default_scenario.get());
+        for (Scenario scenario : Scenario.getGamemodes()){
+            ItemCreator xd = new ItemCreator(scenario.getItemStack());
+            getVotes().put(scenario,0);
+            xd.setName(ChatColor.AQUA + scenario.getName());
+            this.inventory.addItem(xd.get());
+        }
         InventoryUtil.fillInventory(this.inventory);
     }
 
@@ -79,49 +70,17 @@ public class VoteScenarioMenu implements Menu {
             if (e.getCurrentItem() == null || e.getCurrentItem().getType().equals(Material.AIR) || e.getCurrentItem().getType().equals(Material.STAINED_GLASS_PANE))
                 return;
             if (!e.getCurrentItem().hasItemMeta()) return;
-            int slots = e.getSlot();
-            switch (slots) {
-                case 0:
-                    if (meetupPlayer.isVote()){
-                        p.sendMessage("§cYou already vote for scenario");
-                        playSound(p,false);
-                        p.closeInventory();
-                    } else {
-                        getVotes().put(Scenario.getByName("No Clean"),votes.get(Scenario.getByName("No Clean"))+ 1);
-                        playSound(p,true);
-                        p.sendMessage("§aYou voted for §6No Clean");
-                        meetupPlayer.setVote(true);
-                        p.closeInventory();
-                    }
-                    break;
-                case 1:
-                    if (meetupPlayer.isVote()){
-                        p.sendMessage("§cYou already vote for scenario");
-                        playSound(p,false);
-                        p.closeInventory();
-                    } else {
-                        getVotes().put(Scenario.getByName("Time Bomb"),votes.get(Scenario.getByName("Time Bomb"))+ 1);
-                        playSound(p,true);
-                        p.sendMessage("§aYou voted for §6Time Bomb");
-                        meetupPlayer.setVote(true);
-                        p.closeInventory();
-                    }
-                    break;
-                case 2:
-                    if (meetupPlayer.isVote()){
-                        p.sendMessage("§cYou already vote for scenario");
-                        playSound(p,false);
-                        p.closeInventory();
-                    } else {
-                        getVotes().put(Scenario.getByName("Default"),votes.get(Scenario.getByName("Default"))+ 1);
-                        playSound(p,true);
-                        p.sendMessage("§aYou voted for §6Default");
-                        meetupPlayer.setVote(true);
-                        p.closeInventory();
-                    }
-                    break;
-                default:
-                    break;
+            Scenario scenario = Scenario.getByName(ChatColor.stripColor(e.getCurrentItem().getItemMeta().getDisplayName()));
+            if (meetupPlayer.isVote()){
+                p.sendMessage("§cYou already vote for scenario");
+                playSound(p,false);
+                p.closeInventory();
+            } else {
+                getVotes().put(scenario, votes.get(scenario) + 1);
+                playSound(p,true);
+                p.sendMessage("§aYou voted for §6"+scenario.getName());
+                meetupPlayer.setVote(true);
+                p.closeInventory();
             }
         } else if ((!topInventory.equals(clickedInventory) && e.getAction() == InventoryAction.MOVE_TO_OTHER_INVENTORY) || e.getAction() == InventoryAction.COLLECT_TO_CURSOR) {
             e.setCancelled(true);
