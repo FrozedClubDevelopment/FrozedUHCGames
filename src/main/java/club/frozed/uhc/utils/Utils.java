@@ -46,7 +46,7 @@ public class Utils {
         return (hours == 0L) ? (minute_text + ":" + second_text) : (hour_text + ":" + minute_text + ":" + second_text);
     }
 
-    public static Location randomLocation(World world, int radius) {
+    public static Location randomLocation(World world, int radius){
         Random random = FrozedUHCGames.getInstance().getRandom();
 
         int x = random.nextBoolean() ? random.nextInt(radius) : -random.nextInt(radius);

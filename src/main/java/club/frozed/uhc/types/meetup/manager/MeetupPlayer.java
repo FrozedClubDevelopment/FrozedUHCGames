@@ -4,6 +4,7 @@ import club.frozed.uhc.FrozedUHCGames;
 import club.frozed.uhc.data.MongoDB;
 import com.mongodb.client.model.Filters;
 import com.mongodb.client.model.UpdateOptions;
+import de.inventivegames.hologram.Hologram;
 import lombok.Getter;
 import lombok.Setter;
 import org.bson.Document;
@@ -46,14 +47,6 @@ public class MeetupPlayer {
         this.dataLoaded = false;
     }
 
-    public static MeetupPlayer getByUuid(UUID uuid) {
-        return playersData.get(uuid);
-    }
-
-    public static MeetupPlayer getByName(String name) {
-        return playersDataNames.get(name);
-    }
-
     public Player getPlayer() {
         return Bukkit.getPlayer(this.uuid);
     }
@@ -68,6 +61,7 @@ public class MeetupPlayer {
         double kdr = deaths == 0 ? kills : kills / deaths;
         return new DecimalFormat("#.##").format(kdr).replace(",", ".");
     }
+
 
     public boolean isAlive() {
         return this.state == State.PLAYING;
@@ -95,8 +89,8 @@ public class MeetupPlayer {
 
         Document document = new Document();
 
-        document.put("name", this.name);
-        document.put("uuid", this.uuid.toString());
+        document.put("name",this.name);
+        document.put("uuid",this.uuid.toString());
 
         document.put("kills", this.kills);
         document.put("deaths", this.deaths);
@@ -114,5 +108,13 @@ public class MeetupPlayer {
         WAITING,
         PLAYING,
         SPECTATOR
+    }
+
+    public static MeetupPlayer getByUuid(UUID uuid) {
+        return playersData.get(uuid);
+    }
+
+    public static MeetupPlayer getByName(String name) {
+        return playersDataNames.get(name);
     }
 }
