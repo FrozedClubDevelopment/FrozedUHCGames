@@ -49,14 +49,6 @@ public class VoteScenarioMenu implements Menu {
     }
 
     @Override
-    public void onInventoryClose(InventoryCloseEvent event) {
-        MeetupPlayer meetupPlayer = MeetupPlayer.getByUuid(event.getPlayer().getUniqueId());
-        if (!meetupPlayer.isVote()){
-            open(meetupPlayer.getPlayer());
-        }
-    }
-
-    @Override
     public void onInventoryClick(InventoryClickEvent e) {
         Player p = (Player) e.getWhoClicked();
         MeetupPlayer meetupPlayer = MeetupPlayer.getByUuid(p.getUniqueId());

@@ -34,14 +34,12 @@ public class NoClean extends Scenario {
         Cooldown cooldown = new Cooldown(20000L);
         meetupPlayer.setNoCleanCooldown(cooldown);
         player.sendMessage("§a[No Clean] You have been given 20 seconds of invincibility.");
-        player.setPlayerListName(CC.translate("&7[&cNC&7] &r"+player.getName()));
         TaskUtil.runLaterAsync(() -> {
             if (!meetupPlayer.getNoCleanCooldown().isNotified() && meetupPlayer.isOnline()) {
                 if (!cooldown.getUniqueId().equals(meetupPlayer.getNoCleanCooldown().getUniqueId()))
                     return;
                 player.sendMessage("§a[No Clean] You invincibility has expired.");
                 meetupPlayer.setNoCleanCooldown(new Cooldown(0L));
-                player.setPlayerListName(player.getName());
             }
         },400L);
     }
@@ -73,7 +71,6 @@ public class NoClean extends Scenario {
         final MeetupPlayer meetupPlayerTarget = MeetupPlayer.getByUuid(target.getUniqueId());
         if (!meetupPlayerTarget.getNoCleanCooldown().hasExpired()) {
             meetupPlayerTarget.setNoCleanCooldown(new Cooldown(0L));
-            target.setPlayerListName(target.getName());
             target.sendMessage("§c[No Clean] You have lost your invincibility.");
         }
     }
@@ -84,7 +81,6 @@ public class NoClean extends Scenario {
         final MeetupPlayer meetupPlayer = MeetupPlayer.getByUuid(player.getUniqueId());
         if (event.getBucket() != Material.WATER_BUCKET && !meetupPlayer.getNoCleanCooldown().isNotified()) {
             meetupPlayer.setNoCleanCooldown(new Cooldown(0L));
-            player.setPlayerListName(player.getName());
             player.sendMessage("§c[No Clean] You have lost your invincibility.");
             player.setDisplayName(player.getPlayerListName());
         }
