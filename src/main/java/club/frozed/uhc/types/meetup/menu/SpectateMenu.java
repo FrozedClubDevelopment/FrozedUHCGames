@@ -1,13 +1,12 @@
 package club.frozed.uhc.types.meetup.menu;
 
+import club.frozed.uhc.FrozedUHCGames;
 import club.frozed.uhc.types.meetup.manager.MeetupPlayer;
-import club.frozed.uhc.types.meetup.scenario.Scenario;
+import club.frozed.uhc.utils.CC;
 import club.frozed.uhc.utils.InventoryUtil;
 import club.frozed.uhc.utils.item.ItemCreator;
 import club.frozed.uhc.utils.menu.Menu;
-import lombok.Getter;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -16,18 +15,12 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 
-import java.util.HashMap;
-import java.util.Map;
-
-public class VoteScenarioMenu implements Menu {
-
-    @Getter
-    public static Map<Scenario, Integer> votes = new HashMap<>();
+public class SpectateMenu implements Menu {
 
     private Inventory inventory;
 
-    public VoteScenarioMenu() {
-        this.inventory = Bukkit.createInventory((InventoryHolder) this, 9, "§bVote for Scenario");
+    public SpectateMenu() {
+        this.inventory = Bukkit.createInventory((InventoryHolder) this, getMenuSize(), CC.translate("&8Spectate Menu"));
     }
 
     @Override
@@ -38,12 +31,9 @@ public class VoteScenarioMenu implements Menu {
 
     public void update() {
         this.inventory.clear();
-        for (Scenario scenario : Scenario.getGamemodes()){
-            ItemCreator xd = new ItemCreator(scenario.getItemStack());
-            getVotes().put(scenario,0);
-            xd.setName(ChatColor.AQUA + scenario.getName());
-            this.inventory.addItem(xd.get());
-        }
+        FrozedUHCGames.getInstance().getMeetupGameManager().getAlivePlayers().forEach(meetupPlayer -> {
+            this.inventory.addItem(new ItemCreator(Material.SKULL_ITEM,3).setName(meetupPlayer.getPlayer().getName()).setOwner(meetupPlayer.getPlayer().getName()).get());
+        });
         InventoryUtil.fillInventory(this.inventory);
     }
 
@@ -61,18 +51,7 @@ public class VoteScenarioMenu implements Menu {
             if (e.getCurrentItem() == null || e.getCurrentItem().getType().equals(Material.AIR) || e.getCurrentItem().getType().equals(Material.STAINED_GLASS_PANE))
                 return;
             if (!e.getCurrentItem().hasItemMeta()) return;
-            Scenario scenario = Scenario.getByName(ChatColor.stripColor(e.getCurrentItem().getItemMeta().getDisplayName()));
-            if (meetupPlayer.isVote()){
-                p.sendMessage("§cYou already vote for scenario");
-                playSound(p,false);
-                p.closeInventory();
-            } else {
-                getVotes().put(scenario, votes.get(scenario) + 1);
-                playSound(p,true);
-                p.sendMessage("§aYou voted for §6"+scenario.getName());
-                meetupPlayer.setVote(true);
-                p.closeInventory();
-            }
+            p.teleport(Bukkit.getPlayer(e.getCurrentItem().getItemMeta().getDisplayName()).getLocation());
         } else if ((!topInventory.equals(clickedInventory) && e.getAction() == InventoryAction.MOVE_TO_OTHER_INVENTORY) || e.getAction() == InventoryAction.COLLECT_TO_CURSOR) {
             e.setCancelled(true);
         }
@@ -86,19 +65,25 @@ public class VoteScenarioMenu implements Menu {
         }
     }
 
-    public static Scenario getHighestVote(){
-        Scenario scenario = null;
-        int votes = 0;
-        for (Map.Entry<Scenario, Integer> entry : getVotes().entrySet()){
-            if (entry.getValue() > votes){
-                scenario = entry.getKey();
-                votes = entry.getValue();
-            }
+    private int getMenuSize() {
+        if (FrozedUHCGames.getInstance().getMeetupGameManager().getAlivePlayers().size() <= 6){
+            return 9;
+        } else if (FrozedUHCGames.getInstance().getMeetupGameManager().getAlivePlayers().size() <= 12){
+            return 9*2;
+        } else if (FrozedUHCGames.getInstance().getMeetupGameManager().getAlivePlayers().size() <= 24){
+            return 9*3;
+        } else if (FrozedUHCGames.getInstance().getMeetupGameManager().getAlivePlayers().size() <= 32){
+            return 9*4;
+        } else if (FrozedUHCGames.getInstance().getMeetupGameManager().getAlivePlayers().size() <= 48){
+            return 9*5;
+        } else if (FrozedUHCGames.getInstance().getMeetupGameManager().getAlivePlayers().size() <= 60){
+            return 9*6;
         }
-        return scenario == null ? Scenario.getByName("Default") : scenario;
+        return 9;
     }
 
     public Inventory getInventory() {
         return this.inventory;
     }
 }
+

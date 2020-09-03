@@ -9,6 +9,7 @@ import com.wimbli.WorldBorder.Events.WorldBorderFillStartEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.ExperienceOrb;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -65,7 +66,7 @@ public class MeetupWorldListener implements Listener {
                     this.y++;
                     this.progress++;
                     if (this.progress >= 70) {
-                        Bukkit.shutdown();
+                        Bukkit.dispatchCommand((CommandSender)Bukkit.getServer().getConsoleSender(), "stop");
                         cancel();
                     }
                 }

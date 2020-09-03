@@ -31,6 +31,7 @@ public class PlayerMeetupDataLoad implements Listener {
 
     @EventHandler
     public void onPlayerQuitEvent(PlayerQuitEvent e) {
+        e.setQuitMessage(null);
         MeetupPlayer meetupPlayer = MeetupPlayer.getByUuid(e.getPlayer().getUniqueId());
 
         if (meetupPlayer == null) return;

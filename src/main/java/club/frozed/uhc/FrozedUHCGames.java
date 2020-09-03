@@ -55,6 +55,15 @@ public final class FrozedUHCGames extends JavaPlugin {
 
     @Override
     public void onEnable() {
+        /*
+        TO-DO
+        Kits por config
+        TabList
+        Msg de muerte
+        Spectator por packet
+        Fixeae player invisibles
+
+         */
         instance = this;
         commandFramework = new CommandFramework(this);
 

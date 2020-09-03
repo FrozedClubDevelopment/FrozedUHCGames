@@ -2,6 +2,7 @@ package club.frozed.uhc.types.meetup.manager.game;
 
 import club.frozed.uhc.FrozedUHCGames;
 import club.frozed.uhc.types.meetup.manager.MeetupPlayer;
+import club.frozed.uhc.utils.Utils;
 import club.frozed.uhc.utils.item.ItemCreator;
 import lombok.Getter;
 import lombok.Setter;
@@ -30,6 +31,7 @@ public class MeetupGameManager {
     private int startingTime = FrozedUHCGames.getInstance().getMeetupMainConfig().getConfig().getInt("SETTINGS.STARTING-TIME");
     private int restartTime = FrozedUHCGames.getInstance().getMeetupMainConfig().getConfig().getInt("SETTINGS.RESTART-TIME");
     private int gameTime;
+    private boolean gameStarted;
 
     private String winner;
     private int winnerKills;

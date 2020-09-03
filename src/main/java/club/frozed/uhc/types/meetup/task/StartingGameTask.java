@@ -77,6 +77,7 @@ public class StartingGameTask extends BukkitRunnable {
             new GameTask().runTaskTimer(FrozedUHCGames.getInstance(),0L,20L);
             FrozedUHCGames.getInstance().getMeetupGameManager().setState(MeetupGameManager.State.PLAYING);
             new BorderTask().runTaskTimer(FrozedUHCGames.getInstance(),0L,20L);
+            FrozedUHCGames.getInstance().getMeetupGameManager().setGameStarted(true);
             cancel();
             return;
         }

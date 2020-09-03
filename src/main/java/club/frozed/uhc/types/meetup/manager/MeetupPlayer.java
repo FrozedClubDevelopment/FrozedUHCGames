@@ -57,10 +57,6 @@ public class MeetupPlayer {
         return (Bukkit.getPlayer(this.uuid) != null);
     }
 
-    public boolean isSpectating() {
-        return this.state == State.SPECTATOR;
-    }
-
     public String getKDR() {
         double kills = this.kills;
         double deaths = this.deaths;
@@ -75,6 +71,10 @@ public class MeetupPlayer {
 
     public boolean isWaiting() {
         return (this.state == State.WAITING);
+    }
+
+    public boolean isSpectating() {
+        return this.state == State.SPECTATOR;
     }
 
     public void loadData() {

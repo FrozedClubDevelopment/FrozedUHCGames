@@ -1,10 +1,19 @@
 package club.frozed.uhc.types.meetup.listeners.player;
 
+import club.frozed.uhc.FrozedUHCGames;
 import club.frozed.uhc.types.meetup.manager.MeetupPlayer;
+import club.frozed.uhc.types.meetup.manager.game.MeetupGameManager;
+import club.frozed.uhc.types.meetup.menu.SpectateMenu;
+import club.frozed.uhc.types.meetup.menu.StatisticsMenu;
+import club.frozed.uhc.utils.CC;
+import club.frozed.uhc.utils.config.ConfigCursor;
+import org.bukkit.ChatColor;
+import org.bukkit.GameMode;
 import org.bukkit.entity.ItemFrame;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.*;
@@ -17,10 +26,32 @@ import org.bukkit.event.vehicle.VehicleEnterEvent;
 public class MeetupSpectatorListener implements Listener {
 
     @EventHandler
-    public void onPlayerInteract(PlayerInteractEvent e) {
-        MeetupPlayer meetupPlayer = MeetupPlayer.getByUuid(e.getPlayer().getUniqueId());
-        if (!meetupPlayer.isSpectating()) return;
-        e.setCancelled(true);
+    public void onPlayerInteract(PlayerInteractEvent event) {
+        Player player = event.getPlayer();
+        MeetupPlayer meetupPlayer = MeetupPlayer.getByUuid(player.getUniqueId());
+        if (meetupPlayer.isSpectating()){
+            event.setCancelled(true);
+            if (!event.hasItem())
+                return;
+            MeetupGameManager gameManager = FrozedUHCGames.getInstance().getMeetupGameManager();
+            if (event.getItem().getItemMeta().getDisplayName() == null)
+                return;
+            if (gameManager.getState() == MeetupGameManager.State.WAITING || gameManager.getState() == MeetupGameManager.State.GENERATING)
+                return;
+            ConfigCursor configCursor = new ConfigCursor(FrozedUHCGames.getInstance().getMeetupMainConfig(),"SETTINGS.SPECTATOR-ITEM.ITEM");
+            String name = CC.translate(configCursor.getString("NAME"));
+            String itemName = ChatColor.stripColor(event.getItem().getItemMeta().getDisplayName());
+            if (itemName.equals(ChatColor.stripColor(name))) {
+                if (event.getAction() != Action.RIGHT_CLICK_AIR && event.getAction() != Action.RIGHT_CLICK_BLOCK)
+                    return;
+                if (gameManager.getAlivePlayers().isEmpty()) {
+                    player.sendMessage("§cNo Alive players");
+                    return;
+                }
+                (new SpectateMenu()).open(player);
+            }
+            player.updateInventory();
+        }
     }
 
     @EventHandler

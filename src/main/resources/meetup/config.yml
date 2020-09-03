@@ -1,4 +1,16 @@
 SETTINGS:
+  STATS-ITEM:
+    ITEM:
+      MATERIAL: DIAMOND_SWORD
+      DATA: 0
+    SLOT: 0
+    NAME: '&b&lStatistics'
+  SPECTATOR-ITEM:
+    ITEM:
+      MATERIAL: SKULL_ITEM
+      DATA: 0
+      SLOT: 0
+      NAME: '&b&lSpectate Menu'
   WORLD:
     NAME: 'meetup_world'
     SIZE: 200
@@ -14,6 +26,22 @@ SETTINGS:
   MAX-PLAYERS: 32
   STARTING-TIME: 30
   RESTART-TIME: 10
+
+STATISTICS:
+  TITLE: '&bStatistics'
+  ITEM-NAME-COLOR: AQUA
+  FORMAT: '&f#<number>&7: &b<player> &7» &f<amount>'
+  PLAYER-STATS:
+    NAME: '&b&lYour Statistics'
+    LORE:
+      - '&7&m---------------------'
+      - '&b&lWins &7» &f<wins>'
+      - '&b&lDeaths &7» &f<deaths>'
+      - '&b&lKills &7» &f<kills>'
+      - '&b&lGames Played &7» &f<games-played>'
+      - ''
+      - '&b&lKDR &7» &f<kdr>'
+      - '&7&m---------------------'
 
 SOUNDS:
   START: 'ENDERDRAGON_GROWL'
