@@ -4,11 +4,9 @@ import club.frozed.uhc.FrozedUHCGames;
 import club.frozed.uhc.types.meetup.manager.MeetupPlayer;
 import club.frozed.uhc.types.meetup.manager.game.MeetupGameManager;
 import club.frozed.uhc.types.meetup.menu.SpectateMenu;
-import club.frozed.uhc.types.meetup.menu.StatisticsMenu;
 import club.frozed.uhc.utils.CC;
 import club.frozed.uhc.utils.config.ConfigCursor;
 import org.bukkit.ChatColor;
-import org.bukkit.GameMode;
 import org.bukkit.entity.ItemFrame;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -29,7 +27,7 @@ public class MeetupSpectatorListener implements Listener {
     public void onPlayerInteract(PlayerInteractEvent event) {
         Player player = event.getPlayer();
         MeetupPlayer meetupPlayer = MeetupPlayer.getByUuid(player.getUniqueId());
-        if (meetupPlayer.isSpectating()){
+        if (meetupPlayer.isSpectating()) {
             event.setCancelled(true);
             if (!event.hasItem())
                 return;
@@ -38,7 +36,7 @@ public class MeetupSpectatorListener implements Listener {
                 return;
             if (gameManager.getState() == MeetupGameManager.State.WAITING || gameManager.getState() == MeetupGameManager.State.GENERATING)
                 return;
-            ConfigCursor configCursor = new ConfigCursor(FrozedUHCGames.getInstance().getMeetupMainConfig(),"SETTINGS.SPECTATOR-ITEM.ITEM");
+            ConfigCursor configCursor = new ConfigCursor(FrozedUHCGames.getInstance().getMeetupMainConfig(), "SETTINGS.SPECTATOR-ITEM.ITEM");
             String name = CC.translate(configCursor.getString("NAME"));
             String itemName = ChatColor.stripColor(event.getItem().getItemMeta().getDisplayName());
             if (itemName.equals(ChatColor.stripColor(name))) {
@@ -48,7 +46,7 @@ public class MeetupSpectatorListener implements Listener {
                     player.sendMessage("§cNo Alive players");
                     return;
                 }
-                (new SpectateMenu()).open(player);
+                new SpectateMenu().open(player);
             }
             player.updateInventory();
         }
@@ -97,7 +95,6 @@ public class MeetupSpectatorListener implements Listener {
         if (!meetupPlayer.isSpectating()) return;
         e.setCancelled(true);
     }
-
 
     @EventHandler
     public void onBlockBreak(BlockBreakEvent e) {

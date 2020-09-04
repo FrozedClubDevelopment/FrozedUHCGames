@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Scenario implements Listener {
+
     public static List<Scenario> getGamemodes() {
         return gamemodes;
     }
@@ -40,6 +41,7 @@ public abstract class Scenario implements Listener {
         this.itemStack = itemStack.clone();
         gamemodes.add(this);
     }
+
     public String getName() {
         return this.name;
     }
@@ -69,7 +71,7 @@ public abstract class Scenario implements Listener {
 
     public void enable() {
         this.enabled = true;
-        Bukkit.getPluginManager().registerEvents(this, (Plugin) FrozedUHCGames.getInstance());
+        Bukkit.getPluginManager().registerEvents(this, FrozedUHCGames.getInstance());
         onEnable();
     }
 
