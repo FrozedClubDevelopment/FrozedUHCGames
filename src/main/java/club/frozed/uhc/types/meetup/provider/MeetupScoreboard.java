@@ -51,6 +51,10 @@ public class MeetupScoreboard extends Board {
                             if (!meetupPlayer.getNoCleanCooldown().hasExpired())
                                 FrozedUHCGames.getInstance().getMeetupScoreboardConfig().getConfig().getStringList("NO-CLEAN").forEach(line -> lines.add(CC.translate(line.replace("<time>",meetupPlayer.getNoCleanCooldown().getTimeLeft()))));
                             break;
+                        case "<do-not-disturb>":
+                            if (!meetupPlayer.getDoNotDisturbCooldown().hasExpired())
+                                FrozedUHCGames.getInstance().getMeetupScoreboardConfig().getConfig().getStringList("DO-NOT-DISTURB").forEach(line -> lines.add(CC.translate(line.replace("<time>",meetupPlayer.getDoNotDisturbCooldown().getTimeLeft()))));
+                            break;
                         default:
                             lines.add(translate(meetupPlayer, text));
                             break;

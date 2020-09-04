@@ -4,7 +4,9 @@ import club.frozed.uhc.FrozedUHCGames;
 import club.frozed.uhc.types.meetup.manager.MeetupPlayer;
 import club.frozed.uhc.utils.config.ConfigCursor;
 import club.frozed.uhc.utils.item.ItemCreator;
+import club.frozed.uhc.utils.task.TaskUtil;
 import org.bukkit.GameMode;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryType;
@@ -20,10 +22,14 @@ public class MeetupUtil {
 
     public static void prepareSpectator(MeetupPlayer meetupPlayer) {
         ConfigCursor configCursor = new ConfigCursor(FrozedUHCGames.getInstance().getMeetupMainConfig(),"SETTINGS.SPECTATOR-ITEM.ITEM");
-        meetupPlayer.setState(MeetupPlayer.State.SPECTATOR);
-
         Player player = meetupPlayer.getPlayer();
+        Material material = Material.valueOf(configCursor.getString("MATERIAL"));
+        String name = CC.translate(configCursor.getString("NAME"));
+        int slot = configCursor.getInt("SLOT");
+        int damage = configCursor.getInt("DATA");
 
+        player.getPlayer().teleport(new Location(FrozedUHCGames.getInstance().getMeetupWorld().getMeetupWorld(), 0.0D, (FrozedUHCGames.getInstance().getMeetupWorld().getMeetupWorld().getHighestBlockYAt(0, 0) + 10), 0.0D));
+        meetupPlayer.setState(MeetupPlayer.State.SPECTATOR);
         reset(meetupPlayer);
         player.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, 999999999, 1), true);
         player.setGameMode(GameMode.CREATIVE);
@@ -31,13 +37,13 @@ public class MeetupUtil {
         player.setFlying(true);
         player.setCanPickupItems(false);
         player.spigot().setCollidesWithEntities(false);
-        Material material = Material.valueOf(configCursor.getString("MATERIAL"));
-        String name = CC.translate(configCursor.getString("NAME"));
-        int slot = configCursor.getInt("SLOT");
-        int damage = configCursor.getInt("DATA");
         ItemStack itemStack = (new ItemCreator(material, 1, damage)).setName(name).get();
-        player.getInventory().setItem(slot, itemStack);
-        player.updateInventory();
+
+        TaskUtil.runLater(() ->{
+            player.getInventory().setItem(slot, itemStack);
+            player.updateInventory();
+        },20);
+
     }
 
     public static void prepareGame(MeetupPlayer meetupPlayer) {
@@ -239,7 +245,6 @@ public class MeetupUtil {
         player.getInventory().setContents(new ItemStack[36]);
         player.getActivePotionEffects().forEach(effect -> player.removePotionEffect(effect.getType()));
         FrozedUHCGames.getInstance().getNmsHandler().removeArrows(player);
-
         player.updateInventory();
     }
 

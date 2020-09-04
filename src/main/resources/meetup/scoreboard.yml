@@ -5,7 +5,12 @@ BORDER:
   LAST-BORDER: '&f<size>'
 
 NO-CLEAN:
+  - ''
   - '&bNo-Clean&7: &f<time>'
+
+DO-NOT-DISTURB:
+  - ''
+  - '&bDoNotDisturb&7: &f<time>'
 
 SCORE:
   WAITING:
@@ -29,8 +34,9 @@ SCORE:
     - '&bKills&7: &f<kills>'
     - '&bPing&7: &f<ping>'
     - '&bTime&7: &f<time>'
-    - ''
     - '<no-clean>'
+    - '<do-not-disturb>'
+    - ''
     - '&bfrozed.club'
     - '&7&m-------------------'
   FINISH:

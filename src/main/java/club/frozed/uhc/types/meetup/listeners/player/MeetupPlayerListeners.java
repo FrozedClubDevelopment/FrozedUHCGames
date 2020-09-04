@@ -67,6 +67,9 @@ public class MeetupPlayerListeners implements Listener {
                 scatterPlayers.add(meetupPlayer);
             }
         }
+        if (FrozedUHCGames.getInstance().getMeetupGameManager().isGameStarted()){
+            MeetupUtil.prepareSpectator(MeetupPlayer.getByUuid(e.getPlayer().getUniqueId()));
+        }
     }
 
     @EventHandler

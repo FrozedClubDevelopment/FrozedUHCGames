@@ -12,6 +12,7 @@ import org.bukkit.inventory.ItemStack;
 import java.util.Arrays;
 
 public class Rodless extends Scenario {
+
     public Rodless() {
         super("Rodless", (new ItemCreator(Material.FISHING_ROD)).setLore(Arrays.asList(new String[] { "&f- Can't use fishing rod" })).get());
     }

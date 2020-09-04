@@ -5,7 +5,8 @@ import club.frozed.uhc.commands.SetSpawnCommand;
 import club.frozed.uhc.data.MongoDB;
 import club.frozed.uhc.nms.NMS;
 import club.frozed.uhc.nms.version.v1_7_R4;
-import club.frozed.uhc.types.meetup.listeners.MeetupGameListener;
+import club.frozed.uhc.types.meetup.listeners.*;
+import club.frozed.uhc.types.meetup.command.AnnounceMeetupCommand;
 import club.frozed.uhc.types.meetup.listeners.MeetupGlassListener;
 import club.frozed.uhc.types.meetup.listeners.MeetupLobbyListener;
 import club.frozed.uhc.types.meetup.listeners.MeetupWorldListener;
@@ -60,14 +61,14 @@ public final class FrozedUHCGames extends JavaPlugin {
     @Override
     public void onEnable() {
         /*
-         * TODO:
-         *  - Configurable kits
-         *  - Custom Tablist [DONE]
-         *  - Death Messages [DONE]
-         *  - Make spectators display via Packets
-         *  - Fix invisible players
-         */
+        TO-DO
+        Kits por config
+        TabList
+        Msg de muerte
+        Spectator por packet
+        Fixeae player invisibles
 
+         */
         instance = this;
         commandFramework = new CommandFramework(this);
 
@@ -105,7 +106,10 @@ public final class FrozedUHCGames extends JavaPlugin {
 
         commandFramework.registerCommands(new SetSpawnCommand());
         commandFramework.registerCommands(new PlayerDebugCommand());
-        Bukkit.getPluginManager().registerEvents(new MenuListener(), this);
+        Bukkit.getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
+        Bukkit.getMessenger().registerOutgoingPluginChannel(this, "Broadcast");
+        Bukkit.getPluginManager().registerEvents(new MenuListener(),this);
+        commandFramework.registerCommands(new AnnounceMeetupCommand());
     }
 
     private void loadMeetup() {
@@ -135,6 +139,8 @@ public final class FrozedUHCGames extends JavaPlugin {
         new Fireless();
         new Rodless();
         new Bowless();
+        new DoNotDisturb();
+        new WebCage();
     }
 
     private void loadUHCRun() {
