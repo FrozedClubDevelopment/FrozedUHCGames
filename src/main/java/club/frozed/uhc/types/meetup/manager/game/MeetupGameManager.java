@@ -60,6 +60,10 @@ public class MeetupGameManager {
         return MeetupPlayer.playersData.values().stream().filter(MeetupPlayer::isAlive).collect(Collectors.toList());
     }
 
+    public List<MeetupPlayer> getSpectators() {
+        return MeetupPlayer.playersData.values().stream().filter(MeetupPlayer::isSpectating).collect(Collectors.toList());
+    }
+
     public int getMaxPlayers() {
         return (int) MeetupPlayer.playersData.values().stream().filter(MeetupPlayer::isPlayed).count();
     }
