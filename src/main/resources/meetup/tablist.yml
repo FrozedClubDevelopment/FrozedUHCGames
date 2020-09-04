@@ -1,0 +1,32 @@
+TABLIST:
+  TITLE: "&b&lUHC Meetup"
+  HEADER: "&b&lFrozedUHCGames"
+  FOOTER: "&7&oYou're playing &bFrozedSG &7&oon mc.frozed.club"
+
+  LEFT_FOOTER: "&bwww.frozed.club"
+  CENTER_FOOTER: "&bwww.frozed.club"
+  RIGHT_FOOTER: "&bwww.frozed.club"
+
+  WAITING:
+    YOU: "&b&lYou"
+    YOUR_NAME: "&fName: &b<playerName>"
+
+    STATE: "&b&lLobby"
+    PLAYERS: "&fPlayers: &b<online_players>"
+    MAX_PLAYERS: "&fMax Players: &b<max_players>"
+    REQUIRED_PLAYERS: "&fRequired: &b<required_players>"
+
+    PLAYER_STATS: "&b&lPlayer Stats"
+    TOTAL_KILLS: "&fKills: &b<playerKills>"
+    TOTAL_DEATHS: "&fDeaths: &b<playerDeaths>"
+    TOTAL_KDR: "&fKDR: &b<playerKDR>"
+    TOTAL_WINS: "&fWins: &b<playerWins>"
+
+  PLAYING:
+    PLAYER_TITLE: "&b&lPlayers"
+    SCENARIO_TITLE: "&b&lScenario"
+    SPECTATOR_TITLE: "&b&lSpectators"
+
+    PLAYERS: "&b<game_players> &fplayers"
+    SCENARIO: "&f» &b<game_scenario> &f«"
+    SPECTATORS: "&b<game_spectators> &fwatching"
