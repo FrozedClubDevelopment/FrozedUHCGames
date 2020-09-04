@@ -70,7 +70,10 @@ public class StartingGameTask extends BukkitRunnable {
             });
             FrozedUHCGames.getInstance().getMeetupWorld().getMeetupWorld().setPVP(true);
             if (!FrozedUHCGames.getInstance().getMeetupMainConfig().getConfig().getString("SOUNDS.START").equalsIgnoreCase("none") || FrozedUHCGames.getInstance().getMeetupMainConfig().getConfig().getString("SOUNDS.START") != null) {
-                Utils.getOnlinePlayers().forEach(player -> player.playSound(player.getLocation(), Sound.valueOf(FrozedUHCGames.getInstance().getMeetupMainConfig().getConfig().getString("SOUNDS.START")), 2F, 2F));
+                Utils.getOnlinePlayers().forEach(player -> {
+                    player.playSound(player.getLocation(), Sound.valueOf(FrozedUHCGames.getInstance().getMeetupMainConfig().getConfig().getString("SOUNDS.START")), 2F, 2F);
+//                    player.closeInventory();
+                });
             }
             VoteScenarioMenu.getHighestVote().enable();
             Utils.broadcastMessage(CC.translate(FrozedUHCGames.getInstance().getMeetupMessagesConfig().getConfig().getString("SCENARIO").replace("<scenario>",VoteScenarioMenu.getHighestVote().getName())));

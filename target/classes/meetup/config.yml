@@ -1,0 +1,59 @@
+SETTINGS:
+  STATS-ITEM:
+    ITEM:
+      MATERIAL: DIAMOND_SWORD
+      DATA: 0
+    SLOT: 0
+    NAME: '&b&lStatistics'
+  SPECTATOR-ITEM:
+    ITEM:
+      MATERIAL: SKULL_ITEM
+      DATA: 0
+      SLOT: 0
+      NAME: '&b&lSpectate Menu'
+  WORLD:
+    NAME: 'meetup_world'
+    SIZE: 200
+  GLASS-BORDER:
+    ENABLED: true
+    DATA: 3
+    # Glass Colors Data -> https://pastebin.com/NZw2QC3P
+  BORDER:
+    SHRINK-UNTIL: 25
+    SHRINK-EVERY-SECONDS: 180
+    SHRINK-STREAM: 200;150;100;50;25
+  REQUIRED-PLAYERS: 3
+  MAX-PLAYERS: 32
+  STARTING-TIME: 30
+  RESTART-TIME: 10
+
+STATISTICS:
+  TITLE: '&bStatistics'
+  ITEM-NAME-COLOR: AQUA
+  FORMAT: '&f#<number>&7: &b<player> &7» &f<amount>'
+  PLAYER-STATS:
+    NAME: '&b&lYour Statistics'
+    LORE:
+      - '&7&m---------------------'
+      - '&b&lWins &7» &f<wins>'
+      - '&b&lDeaths &7» &f<deaths>'
+      - '&b&lKills &7» &f<kills>'
+      - '&b&lGames Played &7» &f<games-played>'
+      - ''
+      - '&b&lKDR &7» &f<kdr>'
+      - '&7&m---------------------'
+
+SOUNDS:
+  START: 'ENDERDRAGON_GROWL'
+  START_COUNTDOWN: 'NOTE_PLING'
+  BORDER_COUNTDOWN: 'NOTE_PLING'
+  BORDER: 'FIREWORK_BLAST'
+
+HOLOGRAM:
+  TITLE: '&f&l<player>''s &b&lStatistics'
+  LINES:
+    - '&b&lTotal Kills&7: &f<kills>'
+    - '&b&lTotal Deaths&7: &f<deaths>'
+    - '&b&lTotal KRD&7: &f<kdr>'
+    - '&b&lTotal Wins&7: &f<wins>'
+    - '&b&lGames Played&7: &f<games>'

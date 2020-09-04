@@ -1,0 +1,7 @@
+name: FrozedUHCGames
+version: ${project.version}
+main: club.frozed.uhc.FrozedUHCGames
+website: www.frozed.club
+authors:
+  - Ryzeon
+  - Elb1to

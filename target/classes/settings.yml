@@ -1,0 +1,10 @@
+MODE: MEETUP # Modes: MEETUP -> UHC-RUN
+
+SPAWN:
+  WORLD: 'World'
+  COORDS:
+    X: 0
+    Y: 0
+    Z: 0
+    YAW: 0
+    PITCH: 0

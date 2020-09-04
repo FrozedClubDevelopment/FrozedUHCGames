@@ -62,7 +62,6 @@ public final class FrozedUHCGames extends JavaPlugin {
         Msg de muerte
         Spectator por packet
         Fixeae player invisibles
-
          */
         instance = this;
         commandFramework = new CommandFramework(this);
@@ -124,6 +123,8 @@ public final class FrozedUHCGames extends JavaPlugin {
         new Fireless();
         new Rodless();
         new Bowless();
+        new DoNotDisturb();
+        new WebCage();
     }
 
     private void loadUHCRun() {

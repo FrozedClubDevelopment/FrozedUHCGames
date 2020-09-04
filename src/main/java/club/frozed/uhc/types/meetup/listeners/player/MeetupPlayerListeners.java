@@ -34,10 +34,6 @@ public class MeetupPlayerListeners implements Listener {
     public void onPlayerJoin(PlayerJoinEvent e) {
         e.setJoinMessage(null);
         new MeetupScoreboard(e.getPlayer());
-        if (FrozedUHCGames.getInstance().getMeetupGameManager().isGameStarted()){
-            MeetupUtil.prepareSpectator(MeetupPlayer.getByUuid(e.getPlayer().getUniqueId()));
-            e.getPlayer().teleport(new Location(FrozedUHCGames.getInstance().getMeetupWorld().getMeetupWorld(), 0.0D, (FrozedUHCGames.getInstance().getMeetupWorld().getMeetupWorld().getHighestBlockYAt(0, 0) + 10), 0.0D));
-        }
         if (FrozedUHCGames.getInstance().getMeetupGameManager().getState() == MeetupGameManager.State.WAITING) {
             if (FrozedUHCGames.getInstance().getSpawnManager().isSet()) {
                 e.getPlayer().teleport(FrozedUHCGames.getInstance().getSpawnManager().getSpawnLocation());
@@ -66,6 +62,9 @@ public class MeetupPlayerListeners implements Listener {
                 meetupPlayer.setScatterLocation(FrozedUHCGames.getInstance().getMeetupGameManager().getScatterLocations().remove(0));
                 scatterPlayers.add(meetupPlayer);
             }
+        }
+        if (FrozedUHCGames.getInstance().getMeetupGameManager().isGameStarted()){
+            MeetupUtil.prepareSpectator(MeetupPlayer.getByUuid(e.getPlayer().getUniqueId()));
         }
     }
 

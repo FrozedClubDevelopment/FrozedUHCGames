@@ -1,0 +1,10 @@
+JOIN-PLAYER: '&b<player> joined, &f<start-player> &bmore to start....'
+
+SCENARIO: '&b<scenario> &fwon the vote and was activated!'
+
+COUNTER:
+  START: '&fGame starts in &b<time> &f<type>&b.'
+  BORDER:
+    SHRUNK: "&bBorder has been shrunk to &f<border_size> blocks&b."
+    SHRINK-MINUTES: "&bBorder is going to shrink to &f<next_border>&bx&f<next_border> &bin &f<minutes> &bminute(s)"
+    SHRINK-SECONDS: "&bBorder is going to shrink to &f<next_border>&bx&f<next_border> &bin &f<seconds> &bsecond(s)"
