@@ -5,6 +5,7 @@ import club.frozed.uhc.commands.SetSpawnCommand;
 import club.frozed.uhc.data.MongoDB;
 import club.frozed.uhc.nms.NMS;
 import club.frozed.uhc.nms.version.v1_7_R4;
+import club.frozed.uhc.types.meetup.command.AnnounceMeetupCommand;
 import club.frozed.uhc.types.meetup.listeners.*;
 import club.frozed.uhc.types.meetup.listeners.MeetupGlassListener;
 import club.frozed.uhc.types.meetup.listeners.player.MeetupPlayerListeners;
@@ -97,7 +98,10 @@ public final class FrozedUHCGames extends JavaPlugin {
 
         commandFramework.registerCommands(new SetSpawnCommand());
         commandFramework.registerCommands(new PlayerDebugCommand());
+        commandFramework.registerCommands(new AnnounceMeetupCommand());
         Bukkit.getPluginManager().registerEvents(new MenuListener(),this);
+        Bukkit.getMessenger().registerOutgoingPluginChannel(this, "Broadcast");
+        Bukkit.getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
     }
 
     private void loadMeetup() {

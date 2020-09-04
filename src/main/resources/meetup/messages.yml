@@ -2,6 +2,8 @@ JOIN-PLAYER: '&b<player> joined, &f<start-player> &bmore to start....'
 
 SCENARIO: '&b<scenario> &fwon the vote and was activated!'
 
+INVITE: '&b<player> &7is playing on &b<server>&7. Use &b/join <server> &7to join!'
+
 COUNTER:
   START: '&fGame starts in &b<time> &f<type>&b.'
   BORDER:

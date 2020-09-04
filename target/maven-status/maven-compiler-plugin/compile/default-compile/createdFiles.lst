@@ -25,6 +25,7 @@ club\frozed\uhc\utils\command\BukkitCompleter.class
 club\frozed\uhc\utils\menu\type\ChestMenu.class
 club\frozed\uhc\utils\time\TimeUtil.class
 club\frozed\uhc\nms\version\v1_7_R4.class
+club\frozed\uhc\types\meetup\command\AnnounceMeetupCommand.class
 club\frozed\uhc\types\meetup\menu\SpectateMenu.class
 club\frozed\uhc\types\meetup\scenario\scenarios\Default.class
 club\frozed\uhc\commands\SetSpawnCommand.class

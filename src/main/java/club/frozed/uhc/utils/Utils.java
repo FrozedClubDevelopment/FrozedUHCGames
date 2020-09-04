@@ -2,6 +2,8 @@ package club.frozed.uhc.utils;
 
 import club.frozed.uhc.FrozedUHCGames;
 import club.frozed.uhc.types.meetup.manager.world.Border;
+import com.google.common.io.ByteArrayDataOutput;
+import com.google.common.io.ByteStreams;
 import org.bukkit.*;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -122,5 +124,14 @@ public class Utils {
 
     public static void broadcastMessage(String string){
         getOnlinePlayers().forEach(player -> player.sendMessage(CC.translate(string)));
+    }
+
+    public static void globalBroadcast(Player player, String message) {
+        ByteArrayDataOutput output = ByteStreams.newDataOutput();
+        output.writeUTF("Message");
+        output.writeUTF("ALL");
+        output.writeUTF(message);
+
+        player.sendPluginMessage(FrozedUHCGames.getInstance(), "BungeeCord", output.toByteArray());
     }
 }

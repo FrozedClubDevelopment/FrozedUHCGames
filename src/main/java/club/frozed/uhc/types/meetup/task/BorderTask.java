@@ -32,7 +32,7 @@ public class BorderTask extends BukkitRunnable {
             border.setSize(borderSize);
             Utils.playSound(FrozedUHCGames.getInstance().getMeetupMainConfig().getConfig().getString("SOUNDS.BORDER"));
             Utils.broadcastMessage(FrozedUHCGames.getInstance().getMeetupMessagesConfig().getConfig().getString("COUNTER.BORDER.SHRUNK")
-                    .replaceAll("<border_size", String.valueOf(border.getSize()))
+                    .replaceAll("<border_size>", String.valueOf(border.getSize()))
             );
         }
         int minutes = border.getSeconds() / 60;
