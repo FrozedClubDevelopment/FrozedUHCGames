@@ -155,7 +155,6 @@ public final class FrozedUHCGames extends JavaPlugin {
             new Ziggurat(this, new MeetupTablist());
         } else {
             Bukkit.getConsoleSender().sendMessage(CC.CHAT_BAR);
-            Bukkit.getConsoleSender().sendMessage("FrozedUHCGames Tablist is only compatible with 1.8!");
             Bukkit.getConsoleSender().sendMessage(CC.translate("&b[FrozedUHCGames] &4ERROR &c-> The Custom Tablist is only compatible with 1.8!"));
             Bukkit.getConsoleSender().sendMessage(CC.CHAT_BAR);
         }

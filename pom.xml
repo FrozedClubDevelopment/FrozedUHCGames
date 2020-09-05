@@ -6,7 +6,7 @@
 
     <groupId>club.frozed.uhc</groupId>
     <artifactId>FrozedUHCGames</artifactId>
-    <version>1.0-TEST</version>
+    <version>1.0</version>
     <url>https://github.com/FrozedClubDevelopment/FrozedUHCGames</url>
 
     <properties>
