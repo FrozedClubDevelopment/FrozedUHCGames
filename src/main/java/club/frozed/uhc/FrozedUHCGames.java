@@ -45,7 +45,7 @@ public final class FrozedUHCGames extends JavaPlugin {
     @Getter
     public static FrozedUHCGames instance;
     private CommandFramework commandFramework;
-    private NMS nmsHandler = new v1_7_R4();
+    private NMS nmsHandler;
     private Random random = new Random();
 
     private FileConfig databaseConfig;
@@ -81,6 +81,24 @@ public final class FrozedUHCGames extends JavaPlugin {
         meetupMessagesConfig = new FileConfig(this, "meetup/messages.yml");
         meetupTablistConfig = new FileConfig(this, "meetup/tablist.yml");
         settingsConfig = new FileConfig(this, "settings.yml");
+        String packageName = this.getServer().getClass().getPackage().getName();
+        String version = packageName.substring(packageName.lastIndexOf('.') + 1);
+        try {
+            final Class<?> clazz = Class.forName("club.frozed.uhc.nms.version." + version);
+            if (NMS.class.isAssignableFrom(clazz)) {
+                nmsHandler = (NMS) clazz.getConstructor().newInstance();
+            }
+            Bukkit.getConsoleSender().sendMessage(CC.CHAT_BAR);
+            Bukkit.getConsoleSender().sendMessage(CC.translate("&b[FrozedUHCGames] &aEsTaS uSaNdO lA vErZiOn -> "+ version));
+            Bukkit.getConsoleSender().sendMessage(CC.CHAT_BAR);
+        } catch (final Exception e) {
+//            e.printStackTrace();
+            Bukkit.getConsoleSender().sendMessage(CC.CHAT_BAR);
+            Bukkit.getConsoleSender().sendMessage(CC.translate("&b[FrozedUHCGames] &4ERROR &c-> Could not find support for this version. Running version: " + version));
+            Bukkit.getConsoleSender().sendMessage(CC.CHAT_BAR);
+            this.setEnabled(false);
+            return;
+        }
 
         spawnManager = new SpawnManager();
 
