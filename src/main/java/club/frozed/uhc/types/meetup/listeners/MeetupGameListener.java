@@ -51,7 +51,7 @@ public class MeetupGameListener implements Listener {
         }
 
         if (entity.getLastDamageCause() != null) {
-            String killerName = "Null killer";
+            String killerName = "Null Killer";
             if (playerKiller != null) {
                 killerName = "§a" + FrozedUHCGames.getInstance().getMeetupMessagesConfig().getConfig().getString("DEATH-MESSAGES.KILLER-NAME-FORMAT")
                         .replace("<killer>", playerKiller.getName())

@@ -81,6 +81,7 @@ public final class FrozedUHCGames extends JavaPlugin {
         meetupMessagesConfig = new FileConfig(this, "meetup/messages.yml");
         meetupTablistConfig = new FileConfig(this, "meetup/tablist.yml");
         settingsConfig = new FileConfig(this, "settings.yml");
+
         String packageName = this.getServer().getClass().getPackage().getName();
         String version = packageName.substring(packageName.lastIndexOf('.') + 1);
         try {
@@ -92,7 +93,7 @@ public final class FrozedUHCGames extends JavaPlugin {
             Bukkit.getConsoleSender().sendMessage(CC.translate("&b[FrozedUHCGames] &aEsTaS uSaNdO lA vErZiOn -> "+ version));
             Bukkit.getConsoleSender().sendMessage(CC.CHAT_BAR);
         } catch (final Exception e) {
-//            e.printStackTrace();
+            e.printStackTrace();
             Bukkit.getConsoleSender().sendMessage(CC.CHAT_BAR);
             Bukkit.getConsoleSender().sendMessage(CC.translate("&b[FrozedUHCGames] &4ERROR &c-> Could not find support for this version. Running version: " + version));
             Bukkit.getConsoleSender().sendMessage(CC.CHAT_BAR);
@@ -170,6 +171,9 @@ public final class FrozedUHCGames extends JavaPlugin {
 
     public void checkVersion() {
         if (Bukkit.getVersion().contains("1.8")) {
+            Bukkit.getConsoleSender().sendMessage(CC.CHAT_BAR);
+            Bukkit.getConsoleSender().sendMessage(CC.translate("&b[FrozedUHCGames] &aSUCCESS -> The Custom Tablist has been loaded!"));
+            Bukkit.getConsoleSender().sendMessage(CC.CHAT_BAR);
             new Ziggurat(this, new MeetupTablist());
         } else {
             Bukkit.getConsoleSender().sendMessage(CC.CHAT_BAR);

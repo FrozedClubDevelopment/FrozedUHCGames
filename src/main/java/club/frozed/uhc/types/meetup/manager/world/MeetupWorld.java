@@ -2,6 +2,7 @@ package club.frozed.uhc.types.meetup.manager.world;
 
 import club.frozed.uhc.FrozedUHCGames;
 import club.frozed.uhc.types.meetup.manager.game.MeetupGameManager;
+import club.frozed.uhc.utils.CC;
 import club.frozed.uhc.utils.Utils;
 import club.frozed.uhc.utils.config.ConfigCursor;
 import club.frozed.uhc.utils.task.TaskUtil;
@@ -19,12 +20,13 @@ import java.util.*;
 @Getter
 public class MeetupWorld {
 
-    private String meetupWorldName;
-    private World world, meetupWorld;
+    private final String meetupWorldName;
+    private final World world;
+    private World meetupWorld;
     private int meetupWorldSize;
 
-    private Set<Integer> materialBypass = new HashSet<>(Arrays.asList(17, 162, 18, 161, 0, 81, 175, 31, 37, 38, 175, 39, 40));
-    private List<Location> borderBlocks = new ArrayList<>();
+    private final Set<Integer> materialBypass = new HashSet<>(Arrays.asList(17, 162, 18, 161, 0, 81, 175, 31, 37, 38, 175, 39, 40));
+    private final List<Location> borderBlocks = new ArrayList<>();
 
     public MeetupWorld() {
         MeetupGameManager meetupGameManager = FrozedUHCGames.getInstance().getMeetupGameManager();
@@ -54,7 +56,7 @@ public class MeetupWorld {
                 TaskUtil.runLater(() -> {
                     Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "wb shape square");
                     Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "wb " + this.meetupWorldName + " set " + this.meetupWorldSize + " " + this.meetupWorldSize + " 0 0");
-                    Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "wb " + this.meetupWorldName + " fill 1000");
+                    Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "wb " + this.meetupWorldName + " fill 500");
                     Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "wb fill confirm");
                 }, 20);
                 return;
@@ -98,6 +100,7 @@ public class MeetupWorld {
                 Runtime.getRuntime().exec("rm -rf " + path + "/" + this.meetupWorldName);
             }
         } catch (IOException e) {
+            Bukkit.getConsoleSender().sendMessage(CC.translate("&b[FrozedUHCGames] &cThe Meetup Match World couldn't be removed."));
             Bukkit.shutdown();
         }
     }

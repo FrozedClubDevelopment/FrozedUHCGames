@@ -73,7 +73,7 @@ public class MeetupTablist implements ZigguratAdapter {
             }
         }
 
-        if (gameManager.getState() == MeetupGameManager.State.STARTING || gameManager.getState() == MeetupGameManager.State.PLAYING) {
+        if (gameManager.getState() == MeetupGameManager.State.STARTING || gameManager.getState() == MeetupGameManager.State.PLAYING || gameManager.getState() == MeetupGameManager.State.FINISH) {
             objects.add(new BufferedTabObject().slot(3).text(meetupTablistConfig.getString("PLAYING.PLAYER_TITLE")));
             objects.add(new BufferedTabObject().slot(4).text(replace(meetupTablistConfig.getString("PLAYING.PLAYERS"), player)));
 
@@ -116,8 +116,8 @@ public class MeetupTablist implements ZigguratAdapter {
                 .replaceAll("<max_players>", String.valueOf(gameManager.getMaxPlayers()))
                 .replaceAll("<required_players>", String.valueOf(gameManager.getPlayersNeedToStart()))
 
-                .replaceAll("<game_players>", String.valueOf(gameManager.getAlivePlayers()))
-                .replaceAll("<game_spectators>", String.valueOf(gameManager.getSpectators()))
+                .replaceAll("<game_players>", String.valueOf(gameManager.getAlivePlayers().size()))
+                .replaceAll("<game_spectators>", String.valueOf(gameManager.getSpectators().size()))
 
                 .replaceAll("<game_scenario>", String.valueOf(VoteScenarioMenu.getHighestVote().getName()))
 
