@@ -17,6 +17,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.player.PlayerItemBreakEvent;
 import org.bukkit.event.player.PlayerItemConsumeEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerLoginEvent;
@@ -106,5 +107,16 @@ public class MeetupPlayerListeners implements Listener {
     @EventHandler
     public void onBreakBlock(BlockBreakEvent e) {
         if (e.getBlock().getType() == Material.BEDROCK) e.setCancelled(true);
+    }
+
+    @EventHandler
+    public void onSkyBase(BlockPlaceEvent e){
+        if (FrozedUHCGames.getInstance().getMeetupGameManager().getState() == MeetupGameManager.State.PLAYING) {
+            int y = FrozedUHCGames.getInstance().getMeetupMainConfig().getConfig().getInt("SETTINGS.MAX-HEIGHT-TO-PUT-BLOCKS");
+            if (e.getBlock().getY() > y) {
+                e.setCancelled(true);
+                e.getPlayer().sendMessage(CC.translate(FrozedUHCGames.getInstance().getMeetupMessagesConfig().getConfig().getString("MAX-HEIGHT")));
+            }
+        }
     }
 }
