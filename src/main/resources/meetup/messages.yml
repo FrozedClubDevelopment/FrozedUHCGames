@@ -4,6 +4,8 @@ SCENARIO: '&b<scenario> &fwon the vote and was activated!'
 
 INVITE: '&b<player> &7is playing on &b<server>&7. Use &b/join <server> &7to join!'
 
+MAX-HEIGHT: '&cYou cannot put more blocks from this height'
+
 COUNTER:
   START: '&fGame starts in &b<time> &f<type>&b.'
   BORDER:
