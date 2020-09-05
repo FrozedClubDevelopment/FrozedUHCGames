@@ -15,7 +15,6 @@ import org.bukkit.entity.Player;
  * Date: 4/09/2020 @ 08:44
  * Template by Elb1to
  */
-
 public class AnnounceMeetupCommand extends BaseCommand {
     @Command(name = "announce",aliases = {"invite","announcemeetup"},inGameOnly = true,permission = "uhcgames.invite")
 
@@ -25,6 +24,7 @@ public class AnnounceMeetupCommand extends BaseCommand {
 
         Utils.globalBroadcast(p, CC.translate(FrozedUHCGames.getInstance().getMeetupMessagesConfig().getConfig().getString("INVITE")
                 .replace("<player>",p.getName())
-                .replace("<server>", Lang.MEETUP_SERVER_NAME)));
+                .replace("<server>", Lang.MEETUP_SERVER_NAME))
+        );
     }
 }
