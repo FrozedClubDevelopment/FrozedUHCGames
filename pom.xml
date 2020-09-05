@@ -6,13 +6,20 @@
 
     <groupId>club.frozed.uhc</groupId>
     <artifactId>FrozedUHCGames</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0-TEST</version>
     <url>https://github.com/FrozedClubDevelopment/FrozedUHCGames</url>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     </properties>
+
+    <repositories>
+        <repository>
+            <id>jitpack.io</id>
+            <url>https://jitpack.io</url>
+        </repository>
+    </repositories>
 
     <dependencies>
         <!-- 1.8.8 -->
@@ -40,6 +47,14 @@
             <version>1.0-SNAPSHOT</version>
             <scope>compile</scope>
         </dependency>
+
+        <!-- Hatsur Tab -->
+        <!--<dependency>
+            <groupId>dev.hatsur</groupId>
+            <artifactId>SevenTab</artifactId>
+            <version>1.0.0-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>-->
 
         <!-- World Border -->
         <dependency>
