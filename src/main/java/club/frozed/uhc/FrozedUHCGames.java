@@ -5,8 +5,8 @@ import club.frozed.uhc.commands.SetSpawnCommand;
 import club.frozed.uhc.data.MongoDB;
 import club.frozed.uhc.nms.NMS;
 import club.frozed.uhc.nms.version.v1_7_R4;
-import club.frozed.uhc.types.meetup.listeners.*;
 import club.frozed.uhc.types.meetup.command.AnnounceMeetupCommand;
+import club.frozed.uhc.types.meetup.listeners.MeetupGameListener;
 import club.frozed.uhc.types.meetup.listeners.MeetupGlassListener;
 import club.frozed.uhc.types.meetup.listeners.MeetupLobbyListener;
 import club.frozed.uhc.types.meetup.listeners.MeetupWorldListener;
@@ -19,6 +19,7 @@ import club.frozed.uhc.types.meetup.manager.world.MeetupWorld;
 import club.frozed.uhc.types.meetup.provider.MeetupTablist;
 import club.frozed.uhc.types.meetup.scenario.scenarios.*;
 import club.frozed.uhc.types.meetup.task.MeetupScoreboardTask;
+import club.frozed.uhc.utils.CC;
 import club.frozed.uhc.utils.SpawnManager;
 import club.frozed.uhc.utils.command.CommandFramework;
 import club.frozed.uhc.utils.config.FileConfig;
@@ -37,10 +38,12 @@ import java.util.Random;
  * Project: FrozedUHCGames
  * Date: 09/01/2020 @ 12:40
  */
-@Getter @Setter
+@Getter
+@Setter
 public final class FrozedUHCGames extends JavaPlugin {
 
-    @Getter public static FrozedUHCGames instance;
+    @Getter
+    public static FrozedUHCGames instance;
     private CommandFramework commandFramework;
     private NMS nmsHandler = new v1_7_R4();
     private Random random = new Random();
@@ -108,7 +111,7 @@ public final class FrozedUHCGames extends JavaPlugin {
         commandFramework.registerCommands(new PlayerDebugCommand());
         Bukkit.getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
         Bukkit.getMessenger().registerOutgoingPluginChannel(this, "Broadcast");
-        Bukkit.getPluginManager().registerEvents(new MenuListener(),this);
+        Bukkit.getPluginManager().registerEvents(new MenuListener(), this);
         commandFramework.registerCommands(new AnnounceMeetupCommand());
     }
 
@@ -126,8 +129,8 @@ public final class FrozedUHCGames extends JavaPlugin {
             pluginManager.registerEvents(new MeetupGlassListener(), this);
         }
 
-        // Meetup Tablist
-        new Ziggurat(this, new MeetupTablist());
+        // Meetup Tablist Version Check
+        checkVersion();
 
         // Meetup Tasks
         new MeetupScoreboardTask().runTaskTimerAsynchronously(this, 0L, 2L);
@@ -145,5 +148,16 @@ public final class FrozedUHCGames extends JavaPlugin {
 
     private void loadUHCRun() {
 
+    }
+
+    public void checkVersion() {
+        if (Bukkit.getVersion().contains("1.8")) {
+            new Ziggurat(this, new MeetupTablist());
+        } else {
+            Bukkit.getConsoleSender().sendMessage(CC.CHAT_BAR);
+            Bukkit.getConsoleSender().sendMessage("FrozedUHCGames Tablist is only compatible with 1.8!");
+            Bukkit.getConsoleSender().sendMessage(CC.translate("&b[FrozedUHCGames] &4ERROR &c-> The Custom Tablist is only compatible with 1.8!"));
+            Bukkit.getConsoleSender().sendMessage(CC.CHAT_BAR);
+        }
     }
 }
