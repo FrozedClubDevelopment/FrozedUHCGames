@@ -22,11 +22,6 @@ public class MeetupGameListener implements Listener {
             return;
         }
 
-        String message = e.getDeathMessage();
-        if (message == null || message.isEmpty()) {
-            return;
-        }
-
         Player player = e.getEntity();
         Player killer = e.getEntity().getKiller();
         MeetupPlayer meetupPlayer = MeetupPlayer.getByUuid(player.getUniqueId());
@@ -39,10 +34,11 @@ public class MeetupGameListener implements Listener {
             killerPlayer.setKills(meetupPlayer.getKills() + 1);
             killerPlayer.setGameKills(killerPlayer.getGameKills() + 1);
         }
-        e.setDeathMessage(CC.translate(this.getDeathMessage(message, e.getEntity(), e.getEntity().getKiller())));
+        e.setDeathMessage(CC.translate(this.getDeathMessage(e.getEntity(), e.getEntity().getKiller())));
     }
 
-    public String getDeathMessage(String input, LivingEntity entity, Entity killer) {
+    public String getDeathMessage(LivingEntity entity, Entity killer) {
+        String input = "Null msg";
         String name;
         if (entity instanceof Player) {
             Player player = (Player) entity;
