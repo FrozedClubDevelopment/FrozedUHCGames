@@ -38,7 +38,7 @@ public class StartingGameTask extends BukkitRunnable {
                 FrozedUHCGames.getInstance().getNmsHandler().addVehicle(meetupPlayer.getPlayer());
                 new VoteScenarioMenu().open(meetupPlayer.getPlayer());
                 MeetupUtil.prepareGame(meetupPlayer);
-                Location hologramLocation  = new Location(meetupPlayer.getPlayer().getWorld(),meetupPlayer.getPlayer().getLocation().getX(),meetupPlayer.getPlayer().getLocation().getY() + 3.99,meetupPlayer.getPlayer().getLocation().getZ() + 3.50);
+                Location hologramLocation  = new Location(meetupPlayer.getPlayer().getWorld(),meetupPlayer.getPlayer().getLocation().getX(),meetupPlayer.getPlayer().getLocation().getY() + 2.25,meetupPlayer.getPlayer().getLocation().getZ() + 3.00);
                 this.hologram = HologramAPI.createHologram(hologramLocation,CC.translate(hologramConfig.getString("TITLE")
                         .replace("<player>",meetupPlayer.getPlayer().getName())));
                 this.hologram.spawn();
