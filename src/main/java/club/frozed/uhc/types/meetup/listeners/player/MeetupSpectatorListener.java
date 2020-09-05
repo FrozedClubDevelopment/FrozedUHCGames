@@ -130,8 +130,9 @@ public class MeetupSpectatorListener implements Listener {
         Player player = (Player) e.getEntity();
         MeetupPlayer meetupPlayer = MeetupPlayer.getByUuid(player.getUniqueId());
 
-        if (!meetupPlayer.isSpectating()) return;
-        e.setCancelled(true);
+        if (meetupPlayer.getState().equals(MeetupPlayer.State.WAITING) || meetupPlayer.getState().equals(MeetupPlayer.State.SPECTATOR)) {
+            e.setCancelled(true);
+        }
     }
 
     @EventHandler
