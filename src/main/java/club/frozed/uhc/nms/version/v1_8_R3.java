@@ -7,7 +7,6 @@ import org.bukkit.Location;
 import org.bukkit.craftbukkit.v1_8_R3.CraftWorld;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
-import org.bukkit.event.entity.PlayerDeathEvent;
 
 import java.util.HashMap;
 
@@ -26,24 +25,23 @@ public class v1_8_R3 implements NMS {
         Location location = player.getLocation();
         WorldServer worldServer = ((CraftWorld) player.getLocation().getWorld()).getHandle();
 
-        EntityBat bat = new EntityBat(worldServer);
-        bat.setLocation(location.getX() + 0.5, location.getY() + 2.0, location.getZ() + 0.5, 0.0f, 0.0f);
-        bat.setHealth(bat.getMaxHealth());
-        bat.setInvisible(true);
-        bat.d(0);
-        bat.setAsleep(true);
-        bat.setAirTicks(10);
-        bat.setSneaking(false);
+        EntityPig pig = new EntityPig(worldServer);
+        pig.setLocation(location.getX() + 0.5, location.getY() + 2.0, location.getZ() + 0.5, 0.0f, 0.0f);
+        pig.setHealth(pig.getMaxHealth());
+        pig.setInvisible(true);
+        pig.d(0);
+        pig.setAirTicks(10);
+        pig.setSneaking(false);
 
         PlayerConnection playerConnection = ((CraftPlayer) player).getHandle().playerConnection;
 
-        PacketPlayOutSpawnEntityLiving packet = new PacketPlayOutSpawnEntityLiving(bat);
-        PacketPlayOutAttachEntity attach = new PacketPlayOutAttachEntity(0, ((CraftPlayer) player).getHandle(), bat);
+        PacketPlayOutSpawnEntityLiving packet = new PacketPlayOutSpawnEntityLiving(pig);
+        PacketPlayOutAttachEntity attach = new PacketPlayOutAttachEntity(0, ((CraftPlayer) player).getHandle(), pig);
 
         playerConnection.sendPacket(packet);
         playerConnection.sendPacket(attach);
 
-        vehicles.put(player, bat.getId());
+        vehicles.put(player, pig.getId());
     }
 
     @Override
