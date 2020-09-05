@@ -5,10 +5,6 @@ import club.frozed.uhc.types.meetup.manager.MeetupPlayer;
 import club.frozed.uhc.types.meetup.manager.game.MeetupGameManager;
 import club.frozed.uhc.utils.CC;
 import club.frozed.uhc.utils.MeetupUtil;
-import com.google.common.base.Preconditions;
-import net.minecraft.server.v1_8_R3.EntityLiving;
-import org.bukkit.craftbukkit.v1_8_R3.entity.CraftEntity;
-import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -43,12 +39,7 @@ public class MeetupGameListener implements Listener {
             killerPlayer.setKills(meetupPlayer.getKills() + 1);
             killerPlayer.setGameKills(killerPlayer.getGameKills() + 1);
         }
-        e.setDeathMessage(CC.translate(this.getDeathMessage(message, e.getEntity(), this.getKiller(e))));
-    }
-
-    public CraftEntity getKiller(PlayerDeathEvent event) {
-        EntityLiving lastAttacker = ((CraftPlayer) event.getEntity()).getHandle().lastDamager;
-        return (lastAttacker == null) ? null : lastAttacker.getBukkitEntity();
+        e.setDeathMessage(CC.translate(this.getDeathMessage(message, e.getEntity(), e.getEntity().getKiller())));
     }
 
     public String getDeathMessage(String input, LivingEntity entity, Entity killer) {
@@ -65,9 +56,8 @@ public class MeetupGameListener implements Listener {
         if (entity.getLastDamageCause() != null) {
             String killerName = "";
             if (killer != null) {
-                killerName = (killer instanceof Player) ? "&a" + FrozedUHCGames.getInstance().getMeetupMessagesConfig().getConfig().getString("DEATH-MESSAGES.KILLER-NAME-FORMAT")
-                        .replaceAll("<killer>", killer.getName())
-                        .replaceAll("<killer_kills>", String.valueOf(MeetupPlayer.getByUuid(killer.getUniqueId()).getGameKills())) : getEntityName(killer);
+                killerName = "§a" + FrozedUHCGames.getInstance().getMeetupMessagesConfig().getConfig().getString("DEATH-MESSAGES.KILLER-NAME-FORMAT")
+                        .replace("<killer>", killer.getName()).replace("<killer_kills>", String.valueOf(MeetupPlayer.getByUuid(killer.getUniqueId()).getGameKills()));
             }
 
             switch (entity.getLastDamageCause().getCause()) {
@@ -190,10 +180,5 @@ public class MeetupGameListener implements Listener {
         }
 
         return input;
-    }
-
-    public String getEntityName(Entity entity) {
-        Preconditions.checkNotNull(entity, "Entity cannot be null");
-        return (entity instanceof Player) ? entity.getName() : ((CraftEntity) entity).getHandle().getName();
     }
 }
