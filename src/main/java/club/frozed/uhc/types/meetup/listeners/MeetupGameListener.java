@@ -37,7 +37,8 @@ public class MeetupGameListener implements Listener {
         e.setDeathMessage(CC.translate(this.getDeathMessage(e.getEntity(), e.getEntity().getKiller())));
     }
 
-    public String getDeathMessage(LivingEntity entity, Entity killer) {
+    public String getDeathMessage(Entity entity, Entity killer) {
+        Player playerKiller = (Player) killer;
         String input = "Null msg";
         String name;
         if (entity instanceof Player) {
@@ -50,10 +51,11 @@ public class MeetupGameListener implements Listener {
         }
 
         if (entity.getLastDamageCause() != null) {
-            String killerName = "";
-            if (killer != null) {
+            String killerName = "Null killer";
+            if (playerKiller != null) {
                 killerName = "§a" + FrozedUHCGames.getInstance().getMeetupMessagesConfig().getConfig().getString("DEATH-MESSAGES.KILLER-NAME-FORMAT")
-                        .replace("<killer>", killer.getName()).replace("<killer_kills>", String.valueOf(MeetupPlayer.getByUuid(killer.getUniqueId()).getGameKills()));
+                        .replace("<killer>", playerKiller.getName())
+                        .replace("<killer_kills>", String.valueOf(MeetupPlayer.getByUuid(playerKiller.getUniqueId()).getGameKills()));
             }
 
             switch (entity.getLastDamageCause().getCause()) {
