@@ -9,5 +9,4 @@ public interface NMS {
     void addVehicle(Player paramPlayer);
 
     void removeVehicle(Player paramPlayer);
-
 }
