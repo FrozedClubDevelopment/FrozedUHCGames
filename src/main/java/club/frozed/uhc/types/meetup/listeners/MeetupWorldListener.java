@@ -52,7 +52,7 @@ public class MeetupWorldListener implements Listener {
                 public void run() {
                     int xM = 0;
                     int zM = 0;
-                    int radius = 100;
+                    int radius = 200;
                     for (int x = xM - radius; x <= xM + radius; x++) {
                         for (int z = zM - radius; z <= zM + radius; z++) {
                             Block block = meetupWorld.getMeetupWorld().getBlockAt(x, this.y, z);
