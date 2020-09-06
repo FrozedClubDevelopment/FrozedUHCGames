@@ -4,3 +4,4 @@ target/
 dependency-reduced-pom.xml
 
 .idea/libraries/Maven__me_allen_Ziggurat_1_0_SNAPSHOT.xml
+.idea/jarRepositories.xml
