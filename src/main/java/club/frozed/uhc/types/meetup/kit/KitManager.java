@@ -74,4 +74,11 @@ public class KitManager {
     public static KitManager getKitByName(String name) {
         return kits.stream().filter(kit -> kit.getName().equalsIgnoreCase(name)).findFirst().orElse(null);
     }
+
+    public static boolean kitExits(String kit){
+        if (kits.contains(getKitByName(kit))){
+            return true;
+        }
+        return false;
+    }
 }

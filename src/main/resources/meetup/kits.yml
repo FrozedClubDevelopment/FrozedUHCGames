@@ -8,3 +8,9 @@ kits:
   '3':
     items: t@267:e@16@1;t@346;t@261:e@48@1;t@364:a@64;t@322:a@5;t@322:a@2:dn@§6§lGolden Head;t@279;t@259;t@4:a@64;null;t@327;t@326;null;null;t@145;null;null;null;null;t@326;t@327;null;t@278;t@116;t@262:a@64;null;null;null;null;null;null;null;t@384:a@64;null;null;null;
     armor: t@313:e@0@1;t@312:e@0@3;t@311:e@0@3;t@306:e@0@2;
+  '4':
+    items: t@267:e@16@1;t@346;t@261:e@48@1;t@364:a@64;t@322:a@7;t@322:a@2:dn@§6§lGolden Head;t@279;t@259;t@4:a@64;null;t@327;t@326;null;null;t@145;null;null;null;null;t@326;t@327;null;t@278;t@116;t@262:a@64;null;null;null;null;null;null;null;t@384:a@64;null;null;null;
+    armor: t@309:e@0@3;t@308:e@0@1;t@311:e@0@3;t@310:e@0@3;
+  '5':
+    items: t@267:e@16@2;t@346;t@261:e@48@1;t@364:a@64;t@322:a@4;t@322:dn@§6§lGolden Head;t@279;t@259;t@4:a@64;null;t@327;t@326;null;null;t@145;null;null;null;null;t@326;t@327;null;t@278;t@116;t@262:a@64;null;null;null;null;null;null;null;t@384:a@64;null;null;null;
+    armor: t@309:e@0@3;t@308:e@0@1;t@311:e@0@2;t@310:e@0@3;

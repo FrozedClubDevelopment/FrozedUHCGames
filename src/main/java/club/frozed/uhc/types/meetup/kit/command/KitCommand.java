@@ -71,6 +71,10 @@ public class KitCommand extends BaseCommand {
                     p.sendMessage(CC.translate("&cSpecific a kit name"));
                     return;
                 }
+                if (KitManager.kitExits(kitName)){
+                    p.sendMessage(CC.translate("&aThat kit already exists"));
+                    return;
+                }
                 new KitManager(kitName, p.getInventory().getContents(), p.getInventory().getArmorContents());
                 p.sendMessage(CC.translate("&aSuccessfully created &f" + kitName + " &akit"));
                 break;
