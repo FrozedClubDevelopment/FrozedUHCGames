@@ -47,7 +47,10 @@ public class PlayerMeetupDataLoad implements Listener {
                 e.setMotd(CC.translate("&eGenerating..."));
                 break;
             case WAITING:
-                e.setMotd(CC.translate("&aWaiting..."));
+                e.setMotd(CC.translate("&aWaiting for players..."));
+                break;
+            case STARTING:
+                e.setMotd(CC.translate("&eStarting..."));
                 break;
             case PLAYING:
                 e.setMotd(CC.translate("&cIn Game"));
