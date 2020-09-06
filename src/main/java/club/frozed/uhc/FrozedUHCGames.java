@@ -6,6 +6,8 @@ import club.frozed.uhc.data.MongoDB;
 import club.frozed.uhc.nms.NMS;
 import club.frozed.uhc.nms.version.v1_7_R4;
 import club.frozed.uhc.types.meetup.command.AnnounceMeetupCommand;
+import club.frozed.uhc.types.meetup.kit.KitManager;
+import club.frozed.uhc.types.meetup.kit.command.KitCommand;
 import club.frozed.uhc.types.meetup.listeners.MeetupGameListener;
 import club.frozed.uhc.types.meetup.listeners.MeetupGlassListener;
 import club.frozed.uhc.types.meetup.listeners.MeetupLobbyListener;
@@ -48,12 +50,7 @@ public final class FrozedUHCGames extends JavaPlugin {
     private NMS nmsHandler;
     private Random random = new Random();
 
-    private FileConfig databaseConfig;
-    private FileConfig settingsConfig;
-    private FileConfig meetupMainConfig;
-    private FileConfig meetupTablistConfig;
-    private FileConfig meetupMessagesConfig;
-    private FileConfig meetupScoreboardConfig;
+    private FileConfig databaseConfig, settingsConfig, meetupMainConfig, meetupTablistConfig, meetupMessagesConfig, meetupScoreboardConfig, meetupKitsConfig;
 
     private MongoDB mongoDB;
     private SpawnManager spawnManager;
@@ -65,7 +62,7 @@ public final class FrozedUHCGames extends JavaPlugin {
     public void onEnable() {
         /*
         TO-DO
-        Kits por config
+        Kits por config [Done]
         TabList [Done]
         Msg de muerte [Done]
         Spectator por packet
@@ -81,6 +78,7 @@ public final class FrozedUHCGames extends JavaPlugin {
         meetupMessagesConfig = new FileConfig(this, "meetup/messages.yml");
         meetupTablistConfig = new FileConfig(this, "meetup/tablist.yml");
         settingsConfig = new FileConfig(this, "settings.yml");
+        meetupKitsConfig = new FileConfig(this,"meetup/kits.yml");
 
         String packageName = this.getServer().getClass().getPackage().getName();
         String version = packageName.substring(packageName.lastIndexOf('.') + 1);
@@ -90,7 +88,7 @@ public final class FrozedUHCGames extends JavaPlugin {
                 nmsHandler = (NMS) clazz.getConstructor().newInstance();
             }
             Bukkit.getConsoleSender().sendMessage(CC.CHAT_BAR);
-            Bukkit.getConsoleSender().sendMessage(CC.translate("&b[FrozedUHCGames] &aEsTaS uSaNdO lA vErZiOn -> "+ version));
+            Bukkit.getConsoleSender().sendMessage(CC.translate("&b[FrozedUHCGames] &aYou are using versionn -> "+ version));
             Bukkit.getConsoleSender().sendMessage(CC.CHAT_BAR);
         } catch (final Exception e) {
             e.printStackTrace();
@@ -134,7 +132,21 @@ public final class FrozedUHCGames extends JavaPlugin {
         commandFramework.registerCommands(new AnnounceMeetupCommand());
     }
 
+    @Override
+    public void onDisable() {
+        KitManager.saveKits();
+    }
+
     private void loadMeetup() {
+        //Kit Loader
+        try {
+            KitManager.loadKits();
+        } catch (Exception exception) {
+            Bukkit.getConsoleSender().sendMessage(CC.CHAT_BAR);
+            Bukkit.getConsoleSender().sendMessage(CC.translate("&cError in load kits please check your config."));
+            Bukkit.getConsoleSender().sendMessage(CC.CHAT_BAR);
+        }
+
         // Meetup Listeners
         PluginManager pluginManager = Bukkit.getPluginManager();
         pluginManager.registerEvents(new PlayerMeetupDataLoad(), this);
@@ -163,6 +175,9 @@ public final class FrozedUHCGames extends JavaPlugin {
         new Bowless();
         new DoNotDisturb();
         new WebCage();
+
+        //Meetup Kits Comands
+        commandFramework.registerCommands(new KitCommand());
     }
 
     private void loadUHCRun() {

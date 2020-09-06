@@ -1,6 +1,7 @@
 package club.frozed.uhc.utils;
 
 import club.frozed.uhc.FrozedUHCGames;
+import club.frozed.uhc.types.meetup.kit.KitManager;
 import club.frozed.uhc.types.meetup.manager.MeetupPlayer;
 import club.frozed.uhc.utils.config.ConfigCursor;
 import club.frozed.uhc.utils.item.ItemCreator;
@@ -42,7 +43,7 @@ public class MeetupUtil {
         TaskUtil.runLater(() ->{
             player.getInventory().setItem(slot, itemStack);
             player.updateInventory();
-        },20);
+        },8);
 
     }
 
@@ -53,7 +54,9 @@ public class MeetupUtil {
 
         reset(meetupPlayer);
         player.setGameMode(GameMode.SURVIVAL);
-        sendKits(player,Utils.randomInteger(0,5));
+        KitManager kitManager = KitManager.getKits().get(Utils.randomInteger(0, KitManager.getKits().size()));
+        player.getInventory().setContents(kitManager.getInventory());
+        player.getInventory().setArmorContents(kitManager.getArmor());
 
         if (player.getOpenInventory() != null && player.getOpenInventory().getType() == InventoryType.CRAFTING)
             player.getOpenInventory().getTopInventory().clear();
