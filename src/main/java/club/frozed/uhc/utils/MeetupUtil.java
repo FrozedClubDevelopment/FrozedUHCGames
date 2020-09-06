@@ -54,7 +54,7 @@ public class MeetupUtil {
 
         reset(meetupPlayer);
         player.setGameMode(GameMode.SURVIVAL);
-        KitManager kitManager = KitManager.getKits().get(Utils.randomInteger(0, KitManager.getKits().size()));
+        KitManager kitManager = KitManager.getKits().get(Utils.randomInteger(0, (KitManager.getKits().size() - 1)));
         player.getInventory().setContents(kitManager.getInventory());
         player.getInventory().setArmorContents(kitManager.getArmor());
 

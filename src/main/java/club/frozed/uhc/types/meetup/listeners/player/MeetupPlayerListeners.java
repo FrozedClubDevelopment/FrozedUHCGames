@@ -17,10 +17,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
-import org.bukkit.event.player.PlayerItemBreakEvent;
-import org.bukkit.event.player.PlayerItemConsumeEvent;
-import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.event.player.PlayerLoginEvent;
+import org.bukkit.event.player.*;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
@@ -90,6 +87,13 @@ public class MeetupPlayerListeners implements Listener {
 
     @EventHandler
     public void onBlockBreakEvent(BlockBreakEvent e) {
+        if (!FrozedUHCGames.getInstance().getMeetupGameManager().isGameStarted()) {
+            e.setCancelled(true);
+        }
+    }
+
+    @EventHandler
+    public void onPlayerInteractEvent(PlayerInteractEvent e){
         if (!FrozedUHCGames.getInstance().getMeetupGameManager().isGameStarted()) {
             e.setCancelled(true);
         }
