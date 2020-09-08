@@ -27,6 +27,7 @@ public class MeetupSpectatorListener implements Listener {
     public void onPlayerInteract(PlayerInteractEvent event) {
         Player player = event.getPlayer();
         MeetupPlayer meetupPlayer = MeetupPlayer.getByUuid(player.getUniqueId());
+        if (meetupPlayer == null) return;
         if (meetupPlayer.isSpectating()) {
             event.setCancelled(true);
             if (!event.hasItem())
@@ -57,6 +58,7 @@ public class MeetupSpectatorListener implements Listener {
         if (e.getTarget() instanceof Player) {
             Player player = (Player) e.getTarget();
             MeetupPlayer meetupPlayer = MeetupPlayer.getByUuid(player.getUniqueId());
+            if (meetupPlayer == null) return;
             if (!meetupPlayer.isSpectating()) return;
 
             e.setTarget(null);
@@ -70,6 +72,7 @@ public class MeetupSpectatorListener implements Listener {
 
         Player player = (Player) e.getTarget();
         MeetupPlayer meetupPlayer = MeetupPlayer.getByUuid(player.getUniqueId());
+        if (meetupPlayer == null) return;
 
         if (!meetupPlayer.isSpectating()) return;
         e.setTarget(null);
@@ -82,6 +85,7 @@ public class MeetupSpectatorListener implements Listener {
 
         Player player = e.getPlayer();
         MeetupPlayer meetupPlayer = MeetupPlayer.getByUuid(player.getUniqueId());
+        if (meetupPlayer == null) return;
 
         if (!meetupPlayer.isSpectating()) return;
         e.setCancelled(true);
@@ -91,6 +95,7 @@ public class MeetupSpectatorListener implements Listener {
     public void onPlayerDropItemEvent(PlayerDropItemEvent e) {
         Player player = e.getPlayer();
         MeetupPlayer meetupPlayer = MeetupPlayer.getByUuid(player.getUniqueId());
+        if (meetupPlayer == null) return;
 
         if (!meetupPlayer.isSpectating()) return;
         e.setCancelled(true);
@@ -100,6 +105,7 @@ public class MeetupSpectatorListener implements Listener {
     public void onBlockBreak(BlockBreakEvent e) {
         Player player = e.getPlayer();
         MeetupPlayer meetupPlayer = MeetupPlayer.getByUuid(player.getUniqueId());
+        if (meetupPlayer == null) return;
 
         if (!meetupPlayer.isSpectating()) return;
         e.setCancelled(true);
@@ -109,6 +115,7 @@ public class MeetupSpectatorListener implements Listener {
     public void onBlockPlaceEvent(BlockPlaceEvent e) {
         Player player = e.getPlayer();
         MeetupPlayer meetupPlayer = MeetupPlayer.getByUuid(player.getUniqueId());
+        if (meetupPlayer == null) return;
 
         if (!meetupPlayer.isSpectating()) return;
         e.setCancelled(true);
@@ -118,6 +125,7 @@ public class MeetupSpectatorListener implements Listener {
     public void onInventoryClick(InventoryClickEvent e) {
         Player player = (Player) e.getWhoClicked();
         MeetupPlayer meetupPlayer = MeetupPlayer.getByUuid(player.getUniqueId());
+        if (meetupPlayer == null) return;
 
         if (!meetupPlayer.isSpectating()) return;
         e.setCancelled(true);
@@ -129,6 +137,7 @@ public class MeetupSpectatorListener implements Listener {
 
         Player player = (Player) e.getEntity();
         MeetupPlayer meetupPlayer = MeetupPlayer.getByUuid(player.getUniqueId());
+        if (meetupPlayer == null) return;
 
         if (meetupPlayer.getState().equals(MeetupPlayer.State.WAITING) || meetupPlayer.getState().equals(MeetupPlayer.State.SPECTATOR)) {
             e.setCancelled(true);
@@ -141,6 +150,7 @@ public class MeetupSpectatorListener implements Listener {
 
         Player player = (Player) e.getEntity();
         MeetupPlayer meetupPlayer = MeetupPlayer.getByUuid(player.getUniqueId());
+        if (meetupPlayer == null) return;
 
         if (!meetupPlayer.isSpectating()) return;
         e.setCancelled(true);
@@ -152,6 +162,7 @@ public class MeetupSpectatorListener implements Listener {
 
         Player player = (Player) e.getDamager();
         MeetupPlayer meetupPlayer = MeetupPlayer.getByUuid(player.getUniqueId());
+        if (meetupPlayer == null) return;
 
         if (!meetupPlayer.isSpectating()) return;
         e.setCancelled(true);
@@ -163,6 +174,7 @@ public class MeetupSpectatorListener implements Listener {
 
         Player player = (Player) e.getEntered();
         MeetupPlayer meetupPlayer = MeetupPlayer.getByUuid(player.getUniqueId());
+        if (meetupPlayer == null) return;
 
         if (!meetupPlayer.isSpectating()) return;
 
