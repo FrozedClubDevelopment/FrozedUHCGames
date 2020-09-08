@@ -59,6 +59,11 @@ public class v1_7_R4 implements NMS {
         nmsFrom.playerConnection.sendPacket(PacketPlayOutPlayerInfo.addPlayer(nmsHidden));
     }
 
+    @Override
+    public void fixInvisiblePlayer(Player player) {
+
+    }
+
     public EntityPlayer getEntity(Player player) {
         return ((CraftPlayer) player).getHandle();
     }

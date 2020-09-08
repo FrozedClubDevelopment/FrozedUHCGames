@@ -1,20 +1,24 @@
 package club.frozed.uhc.nms.version;
 
+import club.frozed.uhc.FrozedUHCGames;
 import club.frozed.uhc.nms.NMS;
+import club.frozed.uhc.types.meetup.manager.MeetupPlayer;
 import lombok.Getter;
 import net.minecraft.server.v1_8_R3.*;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.craftbukkit.v1_8_R3.CraftWorld;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
-import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
+import org.bukkit.scheduler.BukkitRunnable;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class v1_8_R3 implements NMS {
 
     @Getter private HashMap<Player, Integer> vehicles = new HashMap<>();
-
 
     @Override
     public void removeArrows(Player player) {
@@ -61,5 +65,9 @@ public class v1_8_R3 implements NMS {
         EntityPlayer nmsFrom = ((CraftPlayer) fromPlayer).getHandle();
         EntityPlayer nmsHidden = ((CraftPlayer) hiddenPlayer).getHandle();
         nmsFrom.playerConnection.sendPacket(new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.EnumPlayerInfoAction.ADD_PLAYER, nmsHidden));
+    }
+
+    @Override
+    public void fixInvisiblePlayer(Player player) {
     }
 }

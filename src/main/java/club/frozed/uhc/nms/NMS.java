@@ -11,4 +11,6 @@ public interface NMS {
     void removeVehicle(Player paramPlayer);
 
     void hideMeetupPlayer(Player hiddenPlayer, Player fromPlayer);
+
+    void fixInvisiblePlayer(Player player);
 }
