@@ -1,11 +1,12 @@
 package club.frozed.uhc;
 
+import club.frozed.uhc.commands.FrozedUHCGamesCommand;
 import club.frozed.uhc.commands.PlayerDebugCommand;
 import club.frozed.uhc.commands.SetSpawnCommand;
 import club.frozed.uhc.data.MongoDB;
 import club.frozed.uhc.nms.NMS;
-import club.frozed.uhc.nms.version.v1_7_R4;
 import club.frozed.uhc.types.meetup.command.AnnounceMeetupCommand;
+import club.frozed.uhc.types.meetup.command.MeetupForceStartCommand;
 import club.frozed.uhc.types.meetup.kit.KitManager;
 import club.frozed.uhc.types.meetup.kit.command.KitCommand;
 import club.frozed.uhc.types.meetup.listeners.MeetupGameListener;
@@ -44,8 +45,7 @@ import java.util.Random;
 @Setter
 public final class FrozedUHCGames extends JavaPlugin {
 
-    @Getter
-    public static FrozedUHCGames instance;
+    @Getter public static FrozedUHCGames instance;
     private CommandFramework commandFramework;
     private NMS nmsHandler;
     private Random random = new Random();
@@ -65,7 +65,7 @@ public final class FrozedUHCGames extends JavaPlugin {
         Kits por config [Done]
         TabList [Done]
         Msg de muerte [Done]
-        Spectator por packet
+        Spectator por packet [done]
         Fixear player invisibles
 
          */
@@ -78,7 +78,7 @@ public final class FrozedUHCGames extends JavaPlugin {
         meetupMessagesConfig = new FileConfig(this, "meetup/messages.yml");
         meetupTablistConfig = new FileConfig(this, "meetup/tablist.yml");
         settingsConfig = new FileConfig(this, "settings.yml");
-        meetupKitsConfig = new FileConfig(this,"meetup/kits.yml");
+        meetupKitsConfig = new FileConfig(this, "meetup/kits.yml");
 
         String packageName = this.getServer().getClass().getPackage().getName();
         String version = packageName.substring(packageName.lastIndexOf('.') + 1);
@@ -88,7 +88,7 @@ public final class FrozedUHCGames extends JavaPlugin {
                 nmsHandler = (NMS) clazz.getConstructor().newInstance();
             }
             Bukkit.getConsoleSender().sendMessage(CC.CHAT_BAR);
-            Bukkit.getConsoleSender().sendMessage(CC.translate("&b[FrozedUHCGames] &aYou are using versionn -> "+ version));
+            Bukkit.getConsoleSender().sendMessage(CC.translate("&b[FrozedUHCGames] &aYou are using versionn -> " + version));
             Bukkit.getConsoleSender().sendMessage(CC.CHAT_BAR);
         } catch (final Exception e) {
             e.printStackTrace();
@@ -126,10 +126,11 @@ public final class FrozedUHCGames extends JavaPlugin {
 
         commandFramework.registerCommands(new SetSpawnCommand());
         commandFramework.registerCommands(new PlayerDebugCommand());
+        commandFramework.registerCommands(new FrozedUHCGamesCommand());
+
         Bukkit.getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
         Bukkit.getMessenger().registerOutgoingPluginChannel(this, "Broadcast");
         Bukkit.getPluginManager().registerEvents(new MenuListener(), this);
-        commandFramework.registerCommands(new AnnounceMeetupCommand());
     }
 
     @Override
@@ -178,6 +179,8 @@ public final class FrozedUHCGames extends JavaPlugin {
 
         //Meetup Kits Comands
         commandFramework.registerCommands(new KitCommand());
+        commandFramework.registerCommands(new AnnounceMeetupCommand());
+        commandFramework.registerCommands(new MeetupForceStartCommand());
     }
 
     private void loadUHCRun() {
