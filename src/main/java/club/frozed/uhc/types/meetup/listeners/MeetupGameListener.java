@@ -6,7 +6,6 @@ import club.frozed.uhc.types.meetup.manager.game.MeetupGameManager;
 import club.frozed.uhc.utils.CC;
 import club.frozed.uhc.utils.MeetupUtil;
 import org.bukkit.entity.Entity;
-import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
