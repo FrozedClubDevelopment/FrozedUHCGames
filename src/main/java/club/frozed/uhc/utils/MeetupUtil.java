@@ -34,13 +34,18 @@ public class MeetupUtil {
         player.setFlying(true);
         player.setCanPickupItems(false);
         player.spigot().setCollidesWithEntities(false);
-        ItemStack itemStack = (new ItemCreator(material, 1, damage)).setName(name).get();
+        Utils.getOnlinePlayers().forEach(onlinePlayer -> {
+            MeetupPlayer meetupGamePlayer = MeetupPlayer.getByUuid(onlinePlayer.getUniqueId());
+            if (meetupGamePlayer.isAlive()){
+                FrozedUHCGames.getInstance().getNmsHandler().hideMeetupPlayer(player,onlinePlayer);
+            }
+        });
 
+        ItemStack itemStack = (new ItemCreator(material, 1, damage)).setName(name).get();
         TaskUtil.runLater(() -> {
             player.getInventory().setItem(slot, itemStack);
             player.updateInventory();
         }, 8);
-
     }
 
     public static void prepareGame(MeetupPlayer meetupPlayer) {
