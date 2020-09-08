@@ -6,6 +6,7 @@ import net.minecraft.server.v1_8_R3.*;
 import org.bukkit.Location;
 import org.bukkit.craftbukkit.v1_8_R3.CraftWorld;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
@@ -52,5 +53,13 @@ public class v1_8_R3 implements NMS {
             playerConnection.sendPacket(packet);
             vehicles.put(player, null);
         }
+    }
+
+    @Override
+    public void hideMeetupPlayer(Player hiddenPlayer, Player fromPlayer) {
+        fromPlayer.hidePlayer(hiddenPlayer);
+        EntityPlayer nmsFrom = ((CraftPlayer) fromPlayer).getHandle();
+        EntityPlayer nmsHidden = ((CraftPlayer) hiddenPlayer).getHandle();
+        nmsFrom.playerConnection.sendPacket(new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.EnumPlayerInfoAction.ADD_PLAYER, nmsHidden));
     }
 }

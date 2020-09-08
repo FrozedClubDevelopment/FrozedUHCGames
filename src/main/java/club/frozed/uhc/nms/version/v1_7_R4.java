@@ -51,6 +51,14 @@ public class v1_7_R4 implements NMS {
         }
     }
 
+    @Override
+    public void hideMeetupPlayer(Player hiddenPlayer, Player fromPlayer) {
+        fromPlayer.hidePlayer(hiddenPlayer);
+        EntityPlayer nmsFrom = ((CraftPlayer) fromPlayer).getHandle();
+        EntityPlayer nmsHidden = ((CraftPlayer) hiddenPlayer).getHandle();
+        nmsFrom.playerConnection.sendPacket(PacketPlayOutPlayerInfo.addPlayer(nmsHidden));
+    }
+
     public EntityPlayer getEntity(Player player) {
         return ((CraftPlayer) player).getHandle();
     }
