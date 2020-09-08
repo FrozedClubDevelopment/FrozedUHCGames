@@ -9,4 +9,6 @@ public interface NMS {
     void addVehicle(Player paramPlayer);
 
     void removeVehicle(Player paramPlayer);
+
+    void hideMeetupPlayer(Player hiddenPlayer, Player fromPlayer);
 }
