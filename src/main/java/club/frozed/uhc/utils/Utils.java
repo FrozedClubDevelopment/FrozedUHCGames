@@ -108,6 +108,15 @@ public class Utils {
         return attacker;
     }
 
+    public static Player getDamager(EntityDamageByEntityEvent event) {
+        if (event.getDamager() instanceof Player)
+            return (Player)event.getDamager();
+        if (event.getDamager() instanceof Projectile && (
+                (Projectile)event.getDamager()).getShooter() instanceof Player)
+            return (Player)((Projectile)event.getDamager()).getShooter();
+        return null;
+    }
+
     public static void playSound(String sound){
         if (!sound.equalsIgnoreCase("none") || sound != null){
             getOnlinePlayers().forEach(player -> {  player.playSound(player.getLocation(), Sound.valueOf(sound),2F,2F);});

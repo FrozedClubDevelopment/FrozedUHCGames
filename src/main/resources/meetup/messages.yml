@@ -6,6 +6,8 @@ INVITE: '&b<player> &7is playing on &b<server>&7. Use &b/join <server> &7to join
 
 MAX-HEIGHT: '&cYou cannot put more blocks from this height'
 
+BOW-DAMAGE: '&b<player> &fis now at &b<heal> &4❤'
+
 COUNTER:
   START: '&fGame starts in &b<time> &f<type>&b.'
   BORDER:

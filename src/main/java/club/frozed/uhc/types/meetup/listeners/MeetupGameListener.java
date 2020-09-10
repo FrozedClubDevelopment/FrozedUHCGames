@@ -5,10 +5,14 @@ import club.frozed.uhc.types.meetup.manager.MeetupPlayer;
 import club.frozed.uhc.types.meetup.manager.game.MeetupGameManager;
 import club.frozed.uhc.utils.CC;
 import club.frozed.uhc.utils.MeetupUtil;
+import club.frozed.uhc.utils.Utils;
+import club.frozed.uhc.utils.config.ConfigCursor;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 
 public class MeetupGameListener implements Listener {
@@ -177,5 +181,19 @@ public class MeetupGameListener implements Listener {
         }
 
         return input;
+    }
+
+    @EventHandler(ignoreCancelled = true, priority = EventPriority.LOW)
+    public void onEntityDamageByEntity(EntityDamageByEntityEvent event) {
+        Player attacker = Utils.getDamager(event);
+        if (attacker != null && event.getEntity() instanceof Player) {
+            Player damaged = (Player)event.getEntity();
+            if (event.getDamager() instanceof org.bukkit.entity.Arrow) {
+                ConfigCursor configCursor = new ConfigCursor(FrozedUHCGames.getInstance().getMeetupMessagesConfig(),"");
+                double health = Math.ceil(damaged.getHealth() - event.getFinalDamage()) / 2.0D;
+                if (health > 0.0D)
+                    attacker.sendMessage(CC.translate(configCursor.getString("BOW-DAMAGE").replace("<player>",damaged.getName()).replace("<heal>",String.valueOf(health))));
+            }
+        }
     }
 }
