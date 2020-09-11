@@ -67,6 +67,7 @@ public class Border {
         outsidePlayers.forEach(player -> {
             Location location = player.getLocation();
             player.teleport(location.clone().add(0, 2, 0));
+            FrozedUHCGames.getInstance().getNmsHandler().fixInvisiblePlayer(player);
         });
     }
 }

@@ -7,6 +7,7 @@ import lombok.Getter;
 import net.minecraft.server.v1_8_R3.*;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.World;
 import org.bukkit.craftbukkit.v1_8_R3.CraftWorld;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
@@ -69,5 +70,27 @@ public class v1_8_R3 implements NMS {
 
     @Override
     public void fixInvisiblePlayer(Player player) {
+        new BukkitRunnable() {
+            public void run() {
+                World world = player.getWorld();
+                WorldServer worldServer = ((CraftWorld) world).getHandle();
+
+                EntityTracker tracker = worldServer.tracker;
+                EntityTrackerEntry entry = (EntityTrackerEntry) tracker.trackedEntities.get(player.getEntityId());
+
+                List<EntityHuman> players = new ArrayList<>();
+
+                int distance = 64 * 64;
+
+                for(Player all : Bukkit.getOnlinePlayers()) {
+                    MeetupPlayer meetupPlayer = MeetupPlayer.getByUuid(all.getUniqueId());
+                    if(all.getWorld() == player.getWorld() && all.getLocation().distanceSquared(player.getLocation()) <= distance && meetupPlayer.isAlive()) {
+                        players.add((EntityHuman) all);
+                    }
+                }
+                entry.trackedPlayers.removeAll(players);
+                entry.track(players);
+            }
+        }.runTaskLater(FrozedUHCGames.getInstance(), 20L);
     }
 }
