@@ -41,6 +41,9 @@ public class MeetupScoreboard extends Board {
             case WAITING:
                 meetupScoreboard.getStringList("WAITING").forEach(text -> lines.add(translate(meetupPlayer, text)));
                 break;
+            case SCATTER:
+                meetupScoreboard.getStringList("SCATTER").forEach(text -> lines.add(translate(meetupPlayer, text)));
+                break;
             case STARTING:
                 meetupScoreboard.getStringList("STARTING").forEach(text -> lines.add(translate(meetupPlayer, text)));
                 break;
@@ -73,6 +76,9 @@ public class MeetupScoreboard extends Board {
         switch (FrozedUHCGames.getInstance().getMeetupGameManager().getState()) {
             case WAITING:
                 text = text.replace("<w-players>", String.valueOf((FrozedUHCGames.getInstance().getMeetupGameManager().getPlayersNeedToStart() - Bukkit.getOnlinePlayers().size())));
+                break;
+            case SCATTER:
+                text = text.replace("<time>", String.valueOf(FrozedUHCGames.getInstance().getMeetupGameManager().getScatterTime()));
                 break;
             case STARTING:
                 text = text.replace("<time>", String.valueOf(FrozedUHCGames.getInstance().getMeetupGameManager().getStartingTime()));
