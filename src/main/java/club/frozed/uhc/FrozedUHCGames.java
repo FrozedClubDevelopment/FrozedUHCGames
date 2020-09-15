@@ -66,7 +66,7 @@ public final class FrozedUHCGames extends JavaPlugin {
         TabList [Done]
         Msg de muerte [Done]
         Spectator por packet [done]
-        Fixear player invisibles
+        Fixear player invisibles [Done]
 
          */
         instance = this;

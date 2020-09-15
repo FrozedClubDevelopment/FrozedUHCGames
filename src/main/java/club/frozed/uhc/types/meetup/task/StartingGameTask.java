@@ -11,13 +11,10 @@ import club.frozed.uhc.utils.Utils;
 import club.frozed.uhc.utils.config.ConfigCursor;
 import de.inventivegames.hologram.Hologram;
 import de.inventivegames.hologram.HologramAPI;
-import org.apache.commons.lang.StringUtils;
 import org.bukkit.Location;
 import org.bukkit.Sound;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import java.util.ArrayList;
-import java.util.List;
 
 public class StartingGameTask extends BukkitRunnable {
 

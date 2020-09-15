@@ -49,6 +49,9 @@ public class PlayerMeetupDataLoad implements Listener {
             case WAITING:
                 e.setMotd(CC.translate("&aWaiting for players..."));
                 break;
+            case SCATTER:
+                e.setMotd(CC.translate("&6Scattering..."));
+                break;
             case STARTING:
                 e.setMotd(CC.translate("&eStarting..."));
                 break;
