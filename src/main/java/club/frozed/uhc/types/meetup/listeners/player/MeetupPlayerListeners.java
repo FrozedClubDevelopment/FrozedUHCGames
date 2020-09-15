@@ -4,6 +4,7 @@ import club.frozed.uhc.FrozedUHCGames;
 import club.frozed.uhc.types.meetup.manager.MeetupPlayer;
 import club.frozed.uhc.types.meetup.manager.game.MeetupGameManager;
 import club.frozed.uhc.types.meetup.provider.MeetupScoreboard;
+import club.frozed.uhc.types.meetup.task.ScatterTask;
 import club.frozed.uhc.types.meetup.task.StartingGameTask;
 import club.frozed.uhc.utils.CC;
 import club.frozed.uhc.utils.MeetupUtil;
@@ -54,11 +55,11 @@ public class MeetupPlayerListeners implements Listener {
                             scatterPlayers.add(meetupPlayer);
                         }
                     });
-                    new StartingGameTask().runTaskTimer(FrozedUHCGames.getInstance(), 0L, 20L);
+                    new ScatterTask().runTaskTimer(FrozedUHCGames.getInstance(), 0L, 20L);
                 }, 20);
             }
         }
-        if (FrozedUHCGames.getInstance().getMeetupGameManager().getState() == MeetupGameManager.State.STARTING) {
+        if (FrozedUHCGames.getInstance().getMeetupGameManager().getState() == MeetupGameManager.State.STARTING || FrozedUHCGames.getInstance().getMeetupGameManager().getState() == MeetupGameManager.State.SCATTER) {
             MeetupPlayer meetupPlayer = MeetupPlayer.getByUuid(e.getPlayer().getUniqueId());
             if (meetupPlayer.isWaiting() && meetupPlayer.isOnline() && !scatterPlayers.contains(meetupPlayer)) {
                 meetupPlayer.setScatterLocation(FrozedUHCGames.getInstance().getMeetupGameManager().getScatterLocations().remove(0));
