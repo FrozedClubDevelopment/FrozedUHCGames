@@ -20,6 +20,12 @@ SCORE:
     - ' '
     - '&bfrozed.club'
     - '&7&m-------------------'
+  SCATTER:
+    - '&7&m-------------------'
+    - '&fScatter starts in &b<time> seconds'
+    - ''
+    - '&bfrozed.club'
+    - '&7&m-------------------'
   STARTING:
     - '&7&m-------------------'
     - '&fThe game will start in&7:'
