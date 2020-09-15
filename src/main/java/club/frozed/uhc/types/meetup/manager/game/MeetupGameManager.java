@@ -30,6 +30,7 @@ public class MeetupGameManager {
     private int maxPlayers = FrozedUHCGames.getInstance().getMeetupMainConfig().getConfig().getInt("SETTINGS.MAX-PLAYERS");
     private int startingTime = FrozedUHCGames.getInstance().getMeetupMainConfig().getConfig().getInt("SETTINGS.STARTING-TIME");
     private int restartTime = FrozedUHCGames.getInstance().getMeetupMainConfig().getConfig().getInt("SETTINGS.RESTART-TIME");
+    private int scatterTime = FrozedUHCGames.getInstance().getMeetupMainConfig().getConfig().getInt("SETTINGS.SCATTER-TIME");
     private int gameTime;
     private boolean gameStarted;
 
@@ -51,6 +52,7 @@ public class MeetupGameManager {
     public enum State {
         GENERATING,
         WAITING,
+        SCATTER,
         STARTING,
         PLAYING,
         FINISH
