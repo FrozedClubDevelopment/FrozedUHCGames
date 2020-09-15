@@ -34,10 +34,7 @@ public class MeetupTablist implements ZigguratAdapter {
     @Override
     public Set<BufferedTabObject> getSlots(Player player) {
         Set<BufferedTabObject> objects = new HashSet<>();
-
-        MeetupPlayer data = MeetupPlayer.getByUuid(player.getUniqueId());
         MeetupGameManager gameManager = FrozedUHCGames.getInstance().getMeetupGameManager();
-
         ConfigCursor meetupTablistConfig = new ConfigCursor(FrozedUHCGames.getInstance().getMeetupTablistConfig(), "TABLIST");
 
         objects.add(new BufferedTabObject().slot(21).text(meetupTablistConfig.getString("TITLE")));
@@ -85,7 +82,7 @@ public class MeetupTablist implements ZigguratAdapter {
 
             int playerSlot = 7;
             for (Player online : Utils.getOnlinePlayers()) {
-                objects.add(new BufferedTabObject().slot(playerSlot).text((data.isSpectating() ? "&c&m" : "&7") + online.getPlayer().getName()));
+                objects.add(new BufferedTabObject().slot(playerSlot).text((MeetupPlayer.getByUuid(online.getUniqueId()).isSpectating() ? "&c&m" : "&7") + online.getPlayer().getName()));
                 playerSlot++;
                 if (playerSlot == 17) {
                     playerSlot = 27;
