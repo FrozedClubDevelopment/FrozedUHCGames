@@ -30,14 +30,12 @@ public class v1_8_R3 implements NMS {
     public void addVehicle(Player player) {
         Location location = player.getLocation();
         WorldServer worldServer = ((CraftWorld) player.getLocation().getWorld()).getHandle();
+        player.setAllowFlight(true);
 
         EntityPig pig = new EntityPig(worldServer);
         pig.setLocation(location.getX() + 0.5, location.getY() + 2.0, location.getZ() + 0.5, 0.0f, 0.0f);
         pig.setHealth(pig.getMaxHealth());
         pig.setInvisible(true);
-        pig.d(0);
-        pig.setAirTicks(10);
-        pig.setSneaking(false);
 
         PlayerConnection playerConnection = ((CraftPlayer) player).getHandle().playerConnection;
 
@@ -53,6 +51,7 @@ public class v1_8_R3 implements NMS {
     @Override
     public void removeVehicle(Player player) {
         if (vehicles.get(player) != null) {
+            player.setAllowFlight(false);
             PacketPlayOutEntityDestroy packet = new PacketPlayOutEntityDestroy(vehicles.get(player));
             PlayerConnection playerConnection = ((CraftPlayer) player).getHandle().playerConnection;
             playerConnection.sendPacket(packet);

@@ -28,9 +28,6 @@ public class v1_7_R4 implements NMS {
         pig.setLocation(location.getX() + 0.5, location.getY() + 2.0, location.getZ() + 0.5, 0.0f, 0.0f);
         pig.setHealth(pig.getMaxHealth());
         pig.setInvisible(true);
-        pig.d(0);
-        pig.setAirTicks(10);
-        pig.setSneaking(false);
 
         PacketPlayOutSpawnEntityLiving packet = new PacketPlayOutSpawnEntityLiving(pig);
         PacketPlayOutAttachEntity attach = new PacketPlayOutAttachEntity(0, getEntity(player), pig);
