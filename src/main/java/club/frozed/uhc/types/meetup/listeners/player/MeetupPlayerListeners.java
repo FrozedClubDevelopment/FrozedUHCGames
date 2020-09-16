@@ -55,7 +55,10 @@ public class MeetupPlayerListeners implements Listener {
                             scatterPlayers.add(meetupPlayer);
                         }
                     });
-                    new ScatterTask().runTaskTimer(FrozedUHCGames.getInstance(), 0L, 20L);
+                    if (!FrozedUHCGames.getInstance().getMeetupGameManager().isScatterStarted()){
+                        FrozedUHCGames.getInstance().getMeetupGameManager().setScatterStarted(true);
+                        new ScatterTask().runTaskTimer(FrozedUHCGames.getInstance(), 0L, 20L);
+                    }
                 }, 20);
             }
         }
