@@ -40,6 +40,7 @@ public class MeetupPlayer {
     private Location scatterLocation;
     private Cooldown noCleanCooldown = new Cooldown(0L);
     private Cooldown DoNotDisturbCooldown = new Cooldown(0L);
+    private Cooldown announceCooldown = new Cooldown(0L);
 
     public MeetupPlayer(UUID uuid, String name) {
         this.uuid = uuid;

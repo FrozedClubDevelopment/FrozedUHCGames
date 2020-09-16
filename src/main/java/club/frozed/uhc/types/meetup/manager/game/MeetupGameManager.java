@@ -32,7 +32,7 @@ public class MeetupGameManager {
     private int restartTime = FrozedUHCGames.getInstance().getMeetupMainConfig().getConfig().getInt("SETTINGS.RESTART-TIME");
     private int scatterTime = FrozedUHCGames.getInstance().getMeetupMainConfig().getConfig().getInt("SETTINGS.SCATTER-TIME");
     private int gameTime;
-    private boolean gameStarted;
+    private boolean gameStarted, scatterStarted;
 
     private String winner;
     private int winnerKills;
