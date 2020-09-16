@@ -29,25 +29,29 @@ public class StartingGameTask extends BukkitRunnable {
         FrozedUHCGames.getInstance().getMeetupGameManager().setStartingTime(startTime - 1);
         if (!MeetupPlayerListeners.scatterPlayers.isEmpty()){
             MeetupPlayer meetupPlayer = MeetupPlayerListeners.scatterPlayers.remove(0);
-            if (meetupPlayer.isWaiting() && meetupPlayer.getPlayer().isOnline()) {
-                ConfigCursor hologramConfig = new ConfigCursor(FrozedUHCGames.getInstance().getMeetupMainConfig(), "HOLOGRAM");
-                meetupPlayer.getPlayer().teleport(meetupPlayer.getScatterLocation());
-                FrozedUHCGames.getInstance().getNmsHandler().addVehicle(meetupPlayer.getPlayer());
-                new VoteScenarioMenu().open(meetupPlayer.getPlayer());
-                MeetupUtil.prepareGame(meetupPlayer);
-                Location hologramLocation  = new Location(meetupPlayer.getPlayer().getWorld(),meetupPlayer.getPlayer().getLocation().getX(),meetupPlayer.getPlayer().getLocation().getY() + 2.25,meetupPlayer.getPlayer().getLocation().getZ() + 3.00);
-                this.hologram = HologramAPI.createHologram(hologramLocation,CC.translate(hologramConfig.getString("TITLE")
-                        .replace("<player>",meetupPlayer.getPlayer().getName())));
-                this.hologram.spawn();
-                Hologram lastHologram = this.hologram;
-                for (String linea : hologramConfig.getStringList("LINES")){
-                    String format = CC.translate(linea
-                            .replace("<kills>",String.valueOf(meetupPlayer.getKills()))
-                            .replace("<deaths>",String.valueOf(meetupPlayer.getDeaths()))
-                            .replace("<kdr>",String.valueOf(meetupPlayer.getKDR()))
-                            .replace("<wins>",String.valueOf(meetupPlayer.getWins()))
-                            .replace("<games>",String.valueOf(meetupPlayer.getGamesPlayed())));
-                    lastHologram = lastHologram.addLineBelow(format);
+            if (meetupPlayer != null){
+                if (meetupPlayer.isWaiting() && meetupPlayer.getPlayer().isOnline()) {
+                    ConfigCursor hologramConfig = new ConfigCursor(FrozedUHCGames.getInstance().getMeetupMainConfig(), "HOLOGRAM");
+                    meetupPlayer.getPlayer().teleport(meetupPlayer.getScatterLocation());
+                    FrozedUHCGames.getInstance().getNmsHandler().addVehicle(meetupPlayer.getPlayer());
+                    new VoteScenarioMenu().open(meetupPlayer.getPlayer());
+                    MeetupUtil.prepareGame(meetupPlayer);
+                    if (meetupPlayer != null && meetupPlayer.getPlayer().isOnline()){
+                        Location hologramLocation  = new Location(meetupPlayer.getPlayer().getWorld(),meetupPlayer.getPlayer().getLocation().getX(),meetupPlayer.getPlayer().getLocation().getY() + 2.25,meetupPlayer.getPlayer().getLocation().getZ() + 3.00);
+                        this.hologram = HologramAPI.createHologram(hologramLocation,CC.translate(hologramConfig.getString("TITLE")
+                                .replace("<player>",meetupPlayer.getPlayer().getName())));
+                        this.hologram.spawn();
+                        Hologram lastHologram = this.hologram;
+                        for (String linea : hologramConfig.getStringList("LINES")){
+                            String format = CC.translate(linea
+                                    .replace("<kills>",String.valueOf(meetupPlayer.getKills()))
+                                    .replace("<deaths>",String.valueOf(meetupPlayer.getDeaths()))
+                                    .replace("<kdr>",String.valueOf(meetupPlayer.getKDR()))
+                                    .replace("<wins>",String.valueOf(meetupPlayer.getWins()))
+                                    .replace("<games>",String.valueOf(meetupPlayer.getGamesPlayed())));
+                            lastHologram = lastHologram.addLineBelow(format);
+                        }
+                    }
                 }
             }
         }
