@@ -27,28 +27,28 @@ public class StartingGameTask extends BukkitRunnable {
         int startTime = FrozedUHCGames.getInstance().getMeetupGameManager().getStartingTime();
         String type = "second" + ((startTime > 1) ? "s" : "");
         FrozedUHCGames.getInstance().getMeetupGameManager().setStartingTime(startTime - 1);
-        if (!MeetupPlayerListeners.scatterPlayers.isEmpty()){
+        if (!MeetupPlayerListeners.scatterPlayers.isEmpty()) {
             MeetupPlayer meetupPlayer = MeetupPlayerListeners.scatterPlayers.remove(0);
-            if (meetupPlayer != null){
+            if (meetupPlayer != null) {
                 if (meetupPlayer.isWaiting() && meetupPlayer.getPlayer().isOnline()) {
                     ConfigCursor hologramConfig = new ConfigCursor(FrozedUHCGames.getInstance().getMeetupMainConfig(), "HOLOGRAM");
                     meetupPlayer.getPlayer().teleport(meetupPlayer.getScatterLocation());
                     FrozedUHCGames.getInstance().getNmsHandler().addVehicle(meetupPlayer.getPlayer());
                     new VoteScenarioMenu().open(meetupPlayer.getPlayer());
                     MeetupUtil.prepareGame(meetupPlayer);
-                    if (meetupPlayer != null && meetupPlayer.getPlayer().isOnline()){
-                        Location hologramLocation  = new Location(meetupPlayer.getPlayer().getWorld(),meetupPlayer.getPlayer().getLocation().getX(),meetupPlayer.getPlayer().getLocation().getY() + 2.25,meetupPlayer.getPlayer().getLocation().getZ() + 3.00);
-                        this.hologram = HologramAPI.createHologram(hologramLocation,CC.translate(hologramConfig.getString("TITLE")
-                                .replace("<player>",meetupPlayer.getPlayer().getName())));
+                    if (meetupPlayer != null && meetupPlayer.getPlayer().isOnline()) {
+                        Location hologramLocation = new Location(meetupPlayer.getPlayer().getWorld(), meetupPlayer.getPlayer().getLocation().getX(), meetupPlayer.getPlayer().getLocation().getY() + 2.25, meetupPlayer.getPlayer().getLocation().getZ() + 3.00);
+                        this.hologram = HologramAPI.createHologram(hologramLocation, CC.translate(hologramConfig.getString("TITLE")
+                                .replace("<player>", meetupPlayer.getPlayer().getName())));
                         this.hologram.spawn();
                         Hologram lastHologram = this.hologram;
-                        for (String linea : hologramConfig.getStringList("LINES")){
+                        for (String linea : hologramConfig.getStringList("LINES")) {
                             String format = CC.translate(linea
-                                    .replace("<kills>",String.valueOf(meetupPlayer.getKills()))
-                                    .replace("<deaths>",String.valueOf(meetupPlayer.getDeaths()))
-                                    .replace("<kdr>",String.valueOf(meetupPlayer.getKDR()))
-                                    .replace("<wins>",String.valueOf(meetupPlayer.getWins()))
-                                    .replace("<games>",String.valueOf(meetupPlayer.getGamesPlayed())));
+                                    .replace("<kills>", String.valueOf(meetupPlayer.getKills()))
+                                    .replace("<deaths>", String.valueOf(meetupPlayer.getDeaths()))
+                                    .replace("<kdr>", String.valueOf(meetupPlayer.getKDR()))
+                                    .replace("<wins>", String.valueOf(meetupPlayer.getWins()))
+                                    .replace("<games>", String.valueOf(meetupPlayer.getGamesPlayed())));
                             lastHologram = lastHologram.addLineBelow(format);
                         }
                     }
@@ -57,7 +57,7 @@ public class StartingGameTask extends BukkitRunnable {
         }
         if (startTime <= 1) {
             MeetupPlayer.playersData.values().forEach(meetupPlayer -> {
-                if (meetupPlayer.isWaiting() &&  meetupPlayer.isOnline()){
+                if (meetupPlayer.isWaiting() && meetupPlayer.isOnline()) {
                     meetupPlayer.setState(MeetupPlayer.State.PLAYING);
                     meetupPlayer.setPlayed(true);
                     meetupPlayer.setGamesPlayed(meetupPlayer.getGamesPlayed() + 1);
@@ -77,10 +77,10 @@ public class StartingGameTask extends BukkitRunnable {
                 });
             }
             VoteScenarioMenu.getHighestVote().enable();
-            Utils.broadcastMessage(CC.translate(FrozedUHCGames.getInstance().getMeetupMessagesConfig().getConfig().getString("SCENARIO").replace("<scenario>",VoteScenarioMenu.getHighestVote().getName())));
-            new GameTask().runTaskTimer(FrozedUHCGames.getInstance(),0L,20L);
+            Utils.broadcastMessage(CC.translate(FrozedUHCGames.getInstance().getMeetupMessagesConfig().getConfig().getString("SCENARIO").replace("<scenario>", VoteScenarioMenu.getHighestVote().getName())));
+            new GameTask().runTaskTimer(FrozedUHCGames.getInstance(), 0L, 20L);
             FrozedUHCGames.getInstance().getMeetupGameManager().setState(MeetupGameManager.State.PLAYING);
-            new BorderTask().runTaskTimer(FrozedUHCGames.getInstance(),0L,20L);
+            new BorderTask().runTaskTimer(FrozedUHCGames.getInstance(), 0L, 20L);
             FrozedUHCGames.getInstance().getMeetupGameManager().setGameStarted(true);
             cancel();
             return;
