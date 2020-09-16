@@ -106,6 +106,7 @@ public final class FrozedUHCGames extends JavaPlugin {
         }
 
         meetupGameManager = new MeetupGameManager();
+        meetupGameManager.setScatterStarted(false);
         meetupWorld = new MeetupWorld();
         border = new Border();
 
