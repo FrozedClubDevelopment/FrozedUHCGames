@@ -3,7 +3,7 @@ package club.frozed.uhc.types.meetup.command;
 import club.frozed.uhc.FrozedUHCGames;
 import club.frozed.uhc.types.meetup.manager.MeetupPlayer;
 import club.frozed.uhc.types.meetup.manager.game.MeetupGameManager;
-import club.frozed.uhc.types.meetup.task.StartingGameTask;
+import club.frozed.uhc.types.meetup.task.ScatterTask;
 import club.frozed.uhc.utils.CC;
 import club.frozed.uhc.utils.Utils;
 import club.frozed.uhc.utils.command.BaseCommand;
@@ -41,7 +41,7 @@ public class MeetupForceStartCommand extends BaseCommand {
                     scatterPlayers.add(meetupPlayer);
                 }
             });
-            new StartingGameTask().runTaskTimer(FrozedUHCGames.getInstance(), 0L, 20L);
+            new ScatterTask().runTaskTimer(FrozedUHCGames.getInstance(), 0L, 20L);
         }, 20);
 
         for (Player players : Utils.getOnlinePlayers()) {
