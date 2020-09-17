@@ -27,7 +27,7 @@ public class AnnounceMeetupCommand extends BaseCommand {
         Cooldown cooldown = new Cooldown(FrozedUHCGames.getInstance().getMeetupMainConfig().getConfig().getInt("SETTINGS.ANNOUNCE-COOLDOWN"));
 
         if (FrozedUHCGames.getInstance().getMeetupGameManager().getState().equals(MeetupGameManager.State.WAITING)) {
-            if (!meetupPlayer.getAnnounceCooldown().hasExpired()){
+            if (meetupPlayer.getAnnounceCooldown().hasExpired()){
                 Utils.globalBroadcast(p, CC.translate(FrozedUHCGames.getInstance().getMeetupMessagesConfig().getConfig().getString("INVITE")
                         .replace("<player>", p.getName())
                         .replace("<server>", Lang.MEETUP_SERVER_NAME)));
