@@ -1,4 +1,4 @@
-package club.frozed.uhc.types.uhcrun.tasks;
+package club.frozed.uhc.types.uhcrun.tasks.scoreboard;
 
 import club.frozed.uhc.types.uhcrun.provider.UHCRunScoreboard;
 import club.frozed.uhc.utils.Utils;
