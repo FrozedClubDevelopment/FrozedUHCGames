@@ -1,0 +1,58 @@
+JOIN-PLAYER: '&b<player> joined, &f<start-player> &bmore to start....'
+
+INVITE: '&b<player> &7is playing on &b<server>&7. Use &b/join <server> &7to join!'
+
+MAX-HEIGHT: '&cYou cannot put more blocks from this height'
+
+BOW-DAMAGE: '&b<player> &fis now at &b<heal> &4❤'
+
+COUNTER:
+  START: '&fGame starts in &b<time> &f<type>&b.'
+  BORDER:
+    SHRUNK: "&bBorder has been shrunk to &f<border_size> blocks&b."
+    SHRINK-MINUTES: "&bBorder is going to shrink to &f<next_border>&bx&f<next_border> &bin &f<minutes> &bminute(s)"
+    SHRINK-SECONDS: "&bBorder is going to shrink to &f<next_border>&bx&f<next_border> &bin &f<seconds> &bsecond(s)"
+  PVP-TIME:
+    PVP: "&bPvp Activated"
+    PVP-MINUTES: "&bPvp Time will be in &f<minutes> &bminute(s)"
+    PVP-SECONDS: "&bPvp Time will be in &f<seconds> &bsecond(s)"
+  HEAL-TIME:
+    HEAL: "&bFinal Heal ended."
+    HEAL-MINUTES: "&bFinal Heal will be in &f<minutes> &bminute(s)"
+    HEAL-SECONDS: "&bFinal Heal will be in &f<seconds> &bsecond(s)"
+  GOD-TIME:
+    GOD: "&bGod Time given."
+    GOD-MINUTES: "&bGod Time will be disabled in &f<minutes> &bminute(s)"
+    GOD-SECONDS: "&bGod Time will be disabled in &f<seconds> &bsecond(s)"
+
+DEATH-MESSAGES:
+  # The format of killer and victim
+  # Should show the name and kills
+  KILLER-NAME-FORMAT: "&a<killer>&7[&f<killer_kills>&7]"
+  VICTIM-NAME-FORMAT: "&c<victim>&7[&f<victim_kills>&7]"
+  BLOCK-EXPLOSION: "<victim_format> &bjust got blown the hell up"
+  CONTACT: "<victim_format> &bwas pricked to death"
+  DROWNING-CONTAINS-KILLER: "<victim_format> &bdrowned whilst trying to escape <killer_format>"
+  DROWNING: "<victim_format> &bdrowned!"
+  ENTITY-ATTACK: "<victim_format> &bwas slain by <killer_format>"
+  FALL-CONTAINS-KILLER: "<victim_format> &bwas doomed to fall by <killer_format>"
+  FALL: "<victim_format> &bhit the ground too hard"
+  FALLING-BLOCK: "<victim_format> &bgot freaking squashed by a block"
+  FIRE-CONTAINS-KILLER: "<victim_format> &walked into a fire whilst fighting <killer_format>"
+  FIRE: "<victim_format> &bwent up in flames"
+  FIRE-TICK-CONTAINS-KILLER: "<victim_format> &bwas burnt to a crisp whilst fighting <killer_format>"
+  FIRE-TICK: "<victim_format> &bburned to death"
+  LAVA-CONTAINS-KILLER: "<victim_format> &btried to swim in lava while trying to escape <killer_format>"
+  LAVA: "<victim_format> &btried to swim in lava"
+  LIGHTNING: "<victim_format> &bgot lit the hell up by lightning"
+  POISON: "<victim_format> &bwas poisoned"
+  PROJECTILE-CONTAINS-KILLER: "<victim_format> &bwas shot by <killer_format>"
+  PROJECTILE: "<victim_format> &bwas shot"
+  STARVATION: "<victim_format> &bstarved to death"
+  SUFFOCATION: "<victim_format> &bsuffocated in a wall"
+  SUICIDE: "<victim_format> &btook his own life like a peasant"
+  THORNS: "<victim_format> &bkilled themself by trying to kill someone"
+  VOID-CONTAINS-KILLER: "<victim_format> &bwas knocked into the void by <killer_format>"
+  VOID: "<victim_format> &bfell out of the world"
+  WITHER: "<victim_format> &bwithered away"
+  DEFAULT: "<victim_format> &bdied"
