@@ -1,16 +1,18 @@
 package club.frozed.uhc.utils;
 
 import club.frozed.uhc.FrozedUHCGames;
-import club.frozed.uhc.types.meetup.manager.world.Border;
+import club.frozed.uhc.types.meetup.manager.world.MeetupBorder;
 import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
 import org.bukkit.*;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.Horse;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.projectiles.ProjectileSource;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,7 +38,7 @@ public class Utils {
             return -1;
         }
     }
-
+    
     public static String calculate(long seconds) {
         int day = (int) TimeUnit.SECONDS.toDays(seconds);
         long hours = TimeUnit.SECONDS.toHours(seconds) - TimeUnit.DAYS.toHours(day);
@@ -70,9 +72,9 @@ public class Utils {
     }
 
     public static int getNextBorderDefault() {
-        Border border = FrozedUHCGames.getInstance().getBorder();
-        if (border == null) return 25;
-        int size = border.getSize();
+        MeetupBorder meetupBorder = FrozedUHCGames.getInstance().getMeetupBorder();
+        if (meetupBorder == null) return 25;
+        int size = meetupBorder.getSize();
         int nextsize = 0;
         if (size > 500) {
             nextsize = size - 500;
