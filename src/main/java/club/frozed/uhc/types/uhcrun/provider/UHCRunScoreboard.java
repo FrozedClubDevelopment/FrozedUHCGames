@@ -1,7 +1,7 @@
 package club.frozed.uhc.types.uhcrun.provider;
 
 import club.frozed.uhc.FrozedUHCGames;
-import club.frozed.uhc.types.meetup.manager.MeetupPlayer;
+import club.frozed.uhc.types.uhcrun.managers.UHCPlayer;
 import club.frozed.uhc.utils.CC;
 import club.frozed.uhc.utils.Utils;
 import club.frozed.uhc.utils.config.ConfigCursor;
@@ -17,11 +17,11 @@ import java.util.List;
  * Project: FrozedUHCGames
  * Date: 09/30/2020 @ 14:53
  */
-public class RunScoreboard extends Board {
+public class UHCRunScoreboard extends Board {
 
     private Player player;
 
-    public RunScoreboard(Player player) {
+    public UHCRunScoreboard(Player player) {
         super(player);
         this.player = player;
     }
@@ -29,88 +29,90 @@ public class RunScoreboard extends Board {
     public void update() {
         if (this.player == null || !this.player.isOnline()) return;
 
-        MeetupPlayer meetupPlayer = MeetupPlayer.getByUuid(this.player.getUniqueId());
-        if (meetupPlayer == null) return;
+        UHCPlayer uhcPlayer = UHCPlayer.getByUuid(this.player.getUniqueId());
+        if (uhcPlayer == null) return;
 
-        ConfigCursor meetupScoreboard = new ConfigCursor(FrozedUHCGames.getInstance().getMeetupScoreboardConfig(), "SCORE");
+        ConfigCursor uhcRunScoreboard = new ConfigCursor(FrozedUHCGames.getInstance().getUhcRunScoreboardConfig(), "SCORE");
         List<String> lines = new ArrayList<>();
 
-        setTitle(CC.translate(FrozedUHCGames.getInstance().getMeetupScoreboardConfig().getConfig().getString("TITLE")));
+        setTitle(CC.translate(FrozedUHCGames.getInstance().getUhcRunScoreboardConfig().getConfig().getString("TITLE")));
 
-        switch (FrozedUHCGames.getInstance().getMeetupGameManager().getState()) {
+        switch (FrozedUHCGames.getInstance().getUhcRunGameManager().getState()) {
             case WAITING:
-                meetupScoreboard.getStringList("WAITING").forEach(text -> lines.add(translate(meetupPlayer, text)));
+                uhcRunScoreboard.getStringList("WAITING").forEach(text -> lines.add(translate(uhcPlayer, text)));
                 break;
             case SCATTER:
-                meetupScoreboard.getStringList("SCATTER").forEach(text -> lines.add(translate(meetupPlayer, text)));
+                uhcRunScoreboard.getStringList("SCATTER").forEach(text -> lines.add(translate(uhcPlayer, text)));
                 break;
             case STARTING:
-                meetupScoreboard.getStringList("STARTING").forEach(text -> lines.add(translate(meetupPlayer, text)));
+                uhcRunScoreboard.getStringList("STARTING").forEach(text -> lines.add(translate(uhcPlayer, text)));
                 break;
             case PLAYING:
-                meetupScoreboard.getStringList("GAME").forEach(text -> {
+                uhcRunScoreboard.getStringList("GAME").forEach(text -> {
                     switch (text) {
-                        case "<no-clean>":
-                            if (!meetupPlayer.getNoCleanCooldown().hasExpired())
-                                FrozedUHCGames.getInstance().getMeetupScoreboardConfig().getConfig().getStringList("NO-CLEAN").forEach(line -> lines.add(CC.translate(line.replace("<time>",meetupPlayer.getNoCleanCooldown().getTimeLeft()))));
-                            break;
-                        case "<do-not-disturb>":
-                            if (!meetupPlayer.getDoNotDisturbCooldown().hasExpired())
-                                FrozedUHCGames.getInstance().getMeetupScoreboardConfig().getConfig().getStringList("DO-NOT-DISTURB").forEach(line -> lines.add(CC.translate(line.replace("<time>",meetupPlayer.getDoNotDisturbCooldown().getTimeLeft()))));
-                            break;
                         default:
-                            lines.add(translate(meetupPlayer, text));
+                            if (text.contains("<pvp-time>") && FrozedUHCGames.getInstance().getUhcRunGameManager().isPvpTimeAlready()) break;
+                            if (text.contains("<heal-time>") && FrozedUHCGames.getInstance().getUhcRunGameManager().isHealTimeAlready()) break;
+                            if (text.contains("<god-time>") && FrozedUHCGames.getInstance().getUhcRunGameManager().isGodModeAlready()) break;
+
+                            lines.add(translate(uhcPlayer, text));
                             break;
                     }
                 });
                 break;
             case FINISH:
-                meetupScoreboard.getStringList("FINISH").forEach(text -> lines.add(translate(meetupPlayer,text)));
+                uhcRunScoreboard.getStringList("FINISH").forEach(text -> lines.add(translate(uhcPlayer,text)));
                 break;
         }
         setSlotsFromList(lines);
     }
 
-    private String translate(MeetupPlayer meetupPlayer, String text) {
+    private String translate(UHCPlayer uhcPlayer, String text) {
         text = CC.translate(text);
-        switch (FrozedUHCGames.getInstance().getMeetupGameManager().getState()) {
+        switch (FrozedUHCGames.getInstance().getUhcRunGameManager().getState()) {
             case WAITING:
-                text = text.replace("<w-players>", String.valueOf((FrozedUHCGames.getInstance().getMeetupGameManager().getPlayersNeedToStart() - Bukkit.getOnlinePlayers().size())));
+                text = text.replace("<w-players>", String.valueOf((FrozedUHCGames.getInstance().getUhcRunGameManager().getPlayersNeedToStart() - Bukkit.getOnlinePlayers().size())));
                 break;
             case SCATTER:
-                text = text.replace("<time>", String.valueOf(FrozedUHCGames.getInstance().getMeetupGameManager().getScatterTime()));
+                text = text.replace("<time>", String.valueOf(FrozedUHCGames.getInstance().getUhcRunGameManager().getScatterTime()));
                 break;
             case STARTING:
-                text = text.replace("<time>", String.valueOf(FrozedUHCGames.getInstance().getMeetupGameManager().getStartingTime()));
+                text = text.replace("<time>", String.valueOf(FrozedUHCGames.getInstance().getUhcRunGameManager().getStartingTime()));
                 break;
             case PLAYING:
                 text = text
-                        .replace("<time>", Utils.calculate(FrozedUHCGames.getInstance().getMeetupGameManager().getGameTime()))
-                        .replace("<alive>", String.valueOf(FrozedUHCGames.getInstance().getMeetupGameManager().getAlivePlayers().size()))
-                        .replace("<max>", String.valueOf(FrozedUHCGames.getInstance().getMeetupGameManager().getMaxPlayers()))
+                        .replace("<time>", Utils.calculate(FrozedUHCGames.getInstance().getUhcRunGameManager().getGameTime()))
+                        .replace("<pvp-time>", Utils.calculate(FrozedUHCGames.getInstance().getUhcRunGameManager().getPvpTime()))
+                        .replace("<heal-time>", Utils.calculate(FrozedUHCGames.getInstance().getUhcRunGameManager().getHealTime()))
+                        .replace("<god-time>", Utils.calculate(FrozedUHCGames.getInstance().getUhcRunGameManager().getGodTime()))
+                        .replace("<alive>", String.valueOf(FrozedUHCGames.getInstance().getUhcRunGameManager().getAlivePlayers().size()))
+                        .replace("<max>", String.valueOf(FrozedUHCGames.getInstance().getUhcRunGameManager().getMaxPlayers()))
                         .replace("<border>", getBorderLine())
                         .replace("<ping>", String.valueOf(Utils.getPing(player)))
-                        .replace("<kills>", String.valueOf(meetupPlayer.getGameKills()));
+                        .replace("<kills>", String.valueOf(uhcPlayer.getGameKills()));
                 break;
             case FINISH:
                 text = text
-                        .replace("<time>", Utils.calculate(FrozedUHCGames.getInstance().getMeetupGameManager().getRestartTime()))
-                        .replace("<player>", FrozedUHCGames.getInstance().getMeetupGameManager().getWinner())
-                        .replace("<kills>", String.valueOf(FrozedUHCGames.getInstance().getMeetupGameManager().getWinnerKills()))
-                        .replace("<wins>", String.valueOf(FrozedUHCGames.getInstance().getMeetupGameManager().getWinnerWins()));
+                        .replace("<time>", Utils.calculate(FrozedUHCGames.getInstance().getUhcRunGameManager().getRestartTime()))
+                        .replace("<player>", FrozedUHCGames.getInstance().getUhcRunGameManager().getWinner())
+                        .replace("<kills>", String.valueOf(FrozedUHCGames.getInstance().getUhcRunGameManager().getWinnerKills()))
+                        .replace("<wins>", String.valueOf(FrozedUHCGames.getInstance().getUhcRunGameManager().getWinnerWins()));
                 break;
         }
         return text;
     }
 
     private String getBorderLine(){
-        if (FrozedUHCGames.getInstance().getBorder().isCanShrink()){
-            return CC.translate(FrozedUHCGames.getInstance().getMeetupScoreboardConfig().getConfig().getString("BORDER.TIME")
-                    .replace("<size>",String.valueOf(FrozedUHCGames.getInstance().getBorder().getSize()))
-                    .replace("<border-time>", Utils.simpleCalculate(FrozedUHCGames.getInstance().getBorder().getSeconds())));
+        if (!FrozedUHCGames.getInstance().getUhcRunGameManager().isBorderStarted()){
+            return CC.translate(FrozedUHCGames.getInstance().getUhcRunScoreboardConfig().getConfig().getString("BORDER.DEFAULT")
+                    .replace("<size>",String.valueOf(FrozedUHCGames.getInstance().getUhcRunBorder().getSize())));
+        } else if (FrozedUHCGames.getInstance().getUhcRunBorder().isCanShrink()){
+            return CC.translate(FrozedUHCGames.getInstance().getUhcRunScoreboardConfig().getConfig().getString("BORDER.TIME")
+                    .replace("<size>",String.valueOf(FrozedUHCGames.getInstance().getUhcRunBorder().getSize()))
+                    .replace("<border-time>", Utils.simpleCalculate(FrozedUHCGames.getInstance().getUhcRunBorder().getSeconds())));
         } else {
-            return CC.translate(FrozedUHCGames.getInstance().getMeetupScoreboardConfig().getConfig().getString("BORDER.LAST-BORDER")
-                    .replace("<size>",String.valueOf(FrozedUHCGames.getInstance().getBorder().getSize())));
+            return CC.translate(FrozedUHCGames.getInstance().getUhcRunScoreboardConfig().getConfig().getString("BORDER.LAST-BORDER")
+                    .replace("<size>",String.valueOf(FrozedUHCGames.getInstance().getUhcRunBorder().getSize())));
         }
     }
 }

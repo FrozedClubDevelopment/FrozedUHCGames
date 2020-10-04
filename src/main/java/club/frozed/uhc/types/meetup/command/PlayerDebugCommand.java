@@ -1,4 +1,4 @@
-package club.frozed.uhc.commands;
+package club.frozed.uhc.types.meetup.command;
 
 import club.frozed.uhc.types.meetup.manager.MeetupPlayer;
 import club.frozed.uhc.utils.CC;

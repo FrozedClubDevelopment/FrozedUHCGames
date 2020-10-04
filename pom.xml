@@ -65,7 +65,7 @@
             <systemPath>${project.basedir}/libs/WorldBorder.jar</systemPath>
         </dependency>
 
-        <!-- HoloAPI Border -->
+        <!-- HoloAPI -->
         <dependency>
             <groupId>de.inventivegames</groupId>
             <artifactId>hologram</artifactId>

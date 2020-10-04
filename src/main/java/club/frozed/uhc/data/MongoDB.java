@@ -63,6 +63,7 @@ public class MongoDB {
                     break;
                 case "UHC-RUN":
                     this.uhcRunPlayerData = this.mongoDatabase.getCollection("FrozedUHCGames-UHCRunData");
+                    break;
                 default:
                     FrozedUHCGames.getInstance().getLogger().info("[MongoDB] Disabling because you selected an invalid uhc mode.");
                     Bukkit.getServer().getPluginManager().disablePlugins();

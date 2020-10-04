@@ -1,7 +1,10 @@
 package club.frozed.uhc.types.uhcrun.listeners.game;
 
 import club.frozed.uhc.FrozedUHCGames;
+import club.frozed.uhc.types.uhcrun.managers.UHCPlayer;
 import club.frozed.uhc.types.uhcrun.utils.DropsUtils;
+import club.frozed.uhc.types.uhcrun.utils.TreeUtil;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -11,8 +14,11 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.LeavesDecayEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
+import org.bukkit.event.player.PlayerItemConsumeEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.util.Vector;
 
+import java.util.List;
 import java.util.Random;
 
 /**
@@ -21,7 +27,7 @@ import java.util.Random;
  * Date: 30/09/2020 @ 21:22
  */
 
-public class DropsListener implements Listener {
+public class UHCRunDropsListener implements Listener {
 
     private static Random rand;
 
@@ -61,54 +67,48 @@ public class DropsListener implements Listener {
         }
     }
 
-    // On break tree
-    public static void onTreeBreakEvent(BlockBreakEvent event){
-        Location location = event.getBlock().getLocation();
-        World world = location.getWorld();
-        int blockX = location.getBlockX();
-        int blockY = location.getBlockY();
-        int blockZ = location.getBlockZ();
+//    @EventHandler
+//    public void handleBlockBreakEvent(BlockBreakEvent event) {
+//        if (event.getBlock().getType() == Material.LOG || event.getBlock().getType() == Material.LOG_2) {
+//            Block up = event.getBlock();
+//            while (up.getType() == Material.LOG || up.getType() == Material.LOG_2) {
+//                event.getPlayer().getInventory().addItem(new ItemStack(up.getType(), 1, up.getData()));
+//                up.setType(Material.AIR);
+//                up = up.getLocation().clone().add(0, 1, 0).getBlock();
+//            }
+//        }
+//    }
 
-        if (!DropsUtils.validChunk(world, blockX - 5, blockY - 5, blockZ - 5, blockX + 5, blockY + 5, blockZ + 5)) {
+    @EventHandler
+    public void onBreakTree(BlockBreakEvent event) {
+        if (!TreeUtil.isMaterialALog(event.getBlock().getType())) return;
+        Location loc = event.getBlock().getLocation();
+        World world = loc.getWorld();
+        int x = loc.getBlockX();
+        int y = loc.getBlockY();
+        int z = loc.getBlockZ();
+        int range = 4;
+        int off = 5;
+        if (!TreeUtil.validChunk(world, x - 5, y - 5, z - 5, x + 5, y + 5, z + 5))
             return;
-        }
-
-        final int[] i = {0};
-        final int[] j = {0};
-        final int[] k = {0};
-        World world2 = null;
-        int o = 0;
-        int o2 = 0;
-        int o3 = 0;
-
-        FrozedUHCGames.getInstance().getServer().getScheduler().runTask(FrozedUHCGames.getInstance(), () -> {
-            while (i[0] <= 4) {
-                while (j[0] <= 4) {
-                    while (k[0] <= 4) {
-                        if (world2.getBlockTypeIdAt(o + i[0], o2 + j[0], o3 + k[0]) == Material.LEAVES.getId() ||
-                                world2.getBlockTypeIdAt(o + i[0], o2 + j[0], o3 + k[0]) == Material.LEAVES_2.getId()) {
-                            DropsUtils.breakLeaf(world2, o + i[0], o2 + j[0], o3 + k[0]);
-                        }
-                        ++k[0];
+        Bukkit.getScheduler().runTask(FrozedUHCGames.getInstance(), () -> {
+            for (int offX = -4; offX <= 4; offX++) {
+                for (int offY = -4; offY <= 4; offY++) {
+                    for (int offZ = -4; offZ <= 4; offZ++) {
+                        if (TreeUtil.isMaterialALeaf(world.getBlockAt(x + offX, y + offY, z + offZ).getType()))
+                            TreeUtil.breakLeaf(world, x + offX, y + offY, z + offZ);
                     }
-                    ++j[0];
                 }
-                ++i[0];
             }
-            return;
         });
-        DropsUtils.breakTree(event.getBlock(), event.getPlayer());
+        TreeUtil.breakTree(event.getBlock(), event.getPlayer());
     }
 
     @EventHandler
-    public void handleBlockBreakEvent(BlockBreakEvent event) {
-        if (event.getBlock().getType() == Material.LOG || event.getBlock().getType() == Material.LOG_2) {
-            Block up = event.getBlock();
-            while (up.getType() == Material.LOG || up.getType() == Material.LOG_2) {
-                event.getPlayer().getInventory().addItem(new ItemStack(up.getType(), 1, up.getData()));
-                up.setType(Material.AIR);
-                up = up.getLocation().clone().add(0, 1, 0).getBlock();
-            }
+    public void eatGoldenApple(PlayerItemConsumeEvent event){
+        if (event.getItem().getType() == Material.GOLDEN_APPLE){
+            UHCPlayer uhcPlayer = UHCPlayer.getByUuid(event.getPlayer().getUniqueId());
+            uhcPlayer.setGoldenApplesEaten(uhcPlayer.getGoldenApplesEaten() +1);
         }
     }
 
@@ -140,30 +140,26 @@ public class DropsListener implements Listener {
                 DropsUtils.normalDrop(event, Material.COBBLESTONE, 1);
                 break;
             case SUGAR_CANE_BLOCK:
-                if (DropsListener.rand.nextInt(100) >= 50) {
+                if (UHCRunDropsListener.rand.nextInt(100) >= 50) {
                     DropsUtils.normalDrop(event, Material.SUGAR_CANE, 5);
                     break;
                 }
                 DropsUtils.normalDrop(event, Material.SUGAR_CANE, 3);
                 break;
-            case LOG:
-            case LOG_2:
-                onTreeBreakEvent(event);
-                break;
         }
     }
 
     @EventHandler
-    public void onLeaveDecay(final LeavesDecayEvent leavesDecayEvent) {
+    public void onLeaveDecay(LeavesDecayEvent leavesDecayEvent) {
         final Block block = leavesDecayEvent.getBlock();
         final int nextInt = rand.nextInt(100);
         final int nextInt2 = rand.nextInt(500);
         leavesDecayEvent.setCancelled(true);
         block.setType(Material.AIR);
-        if (nextInt <= 1) {
+        if (nextInt <= 5){
             block.getWorld().dropItem(block.getLocation().add(0.5, 0.5, 0.5), new ItemStack(Material.APPLE, 1));
         }
-        else if (nextInt2 >= 495) {
+        else if (nextInt2 >= 475) {
             block.getWorld().dropItem(block.getLocation().add(0.5, 0.5, 0.5), new ItemStack(Material.GOLDEN_APPLE, 1));
         }
     }

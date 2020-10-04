@@ -47,9 +47,9 @@ public class MeetupGlassListener implements Listener {
             if (!from.getWorld().getName().equalsIgnoreCase(FrozedUHCGames.getInstance().getMeetupWorld().getMeetupWorldName()))
                 return;
             if (from.getBlockX() != to.getBlockX() || to.getBlockZ() != from.getBlockZ())
-                handleGlassRender(event.getPlayer(), to, -FrozedUHCGames.getInstance().getBorder().getSize()- 1,
-                        FrozedUHCGames.getInstance().getBorder().getSize(), - FrozedUHCGames.getInstance().getBorder().getSize() - 1,
-                        FrozedUHCGames.getInstance().getBorder().getSize());
+                handleGlassRender(event.getPlayer(), to, -FrozedUHCGames.getInstance().getMeetupBorder().getSize()- 1,
+                        FrozedUHCGames.getInstance().getMeetupBorder().getSize(), - FrozedUHCGames.getInstance().getMeetupBorder().getSize() - 1,
+                        FrozedUHCGames.getInstance().getMeetupBorder().getSize());
         }
     }
 

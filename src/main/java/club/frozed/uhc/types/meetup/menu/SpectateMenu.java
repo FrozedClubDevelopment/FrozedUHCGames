@@ -86,4 +86,3 @@ public class SpectateMenu implements Menu {
         return this.inventory;
     }
 }
-

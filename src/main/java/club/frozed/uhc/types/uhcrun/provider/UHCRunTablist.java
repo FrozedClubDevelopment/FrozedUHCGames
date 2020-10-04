@@ -5,5 +5,5 @@ package club.frozed.uhc.types.uhcrun.provider;
  * Project: FrozedUHCGames
  * Date: 09/30/2020 @ 14:54
  */
-public class RunTablist {
+public class UHCRunTablist {
 }

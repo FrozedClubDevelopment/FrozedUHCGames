@@ -66,7 +66,7 @@ public class MeetupWorldListener implements Listener {
                     this.y++;
                     this.progress++;
                     if (this.progress >= 70) {
-                        Bukkit.dispatchCommand((CommandSender)Bukkit.getServer().getConsoleSender(), "stop");
+                        Bukkit.dispatchCommand((CommandSender) Bukkit.getServer().getConsoleSender(), "stop");
                         cancel();
                     }
                 }

@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 
 @Getter
 @Setter
-public class Border {
+public class MeetupBorder {
     private int size;
     private int seconds;
     private int lastBorder;
@@ -24,7 +24,7 @@ public class Border {
     private int shrinkEvery = FrozedUHCGames.getInstance().getMeetupMainConfig().getConfig().getInt("SETTINGS.BORDER.SHRINK-EVERY-SECONDS");
     public boolean canShrink;
 
-    public Border() {
+    public MeetupBorder() {
         this.startBorder = FrozedUHCGames.getInstance().getMeetupMainConfig().getConfig().getInt("SETTINGS.WORLD.SIZE");
         this.size = startBorder;
         this.canShrink = true;

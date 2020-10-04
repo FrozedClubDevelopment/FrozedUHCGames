@@ -3,7 +3,6 @@ package club.frozed.uhc.types.uhcrun.managers.world;
 import club.frozed.uhc.FrozedUHCGames;
 import club.frozed.uhc.types.meetup.manager.MeetupPlayer;
 import club.frozed.uhc.utils.Utils;
-import club.frozed.uhc.utils.time.TimeUtil;
 import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.Bukkit;
@@ -17,7 +16,7 @@ import java.util.stream.Collectors;
 
 @Getter
 @Setter
-public class Border {
+public class UHCRunBorder {
     private int size;
     private int seconds;
     private int lastBorder;
@@ -26,7 +25,7 @@ public class Border {
     private int shrinkEvery = FrozedUHCGames.getInstance().getUhcRunMainConfig().getConfig().getInt("SETTINGS.BORDER.SHRINK-EVERY-SECONDS");
     public boolean canShrink;
 
-    public Border() {
+    public UHCRunBorder() {
         this.startBorder = FrozedUHCGames.getInstance().getUhcRunMainConfig().getConfig().getInt("SETTINGS.WORLD.SIZE");
         this.size = startBorder;
         this.canShrink = true;
@@ -63,9 +62,9 @@ public class Border {
             }
         });
 
-        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "wb " + FrozedUHCGames.getInstance().getMeetupWorld().getMeetupWorldName() + " set " + size + " " + size + " 0 0");
+        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "wb " + FrozedUHCGames.getInstance().getUhcRunWorld().getUhcRunWorldName() + " set " + size + " " + size + " 0 0");
 
-        FrozedUHCGames.getInstance().getMeetupWorld().shrinkBorder(size,6);
+        FrozedUHCGames.getInstance().getUhcRunWorld().shrinkBorder(size,6);
 
         outsidePlayers.forEach(player -> {
             Location location = player.getLocation();

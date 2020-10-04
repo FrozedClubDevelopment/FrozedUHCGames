@@ -19,7 +19,7 @@ import java.util.Arrays;
  * Date: 30/09/2020 @ 21:45
  */
 
-public class CraftItemListener implements Listener {
+public class UHCRunCraftItemListener implements Listener {
 
     @EventHandler
     public void onPlayerCraft(PrepareItemCraftEvent e) {

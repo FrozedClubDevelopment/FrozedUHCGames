@@ -1,7 +1,7 @@
 package club.frozed.uhc;
 
 import club.frozed.uhc.commands.FrozedUHCGamesCommand;
-import club.frozed.uhc.commands.PlayerDebugCommand;
+import club.frozed.uhc.types.meetup.command.PlayerDebugCommand;
 import club.frozed.uhc.commands.SetSpawnCommand;
 import club.frozed.uhc.data.MongoDB;
 import club.frozed.uhc.nms.NMS;
@@ -17,11 +17,25 @@ import club.frozed.uhc.types.meetup.listeners.player.MeetupPlayerListeners;
 import club.frozed.uhc.types.meetup.listeners.player.MeetupSpectatorListener;
 import club.frozed.uhc.types.meetup.listeners.player.PlayerMeetupDataLoad;
 import club.frozed.uhc.types.meetup.manager.game.MeetupGameManager;
-import club.frozed.uhc.types.meetup.manager.world.Border;
+import club.frozed.uhc.types.meetup.manager.world.MeetupBorder;
 import club.frozed.uhc.types.meetup.manager.world.MeetupWorld;
 import club.frozed.uhc.types.meetup.provider.MeetupTablist;
 import club.frozed.uhc.types.meetup.scenario.scenarios.*;
 import club.frozed.uhc.types.meetup.task.MeetupScoreboardTask;
+import club.frozed.uhc.types.uhcrun.command.UHCRunForceStartCommand;
+import club.frozed.uhc.types.uhcrun.listeners.game.UHCRunCraftItemListener;
+import club.frozed.uhc.types.uhcrun.listeners.game.UHCRunDropsListener;
+import club.frozed.uhc.types.uhcrun.listeners.game.UHCRunGameListener;
+import club.frozed.uhc.types.uhcrun.listeners.glass.UHCRunGlassListener;
+import club.frozed.uhc.types.uhcrun.listeners.lobby.UHCRunLobbyListener;
+import club.frozed.uhc.types.uhcrun.listeners.player.UHCPlayerDataLoad;
+import club.frozed.uhc.types.uhcrun.listeners.player.UHCRunPlayerListener;
+import club.frozed.uhc.types.uhcrun.listeners.player.UHCRunSpectatorListener;
+import club.frozed.uhc.types.uhcrun.listeners.world.UHCRunWorldListener;
+import club.frozed.uhc.types.uhcrun.managers.game.UHCRunGameManager;
+import club.frozed.uhc.types.uhcrun.managers.world.UHCRunBorder;
+import club.frozed.uhc.types.uhcrun.managers.world.UHCRunWorld;
+import club.frozed.uhc.types.uhcrun.tasks.scoreboard.UHCRunScoreboardTask;
 import club.frozed.uhc.utils.CC;
 import club.frozed.uhc.utils.SpawnManager;
 import club.frozed.uhc.utils.command.CommandFramework;
@@ -50,35 +64,60 @@ public final class FrozedUHCGames extends JavaPlugin {
     private NMS nmsHandler;
     private Random random = new Random();
 
-    private FileConfig databaseConfig, settingsConfig, meetupMainConfig, meetupTablistConfig, meetupMessagesConfig, meetupScoreboardConfig, meetupKitsConfig;
+    private FileConfig
+            // Config en General
+            databaseConfig,
+            settingsConfig,
+            // Meetup Config
+            meetupMainConfig,
+            meetupTablistConfig,
+            meetupMessagesConfig,
+            meetupScoreboardConfig,
+            meetupKitsConfig,
+            // UHC Run Config
+            uhcRunMainConfig,
+            uhcRunTablistConfig,
+            uhcRunMessagesConfig,
+            uhcRunScoreboardConfig;
 
     private MongoDB mongoDB;
     private SpawnManager spawnManager;
+
     private MeetupGameManager meetupGameManager;
     private MeetupWorld meetupWorld;
-    private Border border;
+    private MeetupBorder meetupBorder;
+
+    private UHCRunGameManager uhcRunGameManager;
+    private UHCRunBorder uhcRunBorder;
+    protected UHCRunWorld uhcRunWorld;
 
     @Override
     public void onEnable() {
         /*
         TO-DO
-        Kits por config [Done]
-        TabList [Done]
-        Msg de muerte [Done]
-        Spectator por packet [done]
-        Fixear player invisibles [Done]
+
+        UHC-RUN
 
          */
         instance = this;
         commandFramework = new CommandFramework(this);
 
-        meetupMainConfig = new FileConfig(this, "meetup/config.yml");
+        // Main Config
+        settingsConfig = new FileConfig(this, "settings.yml");
         databaseConfig = new FileConfig(this, "database.yml");
+
+        // Meetup Config
+
+        meetupMainConfig = new FileConfig(this, "meetup/config.yml");
         meetupScoreboardConfig = new FileConfig(this, "meetup/scoreboard.yml");
         meetupMessagesConfig = new FileConfig(this, "meetup/messages.yml");
         meetupTablistConfig = new FileConfig(this, "meetup/tablist.yml");
-        settingsConfig = new FileConfig(this, "settings.yml");
         meetupKitsConfig = new FileConfig(this, "meetup/kits.yml");
+
+        uhcRunMainConfig = new FileConfig(this, "uhcrun/config.yml");
+        uhcRunScoreboardConfig = new FileConfig(this, "uhcrun/scoreboard.yml");
+        uhcRunMessagesConfig = new FileConfig(this, "uhcrun/messages.yml");
+        uhcRunTablistConfig = new FileConfig(this, "uhcrun/tablist.yml");
 
         String packageName = this.getServer().getClass().getPackage().getName();
         String version = packageName.substring(packageName.lastIndexOf('.') + 1);
@@ -105,11 +144,6 @@ public final class FrozedUHCGames extends JavaPlugin {
             spawnManager.load();
         }
 
-        meetupGameManager = new MeetupGameManager();
-        meetupGameManager.setScatterStarted(false);
-        meetupWorld = new MeetupWorld();
-        border = new Border();
-
         this.mongoDB = new MongoDB();
         mongoDB.connect();
 
@@ -124,9 +158,11 @@ public final class FrozedUHCGames extends JavaPlugin {
                 Bukkit.shutdown();
                 break;
         }
+        Bukkit.getConsoleSender().sendMessage(CC.CHAT_BAR);
+        Bukkit.getConsoleSender().sendMessage(CC.translate("&b[FrozedUHCGames] &bMode &f" + settingsConfig.getConfig().getString("MODE")));
+        Bukkit.getConsoleSender().sendMessage(CC.CHAT_BAR);
 
         commandFramework.registerCommands(new SetSpawnCommand());
-        commandFramework.registerCommands(new PlayerDebugCommand());
         commandFramework.registerCommands(new FrozedUHCGamesCommand());
 
         Bukkit.getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
@@ -136,7 +172,14 @@ public final class FrozedUHCGames extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        KitManager.saveKits();
+        switch (settingsConfig.getConfig().getString("MODE")) {
+            case "MEETUP":
+                KitManager.saveKits();
+                break;
+            case "UHC-RUN":
+                // NO C
+                break;
+        }
     }
 
     private void loadMeetup() {
@@ -148,6 +191,12 @@ public final class FrozedUHCGames extends JavaPlugin {
             Bukkit.getConsoleSender().sendMessage(CC.translate("&cError in load kits please check your config."));
             Bukkit.getConsoleSender().sendMessage(CC.CHAT_BAR);
         }
+
+        // Meetup
+        meetupGameManager = new MeetupGameManager();
+        meetupGameManager.setScatterStarted(false);
+        meetupWorld = new MeetupWorld();
+        meetupBorder = new MeetupBorder();
 
         // Meetup Listeners
         PluginManager pluginManager = Bukkit.getPluginManager();
@@ -182,10 +231,40 @@ public final class FrozedUHCGames extends JavaPlugin {
         commandFramework.registerCommands(new KitCommand());
         commandFramework.registerCommands(new AnnounceMeetupCommand());
         commandFramework.registerCommands(new MeetupForceStartCommand());
+        commandFramework.registerCommands(new PlayerDebugCommand());
     }
 
     private void loadUHCRun() {
+        // UHCRUN
+        uhcRunGameManager = new UHCRunGameManager();
+        uhcRunGameManager.setScatterStarted(false);
+        uhcRunWorld = new UHCRunWorld();
+        uhcRunBorder = new UHCRunBorder();
 
+        // Meetup Listeners
+        PluginManager pluginManager = Bukkit.getPluginManager();
+        pluginManager.registerEvents(new UHCPlayerDataLoad(), this);
+        pluginManager.registerEvents(new UHCRunPlayerListener(), this);
+        pluginManager.registerEvents(new UHCRunLobbyListener(), this);
+        pluginManager.registerEvents(new UHCRunWorldListener(), this);
+        pluginManager.registerEvents(new UHCRunCraftItemListener(),this);
+        pluginManager.registerEvents(new UHCRunDropsListener(),this);
+        pluginManager.registerEvents(new UHCRunGameListener(), this);
+        pluginManager.registerEvents(new UHCRunSpectatorListener(), this);
+
+        if (FrozedUHCGames.getInstance().getUhcRunMainConfig().getConfig().getBoolean("SETTINGS.GLASS-BORDER.ENABLED")) {
+            pluginManager.registerEvents(new UHCRunGlassListener(), this);
+        }
+
+        // Meetup Tablist Version Check
+        checkVersion();
+
+        // Meetup Tasks
+        new UHCRunScoreboardTask().runTaskTimerAsynchronously(this, 0L, 2L);
+
+        //UHC-RUN Comands
+        commandFramework.registerCommands(new club.frozed.uhc.types.uhcrun.command.PlayerDebugCommand());
+        commandFramework.registerCommands(new UHCRunForceStartCommand());
     }
 
     public void checkVersion() {

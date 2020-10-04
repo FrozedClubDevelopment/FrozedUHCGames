@@ -2,17 +2,14 @@ package club.frozed.uhc.types.meetup.provider;
 
 import club.frozed.uhc.FrozedUHCGames;
 import club.frozed.uhc.types.meetup.manager.MeetupPlayer;
-import club.frozed.uhc.types.meetup.manager.world.Border;
 import club.frozed.uhc.utils.CC;
 import club.frozed.uhc.utils.Utils;
 import club.frozed.uhc.utils.config.ConfigCursor;
 import club.frozed.uhc.utils.scoreboard.Board;
 import lombok.Getter;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
-import javax.rmi.CORBA.Util;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -104,13 +101,13 @@ public class MeetupScoreboard extends Board {
     }
 
     private String getBorderLine(){
-        if (FrozedUHCGames.getInstance().getBorder().isCanShrink()){
+        if (FrozedUHCGames.getInstance().getMeetupBorder().isCanShrink()){
             return CC.translate(FrozedUHCGames.getInstance().getMeetupScoreboardConfig().getConfig().getString("BORDER.TIME")
-                    .replace("<size>",String.valueOf(FrozedUHCGames.getInstance().getBorder().getSize()))
-                    .replace("<border-time>", Utils.simpleCalculate(FrozedUHCGames.getInstance().getBorder().getSeconds())));
+                    .replace("<size>",String.valueOf(FrozedUHCGames.getInstance().getMeetupBorder().getSize()))
+                    .replace("<border-time>", Utils.simpleCalculate(FrozedUHCGames.getInstance().getMeetupBorder().getSeconds())));
         } else {
             return CC.translate(FrozedUHCGames.getInstance().getMeetupScoreboardConfig().getConfig().getString("BORDER.LAST-BORDER")
-                    .replace("<size>",String.valueOf(FrozedUHCGames.getInstance().getBorder().getSize())));
+                    .replace("<size>",String.valueOf(FrozedUHCGames.getInstance().getMeetupBorder().getSize())));
         }
     }
 }
