@@ -1,7 +1,6 @@
-package club.frozed.uhc.types.uhcrun.tasks;
+package club.frozed.uhc.types.uhcrun.tasks.pregame;
 
 import club.frozed.uhc.FrozedUHCGames;
-import club.frozed.uhc.types.meetup.manager.game.MeetupGameManager;
 import club.frozed.uhc.types.uhcrun.managers.game.UHCRunGameManager;
 import org.bukkit.scheduler.BukkitRunnable;
 
