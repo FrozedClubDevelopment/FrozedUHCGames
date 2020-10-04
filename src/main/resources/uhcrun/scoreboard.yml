@@ -1,0 +1,51 @@
+TITLE: '&b&lUHC RUN'
+
+BORDER:
+  DEFAULT: '&f<size>'
+  TIME: '&f<size> &7(&c<border-time>&7)'
+  LAST-BORDER: '&f<size>'
+
+SCORE:
+  WAITING:
+    - '&7&m-------------------'
+    - '&fWaiting for &b<w-players> more'
+    - '&fplayers to start.'
+    - ' '
+    - '&b&ofrozed.club'
+    - '&7&m-------------------'
+  SCATTER:
+    - '&7&m-------------------'
+    - '&fScatter starts in'
+    - '&b<time> seconds'
+    - ''
+    - '&b&ofrozed.club'
+    - '&7&m-------------------'
+  STARTING:
+    - '&7&m-------------------'
+    - '&fThe game will start in&7:'
+    - '&b<time> &fseconds.'
+    - ' '
+    - '&b&ofrozed.club'
+    - '&7&m-------------------'
+  GAME:
+    - '&7&m-------------------'
+    - '&bRemaining Players&7: &f<alive>/<max>'
+    - '&bBorder&7: <border>'
+    - '&bKills&7: &f<kills>'
+    - '&bTime&7: &f<time>'
+    - '&bPvp time&7: &f<pvp-time>'
+    - '&bHeal time&7: &f<heal-time>'
+    - '&bGod time&7: &f<god-time>'
+    - ''
+    - '&b&ofrozed.club'
+    - '&7&m-------------------'
+  FINISH:
+    - '&7&m-------------------'
+    - '&bRestart&7: &f<time>'
+    - ''
+    - '&bWinner&7: &f<player>'
+    - '&bKills&7: &f<kills>'
+    - '&bWins&7: &f<wins>'
+    - ' '
+    - '&b&ofrozed.club'
+    - '&7&m-------------------'
