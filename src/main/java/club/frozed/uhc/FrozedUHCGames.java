@@ -55,8 +55,7 @@ import java.util.Random;
  * Project: FrozedUHCGames
  * Date: 09/01/2020 @ 12:40
  */
-@Getter
-@Setter
+@Getter @Setter
 public final class FrozedUHCGames extends JavaPlugin {
 
     @Getter public static FrozedUHCGames instance;
@@ -93,12 +92,6 @@ public final class FrozedUHCGames extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        /*
-        TO-DO
-
-        UHC-RUN
-
-         */
         instance = this;
         commandFramework = new CommandFramework(this);
 
@@ -107,7 +100,6 @@ public final class FrozedUHCGames extends JavaPlugin {
         databaseConfig = new FileConfig(this, "database.yml");
 
         // Meetup Config
-
         meetupMainConfig = new FileConfig(this, "meetup/config.yml");
         meetupScoreboardConfig = new FileConfig(this, "meetup/scoreboard.yml");
         meetupMessagesConfig = new FileConfig(this, "meetup/messages.yml");
@@ -212,7 +204,7 @@ public final class FrozedUHCGames extends JavaPlugin {
         }
 
         // Meetup Tablist Version Check
-        checkVersion();
+        // meetupTablistVersionCheck();
 
         // Meetup Tasks
         new MeetupScoreboardTask().runTaskTimerAsynchronously(this, 0L, 2L);
@@ -227,7 +219,7 @@ public final class FrozedUHCGames extends JavaPlugin {
         new DoNotDisturb();
         new WebCage();
 
-        //Meetup Kits Comands
+        //Meetup Kits Commands
         commandFramework.registerCommands(new KitCommand());
         commandFramework.registerCommands(new AnnounceMeetupCommand());
         commandFramework.registerCommands(new MeetupForceStartCommand());
@@ -235,13 +227,13 @@ public final class FrozedUHCGames extends JavaPlugin {
     }
 
     private void loadUHCRun() {
-        // UHCRUN
+        // UHC-Run
         uhcRunGameManager = new UHCRunGameManager();
         uhcRunGameManager.setScatterStarted(false);
         uhcRunWorld = new UHCRunWorld();
         uhcRunBorder = new UHCRunBorder();
 
-        // Meetup Listeners
+        // UHC-Run Listeners
         PluginManager pluginManager = Bukkit.getPluginManager();
         pluginManager.registerEvents(new UHCPlayerDataLoad(), this);
         pluginManager.registerEvents(new UHCRunPlayerListener(), this);
@@ -256,18 +248,15 @@ public final class FrozedUHCGames extends JavaPlugin {
             pluginManager.registerEvents(new UHCRunGlassListener(), this);
         }
 
-        // Meetup Tablist Version Check
-        checkVersion();
-
-        // Meetup Tasks
+        // UHC-Run Tasks
         new UHCRunScoreboardTask().runTaskTimerAsynchronously(this, 0L, 2L);
 
-        //UHC-RUN Comands
+        //UHC-Run Commands
         commandFramework.registerCommands(new club.frozed.uhc.types.uhcrun.command.PlayerDebugCommand());
         commandFramework.registerCommands(new UHCRunForceStartCommand());
     }
 
-    public void checkVersion() {
+    public void meetupTablistVersionCheck() {
         if (Bukkit.getVersion().contains("1.8")) {
             Bukkit.getConsoleSender().sendMessage(CC.CHAT_BAR);
             Bukkit.getConsoleSender().sendMessage(CC.translate("&b[FrozedUHCGames] &aSUCCESS -> The Custom Tablist has been loaded!"));

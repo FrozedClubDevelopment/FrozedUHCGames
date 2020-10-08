@@ -14,11 +14,10 @@ import org.bukkit.inventory.ItemStack;
 import java.util.Arrays;
 
 /**
- * Created by Ryzeon
+ * Created by Elb1to
  * Project: FrozedUHCGames
  * Date: 30/09/2020 @ 21:45
  */
-
 public class UHCRunCraftItemListener implements Listener {
 
     @EventHandler

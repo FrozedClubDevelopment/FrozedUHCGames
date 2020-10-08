@@ -18,11 +18,10 @@ import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.world.PortalCreateEvent;
 
 /**
- * Created by Ryzeon
+ * Created by Elb1to
  * Project: FrozedUHCGames
  * Date: 3/10/2020 @ 11:50
  */
-
 public class UHCRunGameListener implements Listener {
 
     @EventHandler
@@ -195,12 +194,12 @@ public class UHCRunGameListener implements Listener {
     public void onEntityDamageByEntity(EntityDamageByEntityEvent event) {
         Player attacker = Utils.getDamager(event);
         if (attacker != null && event.getEntity() instanceof Player) {
-            Player damaged = (Player)event.getEntity();
+            Player damaged = (Player) event.getEntity();
             if (event.getDamager() instanceof org.bukkit.entity.Arrow) {
-                ConfigCursor configCursor = new ConfigCursor(FrozedUHCGames.getInstance().getUhcRunMessagesConfig(),"");
+                ConfigCursor configCursor = new ConfigCursor(FrozedUHCGames.getInstance().getUhcRunMessagesConfig(), "");
                 double health = Math.ceil(damaged.getHealth() - event.getFinalDamage()) / 2.0D;
                 if (health > 0.0D)
-                    attacker.sendMessage(CC.translate(configCursor.getString("BOW-DAMAGE").replace("<player>",damaged.getName()).replace("<heal>",String.valueOf(health))));
+                    attacker.sendMessage(CC.translate(configCursor.getString("BOW-DAMAGE").replace("<player>", damaged.getName()).replace("<heal>", String.valueOf(health))));
             }
         }
     }
@@ -211,10 +210,10 @@ public class UHCRunGameListener implements Listener {
     }
 
     @EventHandler
-    public void onEntityDamageEvent(EntityDamageEvent e){
+    public void onEntityDamageEvent(EntityDamageEvent e) {
         if (FrozedUHCGames.getInstance().getUhcRunGameManager().isGodModeAlready()) return;
-        if (e.getEntity() instanceof Player){
-            switch (e.getCause()){
+        if (e.getEntity() instanceof Player) {
+            switch (e.getCause()) {
                 case FIRE:
                 case LAVA:
                 case FIRE_TICK:

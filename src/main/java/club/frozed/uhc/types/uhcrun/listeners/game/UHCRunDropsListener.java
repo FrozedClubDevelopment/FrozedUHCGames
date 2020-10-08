@@ -16,17 +16,14 @@ import org.bukkit.event.block.LeavesDecayEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.player.PlayerItemConsumeEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.util.Vector;
 
-import java.util.List;
 import java.util.Random;
 
 /**
- * Created by Ryzeon
+ * Created by Elb1to
  * Project: FrozedUHCGames
  * Date: 30/09/2020 @ 21:22
  */
-
 public class UHCRunDropsListener implements Listener {
 
     private static Random rand;
@@ -37,7 +34,7 @@ public class UHCRunDropsListener implements Listener {
 
     // Death Animals
     @EventHandler
-    public void onEntityDeathEvent(EntityDeathEvent event){
+    public void onEntityDeathEvent(EntityDeathEvent event) {
         switch (event.getEntityType()) {
             case COW:
                 DropsUtils.dropEntity(event, Material.COOKED_BEEF, Material.LEATHER, 2, 3, 3);
@@ -105,17 +102,17 @@ public class UHCRunDropsListener implements Listener {
     }
 
     @EventHandler
-    public void eatGoldenApple(PlayerItemConsumeEvent event){
-        if (event.getItem().getType() == Material.GOLDEN_APPLE){
+    public void eatGoldenApple(PlayerItemConsumeEvent event) {
+        if (event.getItem().getType() == Material.GOLDEN_APPLE) {
             UHCPlayer uhcPlayer = UHCPlayer.getByUuid(event.getPlayer().getUniqueId());
-            uhcPlayer.setGoldenApplesEaten(uhcPlayer.getGoldenApplesEaten() +1);
+            uhcPlayer.setGoldenApplesEaten(uhcPlayer.getGoldenApplesEaten() + 1);
         }
     }
 
     // ORE MINE
 
     @EventHandler
-    public void onMineBlock(BlockBreakEvent event){
+    public void onMineBlock(BlockBreakEvent event) {
         switch (event.getBlock().getType()) {
             case DIAMOND_ORE:
                 DropsUtils.dropOre(event, Material.DIAMOND, 6);
@@ -156,10 +153,9 @@ public class UHCRunDropsListener implements Listener {
         final int nextInt2 = rand.nextInt(500);
         leavesDecayEvent.setCancelled(true);
         block.setType(Material.AIR);
-        if (nextInt <= 5){
+        if (nextInt <= 5) {
             block.getWorld().dropItem(block.getLocation().add(0.5, 0.5, 0.5), new ItemStack(Material.APPLE, 1));
-        }
-        else if (nextInt2 >= 475) {
+        } else if (nextInt2 >= 475) {
             block.getWorld().dropItem(block.getLocation().add(0.5, 0.5, 0.5), new ItemStack(Material.GOLDEN_APPLE, 1));
         }
     }

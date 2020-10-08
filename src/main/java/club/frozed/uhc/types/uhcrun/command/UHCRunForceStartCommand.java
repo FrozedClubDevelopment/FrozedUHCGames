@@ -42,7 +42,7 @@ public class UHCRunForceStartCommand extends BaseCommand {
                     scatterPlayers.add(uhcPlayer);
                 }
             });
-            if (!FrozedUHCGames.getInstance().getUhcRunGameManager().isScatterStarted()){
+            if (!FrozedUHCGames.getInstance().getUhcRunGameManager().isScatterStarted()) {
                 FrozedUHCGames.getInstance().getUhcRunGameManager().setScatterStarted(true);
                 new ScatterTask().runTaskTimer(FrozedUHCGames.getInstance(), 0L, 20L);
             }

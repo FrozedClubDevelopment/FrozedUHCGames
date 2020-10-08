@@ -1,6 +1,5 @@
 package club.frozed.uhc.types.uhcrun.command;
 
-import club.frozed.uhc.types.meetup.manager.MeetupPlayer;
 import club.frozed.uhc.types.uhcrun.managers.UHCPlayer;
 import club.frozed.uhc.utils.CC;
 import club.frozed.uhc.utils.command.BaseCommand;

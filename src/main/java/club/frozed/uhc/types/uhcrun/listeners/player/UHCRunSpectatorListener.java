@@ -26,7 +26,6 @@ import org.bukkit.event.vehicle.VehicleEnterEvent;
  * Project: FrozedUHCGames
  * Date: 3/10/2020 @ 11:35
  */
-
 public class UHCRunSpectatorListener implements Listener {
     @EventHandler
     public void onPlayerInteract(PlayerInteractEvent event) {
