@@ -65,10 +65,11 @@ public class MeetupUtil {
 
     public static void prepareLobby(MeetupPlayer meetupPlayer) {
         ConfigCursor configCursor = new ConfigCursor(FrozedUHCGames.getInstance().getMeetupMainConfig(), "SETTINGS.STATS-ITEM");
+
         Player player = meetupPlayer.getPlayer();
         if (player.isDead()) player.spigot().respawn();
-        player.setGameMode(GameMode.SURVIVAL);
         reset(meetupPlayer);
+
         Material material = Material.valueOf(configCursor.getString("ITEM.MATERIAL"));
         String name = CC.translate(configCursor.getString("NAME"));
         int slot = configCursor.getInt("SLOT");

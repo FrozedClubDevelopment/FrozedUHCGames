@@ -1,25 +1,11 @@
 package club.frozed.uhc.types.meetup.provider;
 
-import club.frozed.uhc.FrozedUHCGames;
-import club.frozed.uhc.types.meetup.manager.MeetupPlayer;
-import club.frozed.uhc.types.meetup.manager.game.MeetupGameManager;
-import club.frozed.uhc.types.meetup.menu.VoteScenarioMenu;
-import club.frozed.uhc.utils.CC;
-import club.frozed.uhc.utils.Utils;
-import club.frozed.uhc.utils.config.ConfigCursor;
-import me.allen.ziggurat.ZigguratAdapter;
-import me.allen.ziggurat.objects.BufferedTabObject;
-import org.bukkit.entity.Player;
-
-import java.util.HashSet;
-import java.util.Set;
-
 /**
  * Created by Elb1to
  * Project: FrozedUHCGames
  * Date: 09/04/2020 @ 12:44
  */
-public class MeetupTablist implements ZigguratAdapter {
+public class MeetupTablist {/*implements ZigguratAdapter {
 
     @Override
     public String getHeader() {
@@ -122,5 +108,5 @@ public class MeetupTablist implements ZigguratAdapter {
                 .replaceAll("<playerDeaths>", String.valueOf(data.getDeaths()))
                 .replaceAll("<playerKDR>", String.valueOf(data.getKDR()))
                 .replaceAll("<playerWins>", String.valueOf(data.getWins()));
-    }
+    }*/
 }

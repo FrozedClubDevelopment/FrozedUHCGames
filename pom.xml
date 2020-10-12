@@ -41,12 +41,12 @@
         </dependency>
 
         <!-- Ziggurat -->
-        <dependency>
+        <!--<dependency>
             <groupId>me.allen</groupId>
             <artifactId>Ziggurat</artifactId>
             <version>1.0-SNAPSHOT</version>
             <scope>compile</scope>
-        </dependency>
+        </dependency>-->
 
         <!-- Hatsur Tab -->
         <!--<dependency>
@@ -55,6 +55,15 @@
             <version>1.0.0-SNAPSHOT</version>
             <scope>compile</scope>
         </dependency>-->
+
+        <!-- Hatsur Tab -->
+        <dependency>
+            <groupId>shysin.eighttab</groupId>
+            <artifactId>eighttab</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/libs/eighttab-1.0-SNAPSHOT.jar</systemPath>
+        </dependency>
 
         <!-- World Border -->
         <dependency>

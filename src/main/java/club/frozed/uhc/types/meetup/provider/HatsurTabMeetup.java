@@ -5,7 +5,7 @@ package club.frozed.uhc.types.meetup.provider;
  * Project: FrozedUHCGames
  * Date: 09/04/2020 @ 18:34
  */
-public class HatsurTabMeetup { /*implements TabAdapter {
+public class HatsurTabMeetup {/*implements TabAdapter {
 
     @Override
     public String getHeader(Player player) {
