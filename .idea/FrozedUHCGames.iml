@@ -28,15 +28,7 @@
         <SOURCES />
       </library>
     </orderEntry>
-    <orderEntry type="module-library">
-      <library name="Maven: shysin.eighttab:eighttab:1.0-SNAPSHOT">
-        <CLASSES>
-          <root url="jar://$MODULE_DIR$/libs/eighttab-1.0-SNAPSHOT.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
+    <orderEntry type="library" name="Maven: club.frozed.tab:TabAPI:1.0-SNAPSHOT" level="project" />
     <orderEntry type="module-library">
       <library name="Maven: com.wimbli:WorldBorder:1.8.7">
         <CLASSES>

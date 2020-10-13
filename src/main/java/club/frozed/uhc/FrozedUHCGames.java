@@ -1,5 +1,6 @@
 package club.frozed.uhc;
 
+import club.frozed.tab.Tab;
 import club.frozed.uhc.commands.FrozedUHCGamesCommand;
 import club.frozed.uhc.commands.SetSpawnCommand;
 import club.frozed.uhc.data.MongoDB;
@@ -19,7 +20,7 @@ import club.frozed.uhc.types.meetup.listeners.player.PlayerMeetupDataLoad;
 import club.frozed.uhc.types.meetup.manager.game.MeetupGameManager;
 import club.frozed.uhc.types.meetup.manager.world.MeetupBorder;
 import club.frozed.uhc.types.meetup.manager.world.MeetupWorld;
-import club.frozed.uhc.types.meetup.provider.HatsurTabMeetup;
+import club.frozed.uhc.types.meetup.provider.MeetupTablist;
 import club.frozed.uhc.types.meetup.scenario.scenarios.*;
 import club.frozed.uhc.types.meetup.task.MeetupScoreboardTask;
 import club.frozed.uhc.types.uhcrun.command.UHCRunForceStartCommand;
@@ -41,7 +42,6 @@ import club.frozed.uhc.utils.SpawnManager;
 import club.frozed.uhc.utils.command.CommandFramework;
 import club.frozed.uhc.utils.config.FileConfig;
 import club.frozed.uhc.utils.menu.MenuListener;
-import dev.hatsur.seventab.EightTab;
 import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.Bukkit;
@@ -206,9 +206,8 @@ public final class FrozedUHCGames extends JavaPlugin {
             pluginManager.registerEvents(new MeetupGlassListener(), this);
         }
 
-        // Meetup Tablist Version Check
-        // Temporarily disabled, we are fixing issues
-        // meetupTablistVersionCheck();
+        // Meetup TabList
+        meetupTabList();
 
         // Meetup Tasks
         new MeetupScoreboardTask().runTaskTimerAsynchronously(this, 0L, 2L);
@@ -260,15 +259,15 @@ public final class FrozedUHCGames extends JavaPlugin {
         commandFramework.registerCommands(new UHCRunForceStartCommand());
     }
 
-    public void meetupTablistVersionCheck() {
-        if (Bukkit.getVersion().contains("1.8")) {
+    public void meetupTabList() {
+        if (meetupMainConfig.getConfig().getBoolean("SETTINGS.TAB-LIST")) {
             Bukkit.getConsoleSender().sendMessage(CC.CHAT_BAR);
             Bukkit.getConsoleSender().sendMessage(CC.translate("&b[FrozedUHCGames] &aSUCCESS -> The Custom Tablist has been loaded!"));
             Bukkit.getConsoleSender().sendMessage(CC.CHAT_BAR);
-            //new EightTab(this, new HatsurTabMeetup());
+            new Tab(this, new MeetupTablist(),20, 100);
         } else {
             Bukkit.getConsoleSender().sendMessage(CC.CHAT_BAR);
-            Bukkit.getConsoleSender().sendMessage(CC.translate("&b[FrozedUHCGames] &4ERROR &c-> The Custom Tablist is only compatible with 1.8!"));
+            Bukkit.getConsoleSender().sendMessage(CC.translate("&b[FrozedUHCGames] &4ERROR &c-> The Custom Tablist is disabled in config.yml"));
             Bukkit.getConsoleSender().sendMessage(CC.CHAT_BAR);
         }
     }

@@ -40,29 +40,12 @@
             <systemPath>${project.basedir}/libs/PaperSpigot-1.7.10-R0.1-SNAPSHOT.jar</systemPath>
         </dependency>
 
-        <!-- Ziggurat -->
-        <!--<dependency>
-            <groupId>me.allen</groupId>
-            <artifactId>Ziggurat</artifactId>
-            <version>1.0-SNAPSHOT</version>
-            <scope>compile</scope>
-        </dependency>-->
-
-        <!-- Hatsur Tab -->
-        <!--<dependency>
-            <groupId>dev.hatsur</groupId>
-            <artifactId>SevenTab</artifactId>
-            <version>1.0.0-SNAPSHOT</version>
-            <scope>compile</scope>
-        </dependency>-->
-
-        <!-- Hatsur Tab -->
+        <!-- Frozed Tab -->
         <dependency>
-            <groupId>shysin.eighttab</groupId>
-            <artifactId>eighttab</artifactId>
+            <groupId>club.frozed.tab</groupId>
+            <artifactId>TabAPI</artifactId>
             <version>1.0-SNAPSHOT</version>
-            <scope>system</scope>
-            <systemPath>${project.basedir}/libs/eighttab-1.0-SNAPSHOT.jar</systemPath>
+            <scope>compile</scope>
         </dependency>
 
         <!-- World Border -->
