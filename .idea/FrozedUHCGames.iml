@@ -28,7 +28,7 @@
         <SOURCES />
       </library>
     </orderEntry>
-    <orderEntry type="library" name="Maven: club.frozed.tab:TabAPI:1.0-SNAPSHOT" level="project" />
+    <orderEntry type="library" name="Maven: club.frozed.tab:TabAPI:1.2-SNAPSHOT" level="project" />
     <orderEntry type="module-library">
       <library name="Maven: com.wimbli:WorldBorder:1.8.7">
         <CLASSES>
