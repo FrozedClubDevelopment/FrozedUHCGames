@@ -12,6 +12,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -21,6 +22,8 @@ import java.util.UUID;
 public class DoNotDisturb extends Scenario {
 
     private static Map<UUID, UUID> disturb = new HashMap<>();
+
+    private BukkitRunnable doNotDisturbTask = null;
 
     public DoNotDisturb() {
         super("DoNotDisturb", (new ItemCreator(Material.TORCH)).setLore(Arrays.asList(new String[] { "&f- No disturbing fights!," , "§f- You will not be able to fight with others for 30 seconds." })).get());
@@ -114,11 +117,9 @@ public class DoNotDisturb extends Scenario {
 
     @Override
     public void onEnable() {
-
     }
 
     @Override
     public void onDisable() {
-
     }
 }
